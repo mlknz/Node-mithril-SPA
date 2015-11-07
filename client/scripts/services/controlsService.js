@@ -1,0 +1,50 @@
+/**
+ * Created by mlkn on 14.10.2015.
+ */
+
+(function () {
+    var Config = require('./../config');
+    'use strict';
+
+    var controls = function () {
+
+        var self = this;
+        this.resize = function (event) {
+            Config.canvasWidth = window.innerWidth;
+            Config.canvasHeight = window.innerHeight*0.8;
+            Config.aspectRatio = Config.canvasWidth / Config.canvasHeight;
+            Config.renderer.setSize(Config.canvasWidth, Config.canvasHeight);
+            Config.camera.aspect = Config.aspectRatio;
+            Config.camera.updateProjectionMatrix();
+        };
+
+        this.mouseMoveFunc = function (event) {
+
+        };
+
+        var mouseDown = false;
+        window.addEventListener('mousedown', function () {
+            mouseDown = true
+        });
+        window.addEventListener('mouseup', function () {
+            mouseDown = false
+        });
+        window.addEventListener('mousemove', self.mouseMoveFunc);
+
+        window.addEventListener('resize', self.resize);
+
+        window.addEventListener('keypress', function(event) {
+
+            if (event.keyCode === 116) {
+                Config.universeTime += 0.1;
+                if (Config.universeTime > 1) Config.universeTime = 1;
+                    } else if (event.keyCode === 103) {
+                Config.universeTime -= 0.1;
+                if (Config.universeTime < 0) Config.universeTime = 0;
+            }
+
+        });
+    };
+
+    module.exports = controls;
+})();

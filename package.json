@@ -1,0 +1,52 @@
+{
+  "name": "mlknBay",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "browser": {
+    "./store/index.js": "./store/client.js"
+  },
+  "scripts": {
+    "start": "node ./server"
+  },
+  "author": "mlkn <rkdshe@gmail.com>",
+  "license": "ISC",
+  "browserify": {
+    "transform": [
+      "browserify-shim",
+      "glslify"
+    ]
+  },
+  "browserify-shim": {
+    "three": "global:THREE"
+  },
+  "dependencies": {
+    "body-parser": "^1.10.1",
+    "browserify-middleware": "^4.1.0",
+    "compression": "^1.3.0",
+    "domready": "^1.0.7",
+    "es6-promise": "^2.0.1",
+    "express": "^4.11.0",
+    "lodash": "^2.4.1",
+    "mithril": "^0.1.28",
+    "three": "^0.72.0",
+    "mithril-node-render": "^0.1.7",
+    "promise": "^6.1.0"
+  },
+  "devDependencies": {
+    "brfs": "^1.2.0",
+    "browserify": "^8.1.1",
+    "browserify-shim": "^3.8.10",
+    "glslify": "^2.3.1",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-less": "^3.0.3",
+    "gulp-livereload": "^3.8.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.4.1",
+    "preprocessify": "0.0.6",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}
