@@ -9,9 +9,11 @@
     var landscapeFunc = function () {
         var self = this;
 
-        var geometry = new THREE.PlaneGeometry(200, 200, 30, 30);
-
-        var vertexShader = glslify('./shaders/landscape.vert');
+        var geometry = new THREE.SphereGeometry(25, 100, 100);
+        var material = new THREE.MeshBasicMaterial( { color: 0x222277 });
+        material.transparent = true;
+        material.opacity = 0.5;
+        /*var vertexShader = glslify('./shaders/landscape.vert');
         var fragmentShader = glslify('./shaders/landscape.frag');
 
         this.customUniforms =
@@ -33,7 +35,7 @@
                 side: THREE.DoubleSide
                 // transparent: true,
                 // lights: true
-            }   );
+            }   );*/
 
         var mesh = new THREE.Mesh(geometry,  material);
 

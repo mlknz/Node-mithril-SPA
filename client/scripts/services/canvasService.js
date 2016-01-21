@@ -6,7 +6,6 @@
     var Config = require('./../config');
     var HomeScene = require('./scenes/wildGrowthScene');
     var Controls = require('./controlsService');
-    var OrbitControls = require('./../../../libs/OrbitControls');
     'use strict';
 
     var initRenderer = function(element, isInitialized) {
@@ -17,7 +16,7 @@
         Config.aspectRatio = Config.canvasWidth / Config.canvasHeight;
 
         Config.renderer = new THREE.WebGLRenderer({antialias: true, canvas: element});
-        Config.renderer.setClearColor(0x112244, 1.0);
+        Config.renderer.setClearColor(0x111111, 1.0);
         Config.renderer.clear();
 
         Config.camera = new THREE.PerspectiveCamera(60, Config.aspectRatio, 1, 1000);
@@ -35,6 +34,7 @@
 
         function animate() {
             requestAnimationFrame(animate);
+            Config.time = (new Date()).getTime();
             homeScene.update();
             orbitControls.update();
             Config.renderer.render(homeScene.scene, Config.camera);

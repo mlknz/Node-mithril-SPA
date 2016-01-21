@@ -36,11 +36,11 @@
         window.addEventListener('keypress', function(event) {
 
             if (event.keyCode === 116) {
-                Config.universeTime += 0.1;
-                if (Config.universeTime > 1) Config.universeTime = 1;
+                Config.mixAmount += 0.1;
+                if (Config.mixAmount > 1) Config.mixAmount = 1;
                     } else if (event.keyCode === 103) {
-                Config.universeTime -= 0.1;
-                if (Config.universeTime < 0) Config.universeTime = 0;
+                Config.mixAmount -= 0.1;
+                if (Config.mixAmount < 0) Config.mixAmount = 0;
             }
 
         });

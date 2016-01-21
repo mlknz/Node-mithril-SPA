@@ -4,7 +4,10 @@
 
 (function () {
     var Config = require('./../../config');
+    var Heights = require('./../../prefabs/heightsGenerator');
     var Landscape = require('./../../prefabs/landscapePrefab');
+    var Ocean = require('./../../prefabs/oceanPrefab');
+
     'use strict';
 
     var createScene = function() {
@@ -20,12 +23,17 @@
         var scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
 
+        var heights = new Heights();
+        Config.rtTexture = heights.texture;
         var landscape = new Landscape();
-        landscape.mesh.rotation.x = -90;
+        // landscape.mesh.rotation.x = -90;
 
         scene.add(landscape.mesh);
 
-        var startTime = (new Date()).getTime();
+        var ocean = new Ocean();
+        scene.add(ocean.mesh);
+
+        // var startTime = (new Date()).getTime();
 
         // sky cubemap
 
@@ -35,7 +43,7 @@
 
         // trees
 
-        // lights?
+        // lights
 
         var pointLight = new THREE.PointLight(0xffffff);
         pointLight.position.x = 12;
@@ -73,7 +81,9 @@
         this.update = function() {
             // console.log(new Date().getTime());
             // console.log(Config.universeTime);
+            heights.update();
             landscape.update();
+
 
         };
 

@@ -9,8 +9,10 @@ var Config = {
     'aspectRatio': 1,
     'renderer': null,
     'camera': null,
+    'rtTexture': null,
 
-    'universeTime': 0
+    'time': 0,
+    'mixAmount': 0
 };
 
 module.exports = Config;

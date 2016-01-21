@@ -1,5 +1,6 @@
 uniform float mixAmount;
 uniform float aspectRatio;
+uniform sampler2D tDiffuse;
 varying vec2 vUv;
 varying vec3 vPos;
 varying vec3 vNormal;
@@ -22,11 +23,10 @@ void main()
     vUv = uv;
 
     float phi = M_PI*(uv.x*2.0);
-    float thetta = M_PI*(uv.y- 0.5);
-	vec3 spherePosition = vUv.x < 0.5 ? vec3(sin(phi)*sin(thetta), sin(phi)*cos(thetta), cos(phi))*25.0 :
-		vec3(-sin(phi)*sin(thetta), sin(phi)*cos(thetta), cos(phi))*25.0;
-
-	mat3 rotateX = mat3(
+    float theta = M_PI*(uv.y);
+	vec3 spherePosition = vec3(sin(theta)*cos(phi), sin(theta)*sin(phi), cos(theta)) * 25.0;
+	spherePosition = spherePosition * (1.0 + (0.63 - texture2D( tDiffuse, uv ).x)*0.28);
+	/*mat3 rotateX = mat3(
 		1.0, 0.0, 0.0,
 		0.0, cos(M_PI/2.0), sin(M_PI/2.0),
 		0.0, -sin(M_PI/2.0), cos(M_PI/2.0)
@@ -40,9 +40,9 @@ void main()
 		cos(M_PI/2.0), sin(M_PI/2.0), 0.0,
 		-sin(M_PI/2.0), cos(M_PI/2.0), 0.0,
 		0.0, 0.0, 1.0
-	);
+	);*/
 	vec3 flatPosition = vUv.y > 0.0 ? vec3(-position.x, position.y, position.z) : position;
-	vec3 newPosition = mix( rotateZ * spherePosition + vec3(0.0, 0.0, 5.0), position, mixAmount );
-	vNormal = mix(normal, spherePosition/20.0, mixAmount);
+	vec3 newPosition = mix( spherePosition, position, mixAmount );
+	vNormal = mix(normal, spherePosition/25.0, mixAmount);
 	gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
 }
