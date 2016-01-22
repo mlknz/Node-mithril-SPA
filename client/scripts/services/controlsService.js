@@ -38,9 +38,15 @@
             if (event.keyCode === 116) {
                 Config.mixAmount += 0.1;
                 if (Config.mixAmount > 1) Config.mixAmount = 1;
-                    } else if (event.keyCode === 103) {
+            } else if (event.keyCode === 103) {
                 Config.mixAmount -= 0.1;
                 if (Config.mixAmount < 0) Config.mixAmount = 0;
+            } else if (event.keyCode === 113) {
+                if (Config.time/1000 - Config.changeLandscapeStartTime > Config.changeLandscapeLength) {
+                    Config.changeLandscapeStartTime = Config.time/1000;
+                    Config.changeLandscapeStartFlag = true;
+                    console.log('changing landspace');
+                }
             }
 
         });

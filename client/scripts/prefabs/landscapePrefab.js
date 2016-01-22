@@ -17,8 +17,10 @@
         this.customUniforms =
         {
             mixAmount: 	 { type: "f", value: Config.mixAmount },
+            landscapeAnimMix: 	 { type: "f", value: 1 },
             aspectRatio: { type: "f", value: Config.aspectRatio },
-            tDiffuse: { type: "t", value: Config.rtTexture },
+            landscape: { type: "t", value: Config.rtTexture },
+            landscapeOld: { type: "t", value: Config.rtTextureOld },
             myLightPos:{
                 type:"v3",
                 value: new THREE.Vector3(0.5, 0.2, 1.0)
@@ -37,13 +39,17 @@
 
         var mesh = new THREE.Mesh(geometry,  material);
 
-        this.animationTime = 10;
+        this.changeLandscape = function() {
+            self.customUniforms.landscapeAnimMix.value = 0;
+        };
         this.update = function() {
             self.customUniforms.mixAmount.value = Config.mixAmount;
             self.customUniforms.aspectRatio.value = Config.aspectRatio;
+            self.customUniforms.landscapeAnimMix.value = (Config.time/1000 - Config.changeLandscapeStartTime)/Config.changeLandscapeLength < 1 ?
+            (Config.time/1000 - Config.changeLandscapeStartTime)/Config.changeLandscapeLength : 1;
         };
 
-        return {mesh: mesh, update: self.update, animationTime: self.animationTime}
+        return {mesh: mesh, update: self.update, changeLandscape: self.changeLandscape}
     };
 
     module.exports = landscapeFunc;

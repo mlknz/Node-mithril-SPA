@@ -1,6 +1,8 @@
 uniform float mixAmount;
+uniform float landscapeAnimMix;
 uniform float aspectRatio;
-uniform sampler2D tDiffuse;
+uniform sampler2D landscape;
+uniform sampler2D landscapeOld;
 varying vec2 vUv;
 varying vec3 vPos;
 varying vec3 vNormal;
@@ -25,22 +27,11 @@ void main()
     float phi = M_PI*(uv.x*2.0);
     float theta = M_PI*(uv.y);
 	vec3 spherePosition = vec3(sin(theta)*cos(phi), sin(theta)*sin(phi), cos(theta)) * 25.0;
-	spherePosition = spherePosition * (1.0 + (0.63 - texture2D( tDiffuse, uv ).x)*0.28);
-	/*mat3 rotateX = mat3(
-		1.0, 0.0, 0.0,
-		0.0, cos(M_PI/2.0), sin(M_PI/2.0),
-		0.0, -sin(M_PI/2.0), cos(M_PI/2.0)
-	);
-	mat3 rotateY = mat3(
-    	cos(M_PI/2.0), 0.0, -sin(M_PI/2.0),
-    	0.0, 1.0, 0.0,
-    	sin(M_PI/2.0), 0.0, cos(M_PI/2.0)
-    );
-	mat3 rotateZ = mat3(
-		cos(M_PI/2.0), sin(M_PI/2.0), 0.0,
-		-sin(M_PI/2.0), cos(M_PI/2.0), 0.0,
-		0.0, 0.0, 1.0
-	);*/
+	vec3 spherePositionOld = spherePosition * (1.0 + (0.63 - texture2D( landscapeOld, uv ).x)*0.28);
+	spherePosition = spherePosition * (1.0 + (0.63 - texture2D( landscape, uv ).x)*0.28);
+
+	spherePosition = mix(spherePositionOld, spherePosition, landscapeAnimMix);
+
 	vec3 flatPosition = vUv.y > 0.0 ? vec3(-position.x, position.y, position.z) : position;
 	vec3 newPosition = mix( spherePosition, position, mixAmount );
 	vNormal = mix(normal, spherePosition/25.0, mixAmount);

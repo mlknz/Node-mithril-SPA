@@ -1,5 +1,5 @@
 varying vec2 vUv;
-uniform float time;
+uniform float seed; // 0 - 1000, changes each second
 
 #define M_PI 3.141592653589
 
@@ -20,8 +20,8 @@ float noise( vec3 x )
 
 float noiseOctaves ( vec3 v ) {
     float result = 0.0;
-    for (float i = 1.0; i < 11.0; i++) {
-        result += noise(v * i)/(i * 2.2);
+    for (float i = 2.0; i < 11.0; i++) {
+        result += noise(v * i)/((i-1.0) * 2.0);
     }
     return result;
 }
@@ -31,6 +31,6 @@ void main() {
 	float phi = vUv.x * 2.0 * M_PI;
 	float theta = vUv.y * M_PI;
 	vec3 norm = vec3(sin(theta)*cos(phi), sin(theta)*sin(phi), cos(theta));
-	float value = noiseOctaves(norm);
+	float value = noiseOctaves(norm+seed/10.0);
 	gl_FragColor = vec4( value, value, value, 1.0 );
 }

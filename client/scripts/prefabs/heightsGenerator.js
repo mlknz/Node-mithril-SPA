@@ -7,8 +7,13 @@
     'use strict';
 
     var heightsFunc = function () {
-        var time = Config.time;
+        var seed = 1;
         var rtTexture = new THREE.WebGLRenderTarget(
+            512,
+            512,
+            { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBFormat }
+        );
+        var rtTextureOld = new THREE.WebGLRenderTarget(
             512,
             512,
             { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBFormat }
@@ -18,7 +23,7 @@
         var fragmentShader = glslify('./shaders/generateTexture.frag');
 
         var material = new THREE.ShaderMaterial( {
-            uniforms: { time: { type: "f", value: Config.time } },
+            uniforms: { seed: { type: "f", value: seed } },
             vertexShader: vertexShader,
             fragmentShader: fragmentShader
         } );
@@ -33,16 +38,16 @@
         sceneRTT.add( quad );
 
         Config.renderer.render( sceneRTT, cameraRTT, rtTexture, true );
+        Config.renderer.render( sceneRTT, cameraRTT, rtTextureOld, true );
 
         return {
             texture: rtTexture,
+            textureOld: rtTextureOld,
             update: function() {
-                // console.log((Config.time % 100000 - Config.time % 1000) / 1000);
-                time = (Config.time % 100000 - Config.time % 1000) / 1000;
-                if (material.uniforms.time.value !== time) {
-                    material.uniforms.time.value = time;
-                    Config.renderer.render(sceneRTT, cameraRTT, rtTexture, true);
-                }
+                Config.renderer.render( sceneRTT, cameraRTT, rtTextureOld, true );
+                seed = (Config.time % 100000 - Config.time % 1000) / 1000;
+                material.uniforms.seed.value = seed+1;
+                Config.renderer.render(sceneRTT, cameraRTT, rtTexture, true);
             }
         };
     };
