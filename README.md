@@ -7,7 +7,7 @@ To launch the project locally do the following:
 0. Install Node.js with npm on your system if you don't have it (there are a lot of guides available).
 1. Download .zip archive and extract it to your hard drive.
 2. Launch terminal in the project root directory.
-3. Run "npm install" in project root directory (In terminal you opened in Item 2 write it down and hit Enter).
+3. Run "npm install" in project root directory (In terminal you opened write it down and hit Enter).
 4. Run "gulp" in project root directory.
 5. Run "node server.js" in project root directory.
 6. Open your browser and navigate to "http://localhost:8000/".
