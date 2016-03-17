@@ -53,8 +53,8 @@ gulp.task('js-all', function() {
 
 // libs
 gulp.task('libs', function () {
-    gulp.src('./client/libs')
-        .pipe(gulp.dest('target'));
+    gulp.src('./client/libs/*.js')
+        .pipe(gulp.dest('target/libs'));
 });
 
 // Watch Files For Changes
@@ -67,4 +67,4 @@ gulp.task('watch', function() {
 });
 
 // Default Task
-gulp.task('default', ['libs', 'lint', 'js-all', 'watch']);
+gulp.task('default', ['libs', 'less', 'lint', 'js-all']);
