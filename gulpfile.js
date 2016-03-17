@@ -51,6 +51,12 @@ gulp.task('js-all', function() {
         .pipe(livereload());
 });
 
+// libs
+gulp.task('libs', function () {
+    gulp.src('./client/libs')
+        .pipe(gulp.dest('target'));
+});
+
 // Watch Files For Changes
 gulp.task('watch', function() {
     livereload.listen();
@@ -61,4 +67,4 @@ gulp.task('watch', function() {
 });
 
 // Default Task
-gulp.task('default', ['lint', 'js-all', 'watch']);
+gulp.task('default', ['libs', 'lint', 'js-all', 'watch']);

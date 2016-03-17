@@ -1,7 +1,3 @@
-/**
- * Created by mlkn on 18.10.2015.
- */
-
 (function () {
     var Config = require('./../../config');
     var Heights = require('./../../prefabs/heightsGenerator');
@@ -17,7 +13,7 @@
 
         Config.camera.position.z = 76;
         Config.camera.position.y = 50;
-        Config.camera.lookAt(new THREE.Vector3(0,0,0));
+        Config.camera.lookAt( new THREE.Vector3(0,0,0) );
         Config.camera.updateProjectionMatrix();
 
         scene = new THREE.Scene();
@@ -28,28 +24,29 @@
         Config.rtTextureOld = heights.textureOld;
 
         landscape = new Landscape();
-        scene.add(landscape.mesh);
+        scene.add( landscape.mesh );
 
         ocean = new Ocean();
-        scene.add(ocean.mesh);
+        scene.add( ocean.mesh );
 
-        pointLight = new THREE.PointLight(0xffffff);
+        pointLight = new THREE.PointLight( 0xffffff );
         pointLight.position.x = 12;
         pointLight.position.y = 50;
         pointLight.position.z = 50;
-        scene.add(pointLight);
+        scene.add( pointLight );
         landscape.mesh.material.needsUpdate = true;
 
-        this.update = function() {
-            if (Config.changeLandscapeStartFlag) {
-                heights.update();
-                landscape.changeLandscape();
-                Config.changeLandscapeStartFlag = false;
+        return {
+            scene: scene,
+            update: function() {
+                if ( Config.changeLandscapeStartFlag ) {
+                    heights.update();
+                    landscape.changeLandscape();
+                    Config.changeLandscapeStartFlag = false;
+                }
+                landscape.update();
             }
-            landscape.update();
         };
-
-        return {scene: scene, update: self.update};
     };
 
     module.exports = createScene;

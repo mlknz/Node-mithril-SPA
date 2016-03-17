@@ -1,7 +1,3 @@
-/**
- * Created by mlkn on 14.10.2015.
- */
-
 (function () {
     var Config = require('./../config');
     'use strict';
@@ -18,7 +14,7 @@
             Config.camera.updateProjectionMatrix();
         };
 
-        this.mouseMoveFunc = function (event) {
+        this.mouseMoveFunc = function ( event ) {
 
         };
 
