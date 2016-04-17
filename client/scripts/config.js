@@ -1,18 +1,13 @@
 var Config = {
+    'currentSceneFilename': '',
 
-    'canvasWidth': 0,
-    'canvasHeight': 0,
-    'aspectRatio': 1,
-    'renderer': null,
-    'camera': null,
-    'rtTextureOld': null,
-    'rtTexture': null,
+    'scenes': {
+        'default': './scenes/wildGrowthScene.min.js',
+        'wildGrowth': './scenes/wildGrowthScene.min.js',
+        'fun1': './scenes/fun1Scene.min.js'
+    },
 
-    'time': 0,
-    'mixAmount': 0,
-    'changeLandscapeStartFlag': false,
-    'changeLandscapeStartTime': 0, // in seconds
-    'changeLandscapeLength': 1 // in seconds
+    'renderer': null
 };
 
 module.exports = Config;

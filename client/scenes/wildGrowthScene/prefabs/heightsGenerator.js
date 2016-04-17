@@ -6,7 +6,7 @@
     var Config = require('./../config');
     'use strict';
 
-    var heightsFunc = function () {
+    var heightsFunc = function (renderer) {
         var seed = 1;
         var rtTexture = new THREE.WebGLRenderTarget(
             512,
@@ -37,17 +37,17 @@
         quad.position.z = -100;
         sceneRTT.add( quad );
 
-        Config.renderer.render( sceneRTT, cameraRTT, rtTexture, true );
-        Config.renderer.render( sceneRTT, cameraRTT, rtTextureOld, true );
+        renderer.render( sceneRTT, cameraRTT, rtTexture, true );
+        renderer.render( sceneRTT, cameraRTT, rtTextureOld, true );
 
         return {
             texture: rtTexture,
             textureOld: rtTextureOld,
             update: function() {
-                Config.renderer.render( sceneRTT, cameraRTT, rtTextureOld, true );
+                renderer.render( sceneRTT, cameraRTT, rtTextureOld, true );
                 seed = (Config.time % 100000 - Config.time % 1000) / 1000;
                 material.uniforms.seed.value = seed+1;
-                Config.renderer.render(sceneRTT, cameraRTT, rtTexture, true);
+                renderer.render(sceneRTT, cameraRTT, rtTexture, true);
             }
         };
     };

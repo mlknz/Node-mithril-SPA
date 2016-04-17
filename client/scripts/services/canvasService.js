@@ -1,39 +1,57 @@
 (function () {
     var Config = require('./../config');
-    var HomeScene = require('./scenes/wildGrowthScene');
-    var Controls = require('./controlsService');
+    var currentScene = {};
     'use strict';
 
-    var initRenderer = function(element, isInitialized) {
-        if (isInitialized) return;
+    var getCurrentHash = function() {
+        return window.location.hash.substr(1);
+    };
 
-        Config.canvasWidth = window.innerWidth;
-        Config.canvasHeight = window.innerHeight*0.8;
-        Config.aspectRatio = Config.canvasWidth / Config.canvasHeight;
+    var changeScene = function( element, isInitialized ) {
+        if ( isInitialized ) return;
 
-        Config.renderer = new THREE.WebGLRenderer({antialias: true, canvas: element});
-        Config.renderer.setClearColor(0x111111, 1.0);
-        Config.renderer.clear();
+        if ( !Config.renderer ) {
+            var renderer = new THREE.WebGLRenderer({antialias: true, canvas: element});
+            renderer.setClearColor(0x111111, 1.0);
+            renderer.clear();
+            renderer.setSize(window.innerWidth, window.innerHeight * 0.8);
+            Config.renderer = renderer;
+        }
 
-        Config.camera = new THREE.PerspectiveCamera(60, Config.aspectRatio, 1, 1000);
-        var controls = new Controls();
+        var hash = getCurrentHash();
 
-        controls.resize();
+        if ( !hash || !Config.scenes[hash] ) hash = 'default';
+
+        if ( Config.currentSceneFilename !== Config.scenes[hash]) {
+            var script = document.createElement('script');
+            script.setAttribute('type', 'text/javascript');
+            script.setAttribute('src', Config.scenes[hash]);
+
+            script.onload = function() {
+                if (currentScene && currentScene.dispose) {
+                    currentScene.dispose();
+                }
+                currentScene = window.initScene(element, Config.renderer);
+            };
+
+            Config.currentSceneFilename = Config.scenes[hash];
+            document.body.appendChild(script);
+        }
     };
 
     var canvasService = function (element, isInitialized) {
 
-        initRenderer(element, isInitialized);
+        changeScene(element, isInitialized);
 
-        var homeScene = HomeScene();
-        var orbitControls = new THREE.OrbitControls(Config.camera, Config.renderer.domElement);
+        window.addEventListener("hashchange", function(){ changeScene(element, isInitialized); }, false);
 
         function animate() {
             requestAnimationFrame(animate);
-            Config.time = (new Date()).getTime();
-            homeScene.update();
-            orbitControls.update();
-            Config.renderer.render(homeScene.scene, Config.camera);
+
+             if (currentScene.scene) {
+                 currentScene.update();
+             }
+
         }
         animate();
 

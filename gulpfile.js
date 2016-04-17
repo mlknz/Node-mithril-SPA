@@ -13,6 +13,9 @@ var preprocessify = require('preprocessify');
 var livereload = require('gulp-livereload');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
+var fs = require('fs');
+var path = require('path');
+var merge = require('merge-stream');
 
 // Lint Task
 gulp.task('lint', function() {
@@ -30,7 +33,7 @@ gulp.task('less', function () {
 });
 
 // Concatenate & Minify JS
-gulp.task('js-all', function() {
+gulp.task('js-main', function() {
 
     var pathToJSApp = './client/scripts/index.js';
 
@@ -51,6 +54,41 @@ gulp.task('js-all', function() {
         .pipe(livereload());
 });
 
+// Concatenate & Minify Scenes JS
+
+var scriptsPath = './client/scenes';
+function getFolders(dir) {
+    return fs.readdirSync(dir)
+        .filter(function(file) {
+            return fs.statSync(path.join(dir, file)).isDirectory();
+        });
+}
+
+gulp.task('scenes', function() {
+    var folders = getFolders(scriptsPath);
+
+    var tasks = folders.map(function(folder) {
+        var pathToJSApp = '' + scriptsPath + '/' +  folder + '/' + 'index.js';
+
+        return browserify(pathToJSApp)
+            .bundle()
+            .on('error', function (err) {
+                console.error('Error in Browserify: \n', err.message);
+                this.emit('end');
+            })
+            // .pipe(plumber())
+            .pipe(source('bundled.js'))
+            .pipe(buffer())
+            .pipe(uglify())
+            .pipe(rename({basename: folder, suffix: '.min'}))
+            .pipe(filesize())
+            .pipe(gulp.dest('target/scenes'))
+            .pipe(livereload());
+    });
+
+    return merge(tasks);
+});
+
 // libs
 gulp.task('libs', function () {
     gulp.src('./client/libs/*.js')
@@ -60,11 +98,12 @@ gulp.task('libs', function () {
 // Watch Files For Changes
 gulp.task('watch', function() {
     livereload.listen();
-    gulp.watch('client/scripts/**/*.js', ['lint', 'js-all']);
+    gulp.watch('client/scripts/**/*.js', ['lint', 'js-main']);
+    gulp.watch('client/scenes/**/*.js', ['scenes']);
     gulp.watch('client/content/**/*.less', ['less']);
     gulp.watch('client/scripts/**/*.vert', []);
     gulp.watch('client/scripts/**/*.frag', []);
 });
 
 // Default Task
-gulp.task('default', ['libs', 'less', 'lint', 'js-all']);
+gulp.task('default', ['libs', 'less', 'lint', 'js-main', 'scenes']);

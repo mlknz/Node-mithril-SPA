@@ -1,5 +1,5 @@
 (function () {
-    var Config = require('./../config');
+    var Config = require('./config');
     'use strict';
 
     var controls = function () {

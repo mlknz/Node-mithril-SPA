@@ -2,10 +2,10 @@
   'use strict';
 
 var home = require('./pages/home');
-var second = require('./pages/second');
+var about = require('./pages/about');
 
 module.exports = {
   '/': home,
-  '/second-page': second
+  '/about': about
 };
 } ());
