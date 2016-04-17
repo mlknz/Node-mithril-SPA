@@ -1,6 +1,6 @@
-# mithril three.js sandbox app
+# js/webgl sandbox app
 
-My three.js sandbox app based on [this](https://github.com/StephanHoyer/mithril-isomorphic-example) template.
+My sandbox app based on [this](https://github.com/StephanHoyer/mithril-isomorphic-example) template.
 
 To launch the project locally do the following:
 
