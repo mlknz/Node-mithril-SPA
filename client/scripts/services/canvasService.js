@@ -1,52 +1,74 @@
 (function () {
-    var Config = require('./../config');
+    var Config = require( './../config' );
     var currentScene = {};
     'use strict';
 
     var getCurrentHash = function() {
-        return window.location.hash.substr(1);
+
+        return window.location.hash.substr( 1 );
+
     };
 
     var changeScene = function( element, isInitialized ) {
-        if ( isInitialized ) return;
-
-        if ( !Config.renderer ) {
-            var renderer = new THREE.WebGLRenderer({antialias: true, canvas: element});
-            renderer.setClearColor(0x111111, 1.0);
-            renderer.clear();
-            renderer.setSize(window.innerWidth, window.innerHeight * 0.8);
-            Config.renderer = renderer;
-        }
 
         var hash = getCurrentHash();
 
-        if ( !hash || !Config.scenes[hash] ) hash = 'default';
+        if ( !hash || !Config.scenes[hash] ) hash = Config.defaultScene;
 
-        if ( Config.currentSceneFilename !== Config.scenes[hash]) {
-            var script = document.createElement('script');
-            script.setAttribute('type', 'text/javascript');
-            script.setAttribute('src', Config.scenes[hash]);
+        if ( Config.currentScene !== hash) {
 
-            script.onload = function() {
-                if (currentScene && currentScene.dispose) {
-                    currentScene.dispose();
+            if ( ! window.scenes[hash] ) {
+
+                Config.currentScene = hash;
+
+                var script = document.createElement( 'script' );
+                script.setAttribute( 'type', 'text/javascript' );
+                script.setAttribute( 'src', Config.scenes[ hash ] );
+
+                script.onload = function() {
+
+                    if (currentScene && currentScene.dispose) {
+                        currentScene.dispose();
+                    }
+
+                    currentScene = window.scenes[ hash ]( element, Config.renderer );
+                    
+                };
+ 
+                document.body.appendChild(script);
+
+            } else {
+
+                Config.currentScene = hash;
+
+                if ( currentScene && currentScene.dispose ) {
+                        currentScene.dispose();
                 }
-                currentScene = window.initScene(element, Config.renderer);
-            };
 
-            Config.currentSceneFilename = Config.scenes[hash];
-            document.body.appendChild(script);
+                currentScene = window.scenes[ hash ]( element, Config.renderer );
+                
+            }
         }
     };
 
-    var canvasService = function (element, isInitialized) {
+    var canvasService = function ( element, isInitialized ) {
 
-        changeScene(element, isInitialized);
+        if ( isInitialized ) return;
 
-        window.addEventListener("hashchange", function(){ changeScene(element, isInitialized); }, false);
+        window.scenes = {};
+
+        var renderer = new THREE.WebGLRenderer( { antialias: true, canvas: element } );
+        renderer.setClearColor( 0x111111, 1.0 );
+        renderer.clear();
+        renderer.setSize( window.innerWidth, window.innerHeight * 0.8 );
+        Config.renderer = renderer;
+
+        changeScene( element );
+
+        window.addEventListener("hashchange", function() { changeScene( element, isInitialized ); }, false);
 
         function animate() {
-            requestAnimationFrame(animate);
+            requestAnimationFrame( animate );
 
              if (currentScene.scene) {
                  currentScene.update();

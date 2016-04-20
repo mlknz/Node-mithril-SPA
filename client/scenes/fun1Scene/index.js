@@ -2,7 +2,7 @@
  * Created by mlkn on 18.04.2016.
  */
 
-window.initScene = function(canvas, renderer) {
+window.scenes.fun1 = function(canvas, renderer) {
 
     renderer.setClearColor(0x993322, 1.0);
     renderer.clear();

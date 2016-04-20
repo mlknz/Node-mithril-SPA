@@ -1,10 +1,10 @@
-# js/webgl sandbox app
+# js sandbox app ( WebGL / THREE.js )
 
 My sandbox app based on [this](https://github.com/StephanHoyer/mithril-isomorphic-example) template.
 
 To launch the project locally do the following:
 
-0. Install Node.js with npm on your system if you don't have it (there are a lot of guides available).
+0. Install Node.js with npm on your system if you don't have it.
 1. Download .zip archive and extract it to your hard drive.
 2. Launch terminal in the project root directory.
 3. Run "npm install" in project root directory (In terminal you opened write it down and hit Enter).

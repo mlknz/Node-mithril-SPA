@@ -4,7 +4,7 @@ var Landscape = require('./prefabs/landscapePrefab');
 var Ocean = require('./prefabs/oceanPrefab');
 var Controls = require('./controls');
 
-window.initScene = function(canvas, renderer) {
+window.scenes.wildGrowth = function(canvas, renderer) {
 
     var self = this;
     var scene, heights, landscape, ocean, pointLight;
