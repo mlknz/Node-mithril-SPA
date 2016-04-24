@@ -1,5 +1,5 @@
 (function () {
-    var Config = require( './../config' );
+    var Config = require( './../../config' );
     var currentScene = {};
     'use strict';
 
@@ -9,7 +9,7 @@
 
     };
 
-    var changeScene = function( element, isInitialized ) {
+    var changeScene = function( element ) {
 
         var hash = getCurrentHash();
 
@@ -31,7 +31,7 @@
                         currentScene.dispose();
                     }
 
-                    currentScene = window.scenes[ hash ]( element, Config.renderer );
+                    currentScene = window.scenes[ hash ]( element, Config.renderer, Config );
                     
                 };
  
@@ -45,7 +45,7 @@
                         currentScene.dispose();
                 }
 
-                currentScene = window.scenes[ hash ]( element, Config.renderer );
+                currentScene = window.scenes[ hash ]( element, Config.renderer, Config );
                 
             }
         }
@@ -60,25 +60,21 @@
         var renderer = new THREE.WebGLRenderer( { antialias: true, canvas: element } );
         renderer.setClearColor( 0x111111, 1.0 );
         renderer.clear();
-        renderer.setSize( window.innerWidth, window.innerHeight * 0.8 );
+        renderer.setSize( window.innerWidth, window.innerHeight );
         Config.renderer = renderer;
 
         changeScene( element );
 
-        window.addEventListener("hashchange", function() { changeScene( element, isInitialized ); }, false);
-
-        function animate() {
-            requestAnimationFrame( animate );
-
-             if (currentScene.scene) {
-                 currentScene.update();
-             }
-
-        }
-        animate();
+        window.addEventListener("hashchange", function() { changeScene( element ); }, false);
 
     };
 
     module.exports = canvasService;
+
+    module.exports.update = function() {
+        if (currentScene.scene) {
+            currentScene.update();
+        }
+    };
 
 }());

@@ -1,5 +1,45 @@
-body{
-    background-color: #52514F;
+body {
+    background-color: #111111;
     margin: 0;
     overflow: hidden;
+
+    .controlPanel {
+        height: 20%;
+        width: 100%;
+        top: 0;
+        right: 0;
+        position: absolute;
+        .corner {
+            background-color: #773344;
+            position: absolute;
+            right: 0;
+        }
+        .sceneSelector {
+            background-color: #338844;
+            position: absolute;
+        }
+        .textButton {
+            background-color: #226688;
+            position: absolute;
+        }
+        .earFoodButton {
+            background-color: #229988;
+            position: absolute;
+        }
+        .eyeFoodButton {
+            background-color: #22cc88;
+            position: absolute;
+        }
+        .hidePanelButton {
+            background-color: #AA3344;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+    }
+    canvas {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
 }

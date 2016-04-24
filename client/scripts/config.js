@@ -1,16 +1,27 @@
 var Config = {
 
-    'currentScene': '',
-    'defaultScene': 'wildGrowth',
+    currentScene: '',
+    defaultScene: 'wildGrowth',
 
-    'scenes': {
+    scenes: {
 
-        'wildGrowth': './scenes/wildGrowthScene.min.js',
-        'fun1': './scenes/fun1Scene.min.js'
+        wildGrowth: './scenes/wildGrowthScene.min.js',
+        fun1: './scenes/fun1Scene.min.js'
         
     },
 
-    'renderer': null
+    controlPanel: {
+        isVertical: false,
+        isHidden: false,
+        isMoving: false,
+        endedMovement: false,
+        offset: 0,
+        speed: 45,
+        maxOffset: 15
+    },
+    time: 0,
+
+    renderer: null
 
 };
 
