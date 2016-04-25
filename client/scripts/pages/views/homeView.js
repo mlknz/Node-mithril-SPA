@@ -28,9 +28,6 @@ var view = function () {
 };
 
 module.exports = view;
-module.exports.canvasUpdate = canvasService.update;
-module.exports.controlPanelUpdate = controlPanelService.update;
-
 
 } ());
 

@@ -4,7 +4,7 @@ var Landscape = require('./prefabs/landscapePrefab');
 var Ocean = require('./prefabs/oceanPrefab');
 var Controls = require('./controls');
 
-window.scenes.wildGrowth = function( canvas, renderer, appConfig ) {
+window.scenes.wildGrowth = function( canvas, renderer ) {
 
     var self = this;
     var scene, heights, landscape, ocean, pointLight;
@@ -16,7 +16,7 @@ window.scenes.wildGrowth = function( canvas, renderer, appConfig ) {
     var camera = new THREE.PerspectiveCamera(60, Config.aspectRatio, 1, 1000);
     Config.camera = camera;
 
-    var controls = new Controls(appConfig);
+    var controls = new Controls();
     controls.resize();
 
     camera.position.z = 76;
@@ -50,10 +50,7 @@ window.scenes.wildGrowth = function( canvas, renderer, appConfig ) {
         scene: scene,
         update: function() {
             Config.time = (new Date()).getTime();
-            if (appConfig.controlPanel.isMoving || appConfig.controlPanel.endedMovement) {
-                controls.resize();
-                appConfig.controlPanel.endedMovement = false;
-            }
+
             if ( Config.changeLandscapeStartFlag ) {
                 heights.update();
                 landscape.changeLandscape();

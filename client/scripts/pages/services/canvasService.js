@@ -31,7 +31,7 @@
                         currentScene.dispose();
                     }
 
-                    currentScene = window.scenes[ hash ]( element, Config.renderer, Config );
+                    currentScene = window.scenes[ hash ]( element, Config.renderer );
                     
                 };
  
@@ -45,7 +45,7 @@
                         currentScene.dispose();
                 }
 
-                currentScene = window.scenes[ hash ]( element, Config.renderer, Config );
+                currentScene = window.scenes[ hash ]( element, Config.renderer );
                 
             }
         }
@@ -67,14 +67,21 @@
 
         window.addEventListener("hashchange", function() { changeScene( element ); }, false);
 
+
+        function animate() {
+
+            requestAnimationFrame( animate );
+
+            if (currentScene.scene) {
+                currentScene.update();
+            }
+
+        }
+
+        animate();
+
     };
 
     module.exports = canvasService;
-
-    module.exports.update = function() {
-        if (currentScene.scene) {
-            currentScene.update();
-        }
-    };
 
 }());

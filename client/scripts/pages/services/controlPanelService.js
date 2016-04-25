@@ -8,9 +8,6 @@
 
     var controlPanel, corner, sceneSelector, textButton, earFoodButton, eyeFoodButton, hidePanelButton, hidePanelImg;
 
-    var makeItVertical = false;
-    var makeItHorizontal = false;
-
     var makeControlPanelHorizontal = function() {
 
         controlPanel.style.height = '20vw';
@@ -101,11 +98,11 @@
 
         if ( window.innerWidth/window.innerHeight < 1 && Config.controlPanel.isVertical ) {
 
-            makeItHorizontal = true;
+            makeControlPanelHorizontal();
 
         } else if ( window.innerWidth/window.innerHeight > 1 && ! Config.controlPanel.isVertical ) {
 
-            makeItVertical = true;
+            makeControlPanelVertical();
 
         }
 
@@ -209,8 +206,24 @@
             hidePanelButton.style.cursor = 'pointer';
 
             hidePanelButton.addEventListener( 'click', function( e ){
-                if ( !Config.controlPanel.isMoving ) {
-                    Config.controlPanel.isMoving = true;
+                if ( Config.controlPanel.isHidden ) {
+                    if (  Config.controlPanel.isVertical ) {
+                        hidePanelImg.style.transform = "rotate(90deg)";
+                        controlPanel.style.right = '0';
+                    } else {
+                        hidePanelImg.style.transform = "rotate(0deg)";
+                        controlPanel.style.top = '0';
+                    }
+                    Config.controlPanel.isHidden = false;
+                } else {
+                    if (  Config.controlPanel.isVertical ) {
+                        hidePanelImg.style.transform = "rotate(-90deg)";
+                        controlPanel.style.right = '-15vh';
+                    } else {
+                        hidePanelImg.style.transform = "rotate(180deg)";
+                        controlPanel.style.top = '-15vw';
+                    }
+                    Config.controlPanel.isHidden = true;
                 }
             });
             hidePanelButton.addEventListener('mouseover', function(e){
@@ -225,62 +238,9 @@
             hidePanelImg = document.createElement("img");
             hidePanelImg.src = 'content/images/up.png';
             hidePanelImg.style.position =  "absolute";
-            hidePanelImg.style.opacity = "0.7";
-            hidePanelImg.style.transform = "rotate(90deg)";
+            hidePanelImg.className = 'hidePanelImg';
             hidePanelButton.appendChild(hidePanelImg);
 
-        },
-
-        update: function(dt) {
-
-            if (makeItHorizontal && !Config.controlPanel.isMoving) {
-                makeItHorizontal = false;
-                makeControlPanelHorizontal();
-            }
-
-            if (makeItVertical && !Config.controlPanel.isMoving) {
-                makeItVertical = false;
-                makeControlPanelVertical();
-            }
-
-            if ( Config.controlPanel.isMoving ) {
-                if ( !Config.controlPanel.isHidden ) {
-
-                    Config.controlPanel.offset += Config.controlPanel.speed * dt / 1000;
-
-                } else {
-
-                    Config.controlPanel.offset -= Config.controlPanel.speed * dt / 1000;
-
-                }
-                if ( Config.controlPanel.offset > Config.controlPanel.maxOffset ) {
-
-                    Config.controlPanel.offset = Config.controlPanel.maxOffset;
-                    Config.controlPanel.isHidden = true;
-                    Config.controlPanel.isMoving = false;
-                    Config.controlPanel.endedMovement = true;
-
-                } else if ( Config.controlPanel.offset < 0 ) {
-
-                    Config.controlPanel.offset = 0;
-                    Config.controlPanel.isHidden = false;
-                    Config.controlPanel.isMoving = false;
-                    Config.controlPanel.endedMovement = true;
-
-                }
-
-                if ( Config.controlPanel.isVertical ) {
-
-                    controlPanel.style.right = -Config.controlPanel.offset + 'vh';
-                    hidePanelImg.style.transform = "rotate(" + ( 0.5-Config.controlPanel.offset / Config.controlPanel.maxOffset ) * 180 + "deg)";
-
-                } else {
-
-                    controlPanel.style.top = -Config.controlPanel.offset + 'vw';
-                    hidePanelImg.style.transform = "rotate(" + ( Config.controlPanel.offset / Config.controlPanel.maxOffset ) * 180 + "deg)";
-
-                }
-            }
         }
 
     };

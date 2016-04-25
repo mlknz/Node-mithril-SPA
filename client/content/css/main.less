@@ -9,6 +9,8 @@ body {
         top: 0;
         right: 0;
         position: absolute;
+        transition: right 0.5s, top 0.5s ease-in-out;
+
         .corner {
             background-color: #773344;
             position: absolute;
@@ -35,7 +37,13 @@ body {
             position: absolute;
             left: 0;
             bottom: 0;
+            .hidePanelImg {
+                opacity: 0.7;
+                transition: transform 0.5s ease-in-out;
+            }
+
         }
+
     }
     canvas {
         position: absolute;

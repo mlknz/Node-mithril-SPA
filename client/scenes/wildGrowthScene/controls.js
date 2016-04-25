@@ -2,18 +2,14 @@
     var Config = require('./config');
     'use strict';
 
-    var controls = function ( appConfig ) {
+    var controls = function ( ) {
 
         var self = this;
 
         this.resize = function (event) {
 
-            Config.canvasWidth = appConfig.controlPanel.isVertical ?
-                ( window.innerWidth - innerHeight * ( 0.2 - appConfig.controlPanel.offset / 100 ) ) :
-                window.innerWidth;
-            Config.canvasHeight = appConfig.controlPanel.isVertical ?
-                window.innerHeight :
-                ( innerHeight -  window.innerWidth * ( 0.2 - appConfig.controlPanel.offset / 100 ) );
+            Config.canvasWidth = window.innerWidth;
+            Config.canvasHeight = window.innerHeight;
 
             Config.aspectRatio = Config.canvasWidth / Config.canvasHeight;
             Config.renderer.setSize(Config.canvasWidth, Config.canvasHeight);
