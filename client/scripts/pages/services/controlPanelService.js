@@ -1,8 +1,11 @@
 /**
  * Created by mlkn on 23.04.2016.
  */
+
 (function() {
     var Config = require( './../../config' );
+    var _ = require('lodash');
+    var m = require('mithril');
 
     'use strict';
 
@@ -61,7 +64,7 @@
 
     };
 
-    var resize = function ( ) {
+    var resize = _.throttle(function ( ) {
 
         if ( window.innerWidth/window.innerHeight < 1 && Config.controlPanel.isVertical ) {
 
@@ -73,7 +76,7 @@
 
         }
 
-    };
+    }, 100);
 
     module.exports = {
 
@@ -88,6 +91,11 @@
             });
             corner.addEventListener( 'mouseout', function( ){
                 corner.style.backgroundColor = '#773344';
+            });
+            corner.addEventListener('click', function( e ){
+                e.preventDefault();
+
+                m.route('/');
             });
 
         },
@@ -139,7 +147,7 @@
             textButton = element;
 
             var elem = document.createElement("img");
-            elem.src = 'content/images/testImage.png';
+            elem.src = 'content/images/textButton.png';
             elem.className = 'foodButton';
             textButton.appendChild( elem );
 
@@ -155,21 +163,8 @@
                 e.preventDefault();
                 textButton.style.backgroundColor = '#114466';
                 elem.style.opacity = "0.2";
-                window.location.href = '/about';
-            });
 
-        },
-
-        earFoodButton: function( element, isInitialized ) {
-
-            if ( isInitialized ) return;
-            earFoodButton = element;
-
-            earFoodButton.addEventListener( 'mouseover', function( ){
-                earFoodButton.style.backgroundColor = '#33AA99';
-            });
-            earFoodButton.addEventListener( 'mouseout', function( ){
-                earFoodButton.style.backgroundColor = '#229988';
+                m.route('/blog');
             });
 
         },
@@ -179,11 +174,56 @@
             if ( isInitialized ) return;
             eyeFoodButton = element;
 
+            var elem = document.createElement("img");
+            elem.src = 'content/images/eyeFoodButton.png';
+            elem.className = 'foodButton';
+            eyeFoodButton.appendChild( elem );
+
             eyeFoodButton.addEventListener( 'mouseover', function( ){
                 eyeFoodButton.style.backgroundColor = '#33dd99';
+                elem.style.opacity = "0.5";
             });
             eyeFoodButton.addEventListener( 'mouseout', function( ){
                 eyeFoodButton.style.backgroundColor = '#22cc88';
+                elem.style.opacity = "1.0";
+            });
+            eyeFoodButton.addEventListener('click', function( e ){
+                e.preventDefault();
+                textButton.style.backgroundColor = '#114466';
+                elem.style.opacity = "0.2";
+
+                window.location.hash = '-';
+                Config.currentScene = '-1';
+                m.route('/pictures');
+            });
+        },
+
+        earFoodButton: function( element, isInitialized ) {
+
+            if ( isInitialized ) return;
+            earFoodButton = element;
+
+            var elem = document.createElement("img");
+            elem.src = 'content/images/earFoodButton.png';
+            elem.className = 'foodButton';
+            earFoodButton.appendChild( elem );
+
+            earFoodButton.addEventListener( 'mouseover', function( ){
+                earFoodButton.style.backgroundColor = '#33AA99';
+                elem.style.opacity = "0.5";
+            });
+            earFoodButton.addEventListener( 'mouseout', function( ){
+                earFoodButton.style.backgroundColor = '#229988';
+                elem.style.opacity = "1.0";
+            });
+            earFoodButton.addEventListener('click', function( e ){
+                e.preventDefault();
+                textButton.style.backgroundColor = '#114466';
+                elem.style.opacity = "0.2";
+
+                window.location.hash = '-';
+                Config.currentScene = '-1';
+                m.route('/music');
             });
 
             makeControlPanelHorizontal( );

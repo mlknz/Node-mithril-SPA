@@ -1,14 +1,17 @@
 (function () {
-'use strict';
+    'use strict';
 
     var m = require('mithril');
-    var canvasService = require('./../services/canvasService');
-    var controlPanelService = require('./../services/controlPanelService');
-    var Config = require('./../../config.js');
+    var controlPanelService = require('./services/controlPanelService');
 
-    var view = function () {
+    function controller() {
+
+    }
+
+    function view() {
         return [
-            m('div.canvasContainer', { config: canvasService }),
+
+            m('h1', 'Blog'),
 
             m('div.controlPanel', [
 
@@ -20,11 +23,12 @@
                 m('div.earFoodButton', { config: controlPanelService.earFoodButton })
 
             ])
-
         ];
+    }
+
+    module.exports = {
+        controller: controller,
+        view: view
     };
 
-    module.exports = view;
-
 } ());
-

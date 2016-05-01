@@ -1,12 +1,13 @@
 (function () {
     var Config = require('./config');
+    var _ = require('lodash');
     'use strict';
 
     var controls = function ( ) {
 
         var self = this;
 
-        this.resize = function (event) {
+        this.resize = _.throttle(function (event) {
 
             Config.canvasWidth = window.innerWidth;
             Config.canvasHeight = window.innerHeight;
@@ -15,7 +16,7 @@
             Config.renderer.setSize(Config.canvasWidth, Config.canvasHeight);
             Config.camera.aspect = Config.aspectRatio;
             Config.camera.updateProjectionMatrix();
-        };
+        }, 50);
 
         this.mouseMoveFunc = function ( event ) {
 

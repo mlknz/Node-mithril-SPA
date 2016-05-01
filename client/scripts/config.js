@@ -5,7 +5,8 @@ var Config = {
 
     scenes: {
         wildGrowth: './scenes/wildGrowthScene.min.js',
-        fun1: './scenes/fun1Scene.min.js'
+        fun1: './scenes/fun1Scene.min.js',
+        kangarooMadness: './scenes/fun1Scene.min.js'
     },
 
     controlPanel: {

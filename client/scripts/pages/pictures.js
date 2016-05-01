@@ -2,28 +2,15 @@
 'use strict';
 
 var m = require('mithril');
-var store = require('../../../store');
 var controlPanelService = require('./services/controlPanelService');
 
-function controller(params, done) {
-    var scope = {};
-    /*store.load('dog', 123).then(function(dog) {
-        scope.myDog = dog;
-        done && done(null, scope);
-    });*/
-    // m.redraw.strategy("all");
-    return scope;
+function controller() {
+
 }
 
-function view(scope) {
+function view() {
     return [
-        // m.trust('<!-- Server side rendering \\o/ -->'),
-        m('h1', 'About'),
-        m('p', 'Nothing here yet.'),
-        m('a', {
-            href: '/',
-            config: m.route
-        }, 'back to main page'),
+        m('h1', 'Pictures'),
         m('div.controlPanel', [
 
             m('div.corner', { config: controlPanelService.corner }),
@@ -34,7 +21,6 @@ function view(scope) {
             m('div.earFoodButton', { config: controlPanelService.earFoodButton })
 
         ])
-        // m('p', scope.myDog && ('My dogs name is ' + scope.myDog.name) || '')
     ];
 }
 

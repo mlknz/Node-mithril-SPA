@@ -9,13 +9,13 @@
 
     };
 
-    var changeScene = function( element ) {
+    var changeScene = function( element, forceRedraw ) {
 
         var hash = getCurrentHash();
 
         if ( !hash || !Config.scenes[hash] ) hash = Config.defaultScene;
 
-        if ( Config.currentScene !== hash) {
+        if ( forceRedraw || Config.currentScene !== hash) {
 
             if ( ! window.scenes[hash] ) {
 
@@ -30,11 +30,14 @@
                     if (currentScene && currentScene.dispose) {
                         currentScene.dispose();
                     }
-
-                    currentScene = window.scenes[ hash ]( element, Config.renderer );
+                    if (window.scenes[ hash ]) {
+                        currentScene = window.scenes[hash](element, Config.renderer);
+                    } else {
+                        console.log('couldn\'t load scene');
+                    }
                     
                 };
- 
+
                 document.body.appendChild(script);
 
             } else {
@@ -44,8 +47,7 @@
                 if ( currentScene && currentScene.dispose ) {
                     currentScene.dispose();
                 }
-
-                currentScene = window.scenes[ hash ]( element, Config.renderer );
+                currentScene = window.scenes[hash](element, Config.renderer);
                 
             }
         }
@@ -55,18 +57,34 @@
 
         if ( isInitialized ) return;
 
-        window.scenes = {};
+        if (!window.scenes) window.scenes = {};
 
-        var renderer = new THREE.WebGLRenderer( { antialias: true, canvas: element } );
-        renderer.setClearColor( 0x111111, 1.0 );
-        renderer.clear();
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        Config.renderer = renderer;
+        if ( !Config.renderer ) {
 
-        changeScene( element );
+            var canvas = document.createElement( 'canvas' );
+            var renderer = new THREE.WebGLRenderer( { antialias: true, canvas: canvas } );
+            renderer.setClearColor( 0x111111, 1.0 );
+            renderer.clear();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            Config.renderer = renderer;
+            element.appendChild( canvas );
 
+        } else {
+
+            canvas = Config.renderer.domElement;
+            Config.renderer.setClearColor( 0x111111, 1.0 );
+            Config.renderer.clear();
+            Config.renderer.setSize( window.innerWidth, window.innerHeight );
+            element.appendChild( canvas );
+
+        }
+
+        changeScene( element, true );
+
+        // todo: think how to fix multiplying listeners. remove this
         window.addEventListener("hashchange", function() { changeScene( element ); }, false);
 
+        // todo: and about this piece
         function animate() {
 
             requestAnimationFrame( animate );
