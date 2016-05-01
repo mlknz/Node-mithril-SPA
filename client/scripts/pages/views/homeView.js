@@ -4,11 +4,10 @@
     var m = require('mithril');
     var canvasService = require('./../services/canvasService');
     var controlPanelService = require('./../services/controlPanelService');
-    var Config = require('./../../config.js');
 
     var view = function () {
         return [
-            m('div.canvasContainer', { config: canvasService }),
+            m( 'div.canvasContainer', { config: canvasService } ),
 
             m('div.controlPanel', [
 

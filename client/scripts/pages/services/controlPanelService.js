@@ -94,8 +94,10 @@
             });
             corner.addEventListener('click', function( e ){
                 e.preventDefault();
+                if (m.route() !== '/') {
+                    m.route('/');
+                }
 
-                m.route('/');
             });
 
         },
@@ -131,8 +133,14 @@
                     e.srcElement.style.opacity = "0.2";
 
                     if ( e.srcElement.hashLink === Config.defaultScene ) {
+                        if (m.route() !== '/') {
+                            m.route('/');
+                        }
                         window.location.hash = '';
                     } else {
+                        if (m.route() !== '/') {
+                            m.route('/');
+                        }
                         window.location.hash = e.srcElement.hashLink;
                     }
 

@@ -13,11 +13,11 @@
 
         var hash = getCurrentHash();
 
-        if ( !hash || !Config.scenes[hash] ) hash = Config.defaultScene;
+        if ( !hash || !Config.scenes[ hash ] ) hash = Config.defaultScene;
 
         if ( forceRedraw || Config.currentScene !== hash) {
 
-            if ( ! window.scenes[hash] ) {
+            if ( ! window.scenes[ hash ] ) {
 
                 Config.currentScene = hash;
 
@@ -27,18 +27,18 @@
 
                 script.onload = function() {
 
-                    if (currentScene && currentScene.dispose) {
+                    if ( currentScene && currentScene.dispose ) {
                         currentScene.dispose();
                     }
-                    if (window.scenes[ hash ]) {
-                        currentScene = window.scenes[hash](element, Config.renderer);
+                    if ( window.scenes[ hash ] ) {
+                        currentScene = window.scenes[ hash]( element, Config.renderer );
                     } else {
-                        console.log('couldn\'t load scene');
+                        console.log( 'couldn\'t load scene' );
                     }
                     
                 };
 
-                document.body.appendChild(script);
+                document.body.appendChild( script );
 
             } else {
 
@@ -47,7 +47,7 @@
                 if ( currentScene && currentScene.dispose ) {
                     currentScene.dispose();
                 }
-                currentScene = window.scenes[hash](element, Config.renderer);
+                currentScene = window.scenes[ hash ]( element, Config.renderer );
                 
             }
         }
@@ -89,7 +89,7 @@
 
             requestAnimationFrame( animate );
 
-            if (currentScene.scene) {
+            if ( currentScene.scene ) {
                 currentScene.update();
             }
 

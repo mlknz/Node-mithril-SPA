@@ -5,7 +5,7 @@
     var controlPanelService = require('./services/controlPanelService');
 
     function controller() {
-
+        m.redraw.strategy("diff");
     }
 
     function view() {

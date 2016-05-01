@@ -7,6 +7,7 @@ var controlPanelService = require('./services/controlPanelService');
 
 function controller(params, done) {
     var scope = {};
+    m.redraw.strategy("diff");
     /*store.load('dog', 123).then(function(dog) {
         scope.myDog = dog;
         done && done(null, scope);
