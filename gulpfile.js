@@ -32,6 +32,12 @@ gulp.task('less', function () {
         .pipe(gulp.dest('./target/content/css'));
 });
 
+// images
+gulp.task('images', function () {
+    gulp.src('./client/content/images/*')
+        .pipe(gulp.dest('./target/content/images'));
+});
+
 // Concatenate & Minify JS
 gulp.task('js-main', function() {
 
@@ -106,4 +112,4 @@ gulp.task('watch', function() {
 });
 
 // Default Task
-gulp.task('default', ['libs', 'less', 'lint', 'js-main', 'scenes']);
+gulp.task('default', ['libs', 'less', 'images', 'lint', 'js-main', 'scenes']);

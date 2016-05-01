@@ -12,8 +12,6 @@ var view = function () {
 
         m('div.controlPanel', [
 
-            /*m('button', {onclick: function (e) { window.location.hash = ''; }}, 'first scene'),
-            m('button', {onclick: function (e) { window.location.hash = 'fun1'; }}, 'second scene'),*/
             m('div.corner', { config: controlPanelService.corner }),
             m('div.sceneSelector', { config: controlPanelService.sceneSelector }),
             m('div.hidePanelButton', { config: controlPanelService.hidePanelButton }),

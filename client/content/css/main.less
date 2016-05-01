@@ -3,48 +3,225 @@ body {
     margin: 0;
     overflow: hidden;
 
-    .controlPanel {
-        height: 20%;
+    .controlPanelVertical {
+        height: 100%;
+        width: 20vh;
+        top: 0;
+        right: 0;
+        position: absolute;
+        transition: right 0.5s ease-in-out;
+    }
+    .controlPanelVerticalHidden {
+        height: 100%;
+        width: 20vh;
+        top: 0;
+        right: -15vh;
+        position: absolute;
+        transition: right 0.5s ease-in-out;
+    }
+    .controlPanelHorizontal {
+        height: 20vw;
         width: 100%;
         top: 0;
         right: 0;
         position: absolute;
-        transition: right 0.5s, top 0.5s ease-in-out;
-
-        .corner {
-            background-color: #773344;
-            position: absolute;
-            right: 0;
-        }
-        .sceneSelector {
-            background-color: #338844;
-            position: absolute;
-        }
-        .textButton {
-            background-color: #226688;
-            position: absolute;
-        }
-        .earFoodButton {
-            background-color: #229988;
-            position: absolute;
-        }
-        .eyeFoodButton {
-            background-color: #22cc88;
-            position: absolute;
-        }
-        .hidePanelButton {
-            background-color: #AA3344;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            .hidePanelImg {
-                opacity: 0.7;
-                transition: transform 0.5s ease-in-out;
-            }
-
-        }
-
+        transition: top 0.5s ease-in-out;
     }
+    .controlPanelHorizontalHidden {
+        height: 20vw;
+        width: 100%;
+        top: -15vw;
+        right: 0;
+        position: absolute;
+        transition: top 0.5s ease-in-out;
+    }
+    .cornerVertical {
+        background-color: #773344;
+        position: absolute;
+        right: 0;
+        height: 15vh;
+        width: 15vh;
+        cursor: pointer;
+    }
+    .cornerHorizontal {
+        background-color: #773344;
+        position: absolute;
+        right: 0;
+        height: 15vw;
+        width: 15vw;
+        cursor: pointer;
+    }
+    .sceneSelectorVertical {
+        background-color: #aa8844;
+        position: absolute;
+        height: 55vh;
+        width: 15vh;
+        top: 15vh;
+        right: 0;
+    }
+    .sceneSelectorHorizontal {
+        background-color: #aa8844;
+        position: absolute;
+        height: 15vw;
+        width: 55vw;
+        top: 0;
+        right: 15vw;
+    }
+
+    .scenesContainerHorizontal{
+        background-color: #338844;
+        position: relative;
+        height: 90%;
+        width: 97%;
+        top: 5%;
+        left: 1.5%;
+    }
+    .scenesContainerVertical{
+        background-color: #338844;
+        position: relative;
+        height: 97%;
+        width: 90%;
+        top: 1.5%;
+        left: 5%;
+    }
+    .textButtonHorizontal {
+        background-color: #226688;
+        position: absolute;
+        cursor: pointer;
+        height: 15vw;
+        width: 10vw;
+        top: 0;
+        right: 70vw;
+    }
+    .textButtonVertical {
+        background-color: #226688;
+        position: absolute;
+        cursor: pointer;
+        height: 10vh;
+        width: 15vh;
+        top: 70vh;
+        right: 0;
+    }
+    .earFoodButtonHorizontal {
+        background-color: #229988;
+        position: absolute;
+        cursor: pointer;
+        height: 15vw;
+        width: 10vw;
+        top: 0;
+        right: 80vw;
+    }
+    .earFoodButtonVertical {
+        background-color: #229988;
+        position: absolute;
+        cursor: pointer;
+        height: 10vh;
+        width: 15vh;
+        top: 80vh;
+        right: 0;
+    }
+    .eyeFoodButtonHorizontal {
+        background-color: #22cc88;
+        position: absolute;
+        cursor: pointer;
+        height: 15vw;
+        width: 10vw;
+        top: 0;
+        right: 90vw;
+    }
+    .eyeFoodButtonVertical {
+        background-color: #22cc88;
+        position: absolute;
+        cursor: pointer;
+        height: 10vh;
+        width: 15vh;
+        top: 90vh;
+        right: 0;
+    }
+    .hidePanelButtonHorizontal {
+        background-color: #AA3344;
+        position: absolute;
+        cursor: pointer;
+        left: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 5vw;
+    }
+    .hidePanelButtonVertical {
+        background-color: #AA3344;
+        position: absolute;
+        cursor: pointer;
+        left: 0;
+        bottom: 0;
+        width: 5vh;
+        height: 100vh;
+    }
+    .hidePanelImg {
+        opacity: 0.7;
+        position: absolute;
+        transition: transform 0.5s ease-in-out;
+    }
+    .hidePanelImgHorizontal {
+        opacity: 0.7;
+        position: absolute;
+        transition: transform 0.5s ease-in-out;
+        height: 100%;
+        width: auto;
+        left: 46%;
+        top: 0;
+        transform: rotate(0deg);
+    }
+    .hidePanelImgHorizontalHidden {
+        opacity: 0.7;
+        position: absolute;
+        transition: transform 0.5s ease-in-out;
+        height: 100%;
+        width: auto;
+        left: 46%;
+        top: 0;
+        transform: rotate(180deg);
+    }
+    .hidePanelImgVertical {
+        opacity: 0.7;
+        position: absolute;
+        transition: transform 0.5s ease-in-out;
+        height: auto;
+        width: 100%;
+        left: 0;
+        top: 46%;
+        transform: rotate(90deg);
+    }
+    .hidePanelImgVerticalHidden {
+        opacity: 0.7;
+        position: absolute;
+        transition: transform 0.5s ease-in-out;
+        height: auto;
+        width: 100%;
+        left: 0;
+        top: 46%;
+        transform: rotate(-90deg);
+    }
+    .foodButton {
+        position: absolute;
+        width: 50%;
+        left: 25%;
+        top: 13%;
+    }
+    .sceneButtonHorizontal {
+        cursor: pointer;
+        margin-top: 2.7vw;
+        margin-left: 1vw;
+        height: 60%;
+        width: auto;
+    }
+    .sceneButtonVertical {
+        cursor: pointer;
+        margin: 0;
+        height: auto;
+        width: 100%;
+    }
+
+
     canvas {
         position: absolute;
         bottom: 0;

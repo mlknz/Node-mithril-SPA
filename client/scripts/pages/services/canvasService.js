@@ -42,7 +42,7 @@
                 Config.currentScene = hash;
 
                 if ( currentScene && currentScene.dispose ) {
-                        currentScene.dispose();
+                    currentScene.dispose();
                 }
 
                 currentScene = window.scenes[ hash ]( element, Config.renderer );
@@ -66,7 +66,6 @@
         changeScene( element );
 
         window.addEventListener("hashchange", function() { changeScene( element ); }, false);
-
 
         function animate() {
 

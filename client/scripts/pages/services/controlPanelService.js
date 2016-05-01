@@ -6,95 +6,62 @@
 
     'use strict';
 
-    var controlPanel, corner, sceneSelector, textButton, earFoodButton, eyeFoodButton, hidePanelButton, hidePanelImg;
+    var controlPanel,
+        corner,
+        textButton,
+        earFoodButton,
+        eyeFoodButton,
+        hidePanelButton,
+        hidePanelImg,
+        sceneSelector,
+        scenesContainer,
+        scenesButtons = [];
 
     var makeControlPanelHorizontal = function() {
 
-        controlPanel.style.height = '20vw';
-        controlPanel.style.width = '100%';
-        controlPanel.style.right = '0';
-        controlPanel.style.top = Config.controlPanel.isHidden ? -Config.controlPanel.offset + 'vw' : '0';
-
-        corner.style.height = '15vw';
-        corner.style.width = '15vw';
-
-        sceneSelector.style.height = '15vw';
-        sceneSelector.style.width = '55vw';
-        sceneSelector.style.top = '0';
-        sceneSelector.style.right = '15vw';
-
-        textButton.style.height = '15vw';
-        textButton.style.width = '10vw';
-        textButton.style.top = '0';
-        textButton.style.right = '70vw';
-
-        earFoodButton.style.height = '15vw';
-        earFoodButton.style.width = '10vw';
-        earFoodButton.style.top = '0';
-        earFoodButton.style.right = '80vw';
-
-        eyeFoodButton.style.height = '15vw';
-        eyeFoodButton.style.width = '10vw';
-        eyeFoodButton.style.top = '0';
-        eyeFoodButton.style.right = '90vw';
-
-        hidePanelButton.style.width = '100vw';
-        hidePanelButton.style.height = '5vw';
-
-        hidePanelImg.setAttribute("height", "100%");
-        hidePanelImg.setAttribute("width", "");
-        hidePanelImg.style.left = "46%";
-        hidePanelImg.style.top = "0";
-        hidePanelImg.style.transform =  Config.controlPanel.isHidden ? "rotate(180deg)" : "rotate(0deg)";
-
         Config.controlPanel.isVertical = false;
+
+        controlPanel.className = Config.controlPanel.isHidden ? 'controlPanelHorizontalHidden' : 'controlPanelHorizontal';
+
+        sceneSelector.className = 'sceneSelectorHorizontal';
+        scenesContainer.className = 'scenesContainerHorizontal';
+        hidePanelButton.className = 'hidePanelButtonHorizontal';
+        hidePanelImg.className = Config.controlPanel.isHidden ? 'hidePanelImgHorizontalHidden' : 'hidePanelImgHorizontal';
+
+        corner.className = 'cornerHorizontal';
+        textButton.className = 'textButtonHorizontal';
+        earFoodButton.className = 'earFoodButtonHorizontal';
+        eyeFoodButton.className = 'eyeFoodButtonHorizontal';
+
+        scenesButtons.forEach( function( b ) {
+            b.className = 'sceneButtonHorizontal';
+        });
 
     };
 
     var makeControlPanelVertical = function() {
 
-        controlPanel.style.height = '100%';
-        controlPanel.style.width = '20vh';
-        controlPanel.style.right = Config.controlPanel.isHidden ? -Config.controlPanel.offset + 'vh' : '0';;
-        controlPanel.style.top = '0';
-
-        corner.style.height = '15vh';
-        corner.style.width = '15vh';
-
-        sceneSelector.style.height = '55vh';
-        sceneSelector.style.width = '15vh';
-        sceneSelector.style.top = '15vh';
-        sceneSelector.style.right = '0';
-
-        textButton.style.height = '10vh';
-        textButton.style.width = '15vh';
-        textButton.style.top = '70vh';
-        textButton.style.right = '0';
-
-        earFoodButton.style.height = '10vh';
-        earFoodButton.style.width = '15vh';
-        earFoodButton.style.top = '80vh';
-        earFoodButton.style.right = '0';
-
-        eyeFoodButton.style.height = '10vh';
-        eyeFoodButton.style.width = '15vh';
-        eyeFoodButton.style.top = '90vh';
-        eyeFoodButton.style.right = '0';
-
-        hidePanelButton.style.width = '5vh';
-        hidePanelButton.style.height = '100vh';
-
-        hidePanelImg.setAttribute("height", "");
-        hidePanelImg.setAttribute("width", "100%");
-        hidePanelImg.style.left = "0";
-        hidePanelImg.style.top = "46%";
-        hidePanelImg.style.transform = Config.controlPanel.isHidden ? "rotate(-90deg)" : "rotate(90deg)";
-
         Config.controlPanel.isVertical = true;
+
+        controlPanel.className = Config.controlPanel.isHidden ? 'controlPanelVerticalHidden' : 'controlPanelVertical';
+
+        sceneSelector.className = 'sceneSelectorVertical';
+        scenesContainer.className = 'scenesContainerVertical';
+        hidePanelButton.className = 'hidePanelButtonVertical';
+        hidePanelImg.className = Config.controlPanel.isHidden ? 'hidePanelImgVerticalHidden' : 'hidePanelImgVertical';
+
+        corner.className = 'cornerVertical';
+        textButton.className = 'textButtonVertical';
+        earFoodButton.className = 'earFoodButtonVertical';
+        eyeFoodButton.className = 'eyeFoodButtonVertical';
+
+        scenesButtons.forEach( function( b ) {
+            b.className = 'sceneButtonVertical';
+        });
 
     };
 
-    var resize = function (e) {
+    var resize = function ( ) {
 
         if ( window.innerWidth/window.innerHeight < 1 && Config.controlPanel.isVertical ) {
 
@@ -115,12 +82,11 @@
             if ( isInitialized ) return;
             controlPanel = element.parentElement;
             corner = element;
-            corner.style.cursor = 'pointer';
 
-            corner.addEventListener( 'mouseover', function( e ){
+            corner.addEventListener( 'mouseover', function( ){
                 corner.style.backgroundColor = '#884455';
             });
-            corner.addEventListener( 'mouseout', function( e ){
+            corner.addEventListener( 'mouseout', function( ){
                 corner.style.backgroundColor = '#773344';
             });
 
@@ -131,28 +97,57 @@
             if ( isInitialized ) return;
             sceneSelector = element;
 
+            scenesContainer = document.createElement( "div" );
+            sceneSelector.appendChild( scenesContainer );
+
+            var scenesKeys = Object.keys( Config.scenes );
+
+            for ( var i = 0; i < scenesKeys.length; i ++ ) {
+
+                var elem = document.createElement("img");
+                elem.src = 'content/images/' + scenesKeys[ i ] + '.png';
+                elem.hashLink = scenesKeys[ i ];
+
+                scenesContainer.appendChild( elem );
+                scenesButtons.push( elem );
+
+                elem.addEventListener('mouseover', function( e ){
+                    e.srcElement.style.opacity = "0.5";
+                });
+                elem.addEventListener('mouseout', function( e ){
+                    e.srcElement.style.opacity = "1.0";
+                });
+                elem.addEventListener('click', function( e ){
+
+                    e.preventDefault();
+                    e.srcElement.style.opacity = "0.2";
+
+                    if ( e.srcElement.hashLink === Config.defaultScene ) {
+                        window.location.hash = '';
+                    } else {
+                        window.location.hash = e.srcElement.hashLink;
+                    }
+
+                });
+            }
+
         },
 
         textButton: function( element, isInitialized ) {
 
             if ( isInitialized ) return;
             textButton = element;
-            textButton.style.cursor = 'pointer';
 
             var elem = document.createElement("img");
             elem.src = 'content/images/testImage.png';
-            // elem.setAttribute("height", "50%");
-            elem.setAttribute("width", "50%");
-            elem.style.position =  "absolute";
-            elem.style.left = "25%";
-            elem.style.top = "13%";
+            elem.className = 'foodButton';
             textButton.appendChild( elem );
 
-            textButton.addEventListener('mouseover', function( e ){
+            textButton.addEventListener('mouseover', function( ){
                 textButton.style.backgroundColor = '#337799';
                 elem.style.opacity = "0.5";
             });
-            textButton.addEventListener('mouseout', function( e ){
+            textButton.addEventListener('mouseout', function( ){
                 textButton.style.backgroundColor = '#226688';
                 elem.style.opacity = "1.0";
             });
@@ -163,19 +158,17 @@
                 window.location.href = '/about';
             });
 
-
         },
 
         earFoodButton: function( element, isInitialized ) {
 
             if ( isInitialized ) return;
             earFoodButton = element;
-            earFoodButton.style.cursor = 'pointer';
 
-            earFoodButton.addEventListener( 'mouseover', function( e ){
+            earFoodButton.addEventListener( 'mouseover', function( ){
                 earFoodButton.style.backgroundColor = '#33AA99';
             });
-            earFoodButton.addEventListener( 'mouseout', function( e ){
+            earFoodButton.addEventListener( 'mouseout', function( ){
                 earFoodButton.style.backgroundColor = '#229988';
             });
 
@@ -185,17 +178,16 @@
 
             if ( isInitialized ) return;
             eyeFoodButton = element;
-            eyeFoodButton.style.cursor = 'pointer';
 
-            eyeFoodButton.addEventListener('mouseover', function( e ){
+            eyeFoodButton.addEventListener( 'mouseover', function( ){
                 eyeFoodButton.style.backgroundColor = '#33dd99';
             });
-            eyeFoodButton.addEventListener('mouseout', function( e ){
+            eyeFoodButton.addEventListener( 'mouseout', function( ){
                 eyeFoodButton.style.backgroundColor = '#22cc88';
             });
 
-            makeControlPanelHorizontal();
-            resize( {} );
+            makeControlPanelHorizontal( );
+            resize( );
             window.addEventListener( 'resize', resize );
         },
 
@@ -203,46 +195,42 @@
 
             if ( isInitialized ) return;
             hidePanelButton = element;
-            hidePanelButton.style.cursor = 'pointer';
 
-            hidePanelButton.addEventListener( 'click', function( e ){
+            hidePanelButton.addEventListener( 'click', function( ){
                 if ( Config.controlPanel.isHidden ) {
                     if (  Config.controlPanel.isVertical ) {
-                        hidePanelImg.style.transform = "rotate(90deg)";
-                        controlPanel.style.right = '0';
+                        hidePanelImg.className = 'hidePanelImgVertical';
+                        controlPanel.className = 'controlPanelVertical';
                     } else {
-                        hidePanelImg.style.transform = "rotate(0deg)";
-                        controlPanel.style.top = '0';
+                        hidePanelImg.className = 'hidePanelImgHorizontal';
+                        controlPanel.className = 'controlPanelHorizontal';
                     }
                     Config.controlPanel.isHidden = false;
                 } else {
                     if (  Config.controlPanel.isVertical ) {
-                        hidePanelImg.style.transform = "rotate(-90deg)";
-                        controlPanel.style.right = '-15vh';
+                        hidePanelImg.className = 'hidePanelImgVerticalHidden';
+                        controlPanel.className = 'controlPanelVerticalHidden';
                     } else {
-                        hidePanelImg.style.transform = "rotate(180deg)";
-                        controlPanel.style.top = '-15vw';
+                        hidePanelImg.className = 'hidePanelImgHorizontalHidden';
+                        controlPanel.className = 'controlPanelHorizontalHidden';
                     }
                     Config.controlPanel.isHidden = true;
                 }
             });
-            hidePanelButton.addEventListener('mouseover', function(e){
+            hidePanelButton.addEventListener( 'mouseover', function( ){
                 hidePanelButton.style.backgroundColor = '#992233';
                 hidePanelImg.style.opacity = "1.0";
             });
-            hidePanelButton.addEventListener('mouseout', function(e){
+            hidePanelButton.addEventListener( 'mouseout', function( ){
                 hidePanelButton.style.backgroundColor = '#AA3344';
                 hidePanelImg.style.opacity = "0.7";
             });
 
-            hidePanelImg = document.createElement("img");
+            hidePanelImg = document.createElement( "img" );
             hidePanelImg.src = 'content/images/up.png';
-            hidePanelImg.style.position =  "absolute";
-            hidePanelImg.className = 'hidePanelImg';
-            hidePanelButton.appendChild(hidePanelImg);
+            hidePanelButton.appendChild( hidePanelImg );
 
         }
 
     };
-
 }());
