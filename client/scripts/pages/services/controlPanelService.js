@@ -6,6 +6,11 @@
     var Config = require( './../../config' );
     var _ = require('lodash');
     var m = require('mithril');
+    var EventEmitter  = require('events').EventEmitter;
+
+    if (!Config.eventEmitter) {
+        Config.eventEmitter = new EventEmitter();
+    }
 
     'use strict';
 
@@ -14,6 +19,7 @@
         textButton,
         earFoodButton,
         eyeFoodButton,
+        videoButton,
         hidePanelButton,
         hidePanelImg,
         sceneSelector,
@@ -33,8 +39,10 @@
 
         corner.className = 'cornerHorizontal';
         textButton.className = 'textButtonHorizontal';
-        earFoodButton.className = 'earFoodButtonHorizontal';
         eyeFoodButton.className = 'eyeFoodButtonHorizontal';
+        videoButton.className = 'videoButtonHorizontal';
+        earFoodButton.className = 'earFoodButtonHorizontal';
+
 
         scenesButtons.forEach( function( b ) {
             b.className = 'sceneButtonHorizontal';
@@ -55,8 +63,9 @@
 
         corner.className = 'cornerVertical';
         textButton.className = 'textButtonVertical';
-        earFoodButton.className = 'earFoodButtonVertical';
         eyeFoodButton.className = 'eyeFoodButtonVertical';
+        videoButton.className = 'videoButtonVertical';
+        earFoodButton.className = 'earFoodButtonVertical';
 
         scenesButtons.forEach( function( b ) {
             b.className = 'sceneButtonVertical';
@@ -69,10 +78,12 @@
         if ( window.innerWidth/window.innerHeight < 1 && Config.controlPanel.isVertical ) {
 
             makeControlPanelHorizontal();
+            Config.eventEmitter.emit('horizontal');
 
         } else if ( window.innerWidth/window.innerHeight > 1 && ! Config.controlPanel.isVertical ) {
 
             makeControlPanelVertical();
+            Config.eventEmitter.emit('vertical');
 
         }
 
@@ -188,22 +199,52 @@
             eyeFoodButton.appendChild( elem );
 
             eyeFoodButton.addEventListener( 'mouseover', function( ){
-                eyeFoodButton.style.backgroundColor = '#33dd99';
+                eyeFoodButton.style.backgroundColor = '#118077';
                 elem.style.opacity = "0.5";
             });
             eyeFoodButton.addEventListener( 'mouseout', function( ){
-                eyeFoodButton.style.backgroundColor = '#22cc88';
+                eyeFoodButton.style.backgroundColor = '#228088';
                 elem.style.opacity = "1.0";
             });
             eyeFoodButton.addEventListener('click', function( e ){
                 e.preventDefault();
-                textButton.style.backgroundColor = '#114466';
+                eyeFoodButton.style.backgroundColor = '#114466';
                 elem.style.opacity = "0.2";
 
                 window.location.hash = '-';
                 Config.currentScene = '-1';
                 m.route('/pictures');
             });
+        },
+
+        videoButton: function( element, isInitialized ) {
+
+            if ( isInitialized ) return;
+            videoButton = element;
+
+            var elem = document.createElement("img");
+            elem.src = 'content/images/videoButton.png';
+            elem.className = 'foodButton';
+            videoButton.appendChild( elem );
+
+            videoButton.addEventListener( 'mouseover', function( ){
+                videoButton.style.backgroundColor = '#119977';
+                elem.style.opacity = "0.5";
+            });
+            videoButton.addEventListener( 'mouseout', function( ){
+                videoButton.style.backgroundColor = '#229988';
+                elem.style.opacity = "1.0";
+            });
+            videoButton.addEventListener('click', function( e ){
+                e.preventDefault();
+                videoButton.style.backgroundColor = '#114466';
+                elem.style.opacity = "0.2";
+
+                window.location.hash = '-';
+                Config.currentScene = '-1';
+                m.route('/video');
+            });
+
         },
 
         earFoodButton: function( element, isInitialized ) {
@@ -217,16 +258,16 @@
             earFoodButton.appendChild( elem );
 
             earFoodButton.addEventListener( 'mouseover', function( ){
-                earFoodButton.style.backgroundColor = '#33AA99';
+                earFoodButton.style.backgroundColor = '#11cc77';
                 elem.style.opacity = "0.5";
             });
             earFoodButton.addEventListener( 'mouseout', function( ){
-                earFoodButton.style.backgroundColor = '#229988';
+                earFoodButton.style.backgroundColor = '#22cc88';
                 elem.style.opacity = "1.0";
             });
             earFoodButton.addEventListener('click', function( e ){
                 e.preventDefault();
-                textButton.style.backgroundColor = '#114466';
+                earFoodButton.style.backgroundColor = '#114466';
                 elem.style.opacity = "0.2";
 
                 window.location.hash = '-';
@@ -234,6 +275,8 @@
                 m.route('/music');
             });
 
+            Config.eventEmitter.emit('horizontal');
+            Config.controlPanel.isVertical = false;
             makeControlPanelHorizontal( );
             resize( );
             window.addEventListener( 'resize', resize );

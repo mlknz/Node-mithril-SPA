@@ -9,6 +9,7 @@ body {
         top: 0;
         right: 0;
         position: absolute;
+        z-index: 1;
         transition: right 0.5s ease-in-out;
     }
     .controlPanelVerticalHidden {
@@ -17,6 +18,7 @@ body {
         top: 0;
         right: -15vh;
         position: absolute;
+        z-index: 1;
         transition: right 0.5s ease-in-out;
     }
     .controlPanelHorizontal {
@@ -25,6 +27,8 @@ body {
         top: 0;
         right: 0;
         position: absolute;
+        float: left;
+        z-index: 1;
         transition: top 0.5s ease-in-out;
     }
     .controlPanelHorizontalHidden {
@@ -33,6 +37,8 @@ body {
         top: -15vw;
         right: 0;
         position: absolute;
+        float: left;
+        z-index: 1;
         transition: top 0.5s ease-in-out;
     }
     .cornerVertical {
@@ -54,7 +60,7 @@ body {
     .sceneSelectorVertical {
         background-color: #aa8844;
         position: absolute;
-        height: 55vh;
+        height: 45vh;
         width: 15vh;
         top: 15vh;
         right: 0;
@@ -63,7 +69,7 @@ body {
         background-color: #aa8844;
         position: absolute;
         height: 15vw;
-        width: 55vw;
+        width: 45vw;
         top: 0;
         right: 15vw;
     }
@@ -91,7 +97,7 @@ body {
         height: 15vw;
         width: 10vw;
         top: 0;
-        right: 70vw;
+        right: 60vw;
     }
     .textButtonVertical {
         background-color: #226688;
@@ -99,7 +105,43 @@ body {
         cursor: pointer;
         height: 10vh;
         width: 15vh;
+        top: 60vh;
+        right: 0;
+    }
+    .eyeFoodButtonHorizontal {
+        background-color: #228088;
+        position: absolute;
+        cursor: pointer;
+        height: 15vw;
+        width: 10vw;
+        top: 0;
+        right: 70vw;
+    }
+    .eyeFoodButtonVertical {
+        background-color: #228088;
+        position: absolute;
+        cursor: pointer;
+        height: 10vh;
+        width: 15vh;
         top: 70vh;
+        right: 0;
+    }
+    .videoButtonHorizontal {
+        background-color: #229988;
+        position: absolute;
+        cursor: pointer;
+        height: 15vw;
+        width: 10vw;
+        top: 0;
+        right: 80vw;
+    }
+    .videoButtonVertical {
+        background-color: #229988;
+        position: absolute;
+        cursor: pointer;
+        height: 10vh;
+        width: 15vh;
+        top: 80vh;
         right: 0;
     }
     .earFoodButtonHorizontal {
@@ -118,24 +160,6 @@ body {
         height: 10vh;
         width: 15vh;
         top: 90vh;
-        right: 0;
-    }
-    .eyeFoodButtonHorizontal {
-        background-color: #229988;
-        position: absolute;
-        cursor: pointer;
-        height: 15vw;
-        width: 10vw;
-        top: 0;
-        right: 80vw;
-    }
-    .eyeFoodButtonVertical {
-        background-color: #229988;
-        position: absolute;
-        cursor: pointer;
-        height: 10vh;
-        width: 15vh;
-        top: 80vh;
         right: 0;
     }
     .hidePanelButtonHorizontal {
@@ -225,5 +249,32 @@ body {
         position: absolute;
         bottom: 0;
         left: 0;
+    }
+
+    .pageContainer {
+        height: 100vh;
+        width: 100vw;
+        margin-right: -100px;
+        padding-right: 100px;
+        overflow: auto;
+    }
+
+    .header {
+        height: 40vw;
+        width: 100vw;
+        background-color: #aa5555;
+        font-size: 17vw;
+        font-style: oblique;
+        font-weight: bold;
+    }
+
+    .playVideoButton {
+        height: 100%;
+        width: 100%;
+        background-image: url("./../images/youtubePlayButton.png");
+        background-repeat: no-repeat;
+        background-position: 50%;
+        opacity: 0.9;
+        cursor: pointer;
     }
 }

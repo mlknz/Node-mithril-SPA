@@ -1,13 +1,16 @@
 (function () {
-'use strict';
+    'use strict';
 
     var m = require('mithril');
-    var canvasService = require('./../services/canvasService');
-    var controlPanelService = require('./../services/controlPanelService');
+    var controlPanelService = require('./services/controlPanelService');
+    var videosPageService = require('./services/videoPageService');
 
-    var view = function () {
+    function controller() {
+        m.redraw.strategy("diff");
+    }
+
+    function view() {
         return [
-            m( 'div.canvasContainer', { config: canvasService } ),
 
             m('div.controlPanel', [
 
@@ -16,14 +19,18 @@
                 m('div.hidePanelButton', { config: controlPanelService.hidePanelButton }),
                 m('div.textButton', { config: controlPanelService.textButton }),
                 m('div.eyeFoodButton', { config: controlPanelService.eyeFoodButton }),
+                m('div.videoButton', { config: controlPanelService.videoButton }),
                 m('div.earFoodButton', { config: controlPanelService.earFoodButton })
 
-            ])
+            ]),
+            m('videoPage', { config: videosPageService })
 
         ];
+    }
+
+    module.exports = {
+        controller: controller,
+        view: view
     };
 
-    module.exports = view;
-
 } ());
-
