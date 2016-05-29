@@ -31,9 +31,9 @@ function view(scope) {
             m('div.sceneSelector', { config: controlPanelService.sceneSelector }),
             m('div.hidePanelButton', { config: controlPanelService.hidePanelButton }),
             m('div.textButton', { config: controlPanelService.textButton }),
-            m('div.eyeFoodButton', { config: controlPanelService.eyeFoodButton }),
+            m('div.picturesButton', { config: controlPanelService.picturesButton }),
             m('div.videoButton', { config: controlPanelService.videoButton }),
-            m('div.earFoodButton', { config: controlPanelService.earFoodButton })
+            m('div.musicButton', { config: controlPanelService.musicButton })
 
         ])
         // m('p', scope.myDog && ('My dogs name is ' + scope.myDog.name) || '')

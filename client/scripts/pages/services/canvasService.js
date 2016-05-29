@@ -31,7 +31,7 @@
                         currentScene.dispose();
                     }
                     if ( window.scenes[ hash ] ) {
-                        currentScene = window.scenes[ hash]( element, Config.renderer );
+                        currentScene = window.scenes[ hash ]( element, Config.renderer );
                     } else {
                         console.log( 'couldn\'t load scene' );
                     }

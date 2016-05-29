@@ -1,194 +1,183 @@
 body {
-    background-color: #555555;
+    background-color: #553333;
     margin: 0;
     overflow: hidden;
 
-    .controlPanelVertical {
+    .controlPanelVertical, .controlPanelVerticalHidden {
         height: 100%;
         width: 20vh;
         top: 0;
-        right: 0;
         position: absolute;
-        z-index: 1;
+        z-index: 2;
         transition: right 0.5s ease-in-out;
+    }
+    .controlPanelVertical {
+        right: 0;
     }
     .controlPanelVerticalHidden {
-        height: 100%;
-        width: 20vh;
-        top: 0;
         right: -15vh;
+    }
+    .controlPanelHorizontal, .controlPanelHorizontalHidden {
+        height: 20vw;
+        width: 100%;
+        right: 0;
         position: absolute;
-        z-index: 1;
-        transition: right 0.5s ease-in-out;
+        float: left;
+        z-index: 2;
+        transition: top 0.5s ease-in-out;
     }
     .controlPanelHorizontal {
-        height: 20vw;
-        width: 100%;
         top: 0;
-        right: 0;
-        position: absolute;
-        float: left;
-        z-index: 1;
-        transition: top 0.5s ease-in-out;
     }
     .controlPanelHorizontalHidden {
-        height: 20vw;
-        width: 100%;
         top: -15vw;
-        right: 0;
+    }
+    .cornerVertical, .cornerHorizontal {
+        background-color: #773344;
         position: absolute;
-        float: left;
-        z-index: 1;
-        transition: top 0.5s ease-in-out;
+        right: 0;
+        cursor: pointer;
+    }
+    .cornerVertical:hover, .cornerHorizontal:hover {
+        background-color: #884455;
     }
     .cornerVertical {
-        background-color: #773344;
-        position: absolute;
-        right: 0;
         height: 15vh;
         width: 15vh;
-        cursor: pointer;
     }
     .cornerHorizontal {
-        background-color: #773344;
-        position: absolute;
-        right: 0;
         height: 15vw;
         width: 15vw;
-        cursor: pointer;
     }
-    .sceneSelectorVertical {
+
+    .sceneSelectorVertical, .sceneSelectorHorizontal {
         background-color: #aa8844;
         position: absolute;
+    }
+    .sceneSelectorVertical {
         height: 45vh;
         width: 15vh;
         top: 15vh;
         right: 0;
     }
     .sceneSelectorHorizontal {
-        background-color: #aa8844;
-        position: absolute;
         height: 15vw;
         width: 45vw;
         top: 0;
         right: 15vw;
     }
-
-    .scenesContainerHorizontal{
+    .scenesContainerHorizontal, .scenesContainerVertical {
         background-color: #338844;
         position: relative;
+    }
+    .scenesContainerHorizontal{
         height: 90%;
         width: 97%;
         top: 5%;
         left: 1.5%;
     }
     .scenesContainerVertical{
-        background-color: #338844;
-        position: relative;
         height: 97%;
         width: 90%;
         top: 1.5%;
         left: 5%;
     }
-    .textButtonHorizontal {
-        background-color: #226688;
-        position: absolute;
-        cursor: pointer;
+    .textButtonHorizontal, .picturesButtonHorizontal, .videoButtonHorizontal, .musicButtonHorizontal {
         height: 15vw;
         width: 10vw;
         top: 0;
+    }
+    .textButtonVertical, .picturesButtonVertical, .videoButtonVertical, .musicButtonVertical {
+        height: 10vh;
+        width: 15vh;
+        right: 0;
+    }
+    .textButtonHorizontal, .textButtonVertical {
+        background-color: #226688;
+        position: absolute;
+        cursor: pointer;
+    }
+    .textButtonHorizontal:hover, .textButtonVertical:hover {
+        background-color: #337799;
+    }
+    .textButtonHorizontal {
         right: 60vw;
     }
     .textButtonVertical {
-        background-color: #226688;
-        position: absolute;
-        cursor: pointer;
-        height: 10vh;
-        width: 15vh;
         top: 60vh;
-        right: 0;
     }
-    .eyeFoodButtonHorizontal {
+    .picturesButtonHorizontal, .picturesButtonVertical {
         background-color: #228088;
         position: absolute;
         cursor: pointer;
-        height: 15vw;
-        width: 10vw;
-        top: 0;
+    }
+    .picturesButtonHorizontal:hover, .picturesButtonVertical:hover {
+        background-color: #118077;
+    }
+    .picturesButtonHorizontal {
         right: 70vw;
     }
-    .eyeFoodButtonVertical {
-        background-color: #228088;
-        position: absolute;
-        cursor: pointer;
-        height: 10vh;
-        width: 15vh;
+    .picturesButtonVertical {
         top: 70vh;
-        right: 0;
     }
-    .videoButtonHorizontal {
+    .videoButtonHorizontal, .videoButtonVertical {
         background-color: #229988;
         position: absolute;
         cursor: pointer;
-        height: 15vw;
-        width: 10vw;
-        top: 0;
+    }
+    .videoButtonHorizontal:hover, .videoButtonVertical:hover {
+        background-color: #119977;
+    }
+    .videoButtonHorizontal {
         right: 80vw;
     }
     .videoButtonVertical {
-        background-color: #229988;
-        position: absolute;
-        cursor: pointer;
-        height: 10vh;
-        width: 15vh;
         top: 80vh;
-        right: 0;
     }
-    .earFoodButtonHorizontal {
+    .musicButtonHorizontal, .musicButtonVertical {
         background-color: #22cc88;
         position: absolute;
         cursor: pointer;
-        height: 15vw;
-        width: 10vw;
-        top: 0;
+    }
+    .musicButtonHorizontal:hover, .musicButtonVertical:hover {
+        background-color: #11cc77;
+    }
+    .musicButtonHorizontal {
         right: 90vw;
     }
-    .earFoodButtonVertical {
-        background-color: #22cc88;
-        position: absolute;
-        cursor: pointer;
-        height: 10vh;
-        width: 15vh;
+    .musicButtonVertical {
         top: 90vh;
-        right: 0;
     }
-    .hidePanelButtonHorizontal {
+    .hidePanelButtonHorizontal, .hidePanelButtonVertical {
         background-color: #AA3344;
         position: absolute;
         cursor: pointer;
+    }
+    .hidePanelButtonHorizontal:hover, .hidePanelButtonVertical:hover {
+        background-color: #992233;
+    }
+    .hidePanelButtonHorizontal {
         left: 0;
         bottom: 0;
         width: 100vw;
         height: 5vw;
     }
     .hidePanelButtonVertical {
-        background-color: #AA3344;
-        position: absolute;
-        cursor: pointer;
         left: 0;
         bottom: 0;
         width: 5vh;
         height: 100vh;
     }
-    .hidePanelImg {
+
+    .hidePanelImg,.hidePanelImgHorizontal, .hidePanelImgHorizontalHidden, .hidePanelImgVertical, .hidePanelImgVerticalHidden {
         opacity: 0.7;
         position: absolute;
         transition: transform 0.5s ease-in-out;
     }
+    .hidePanelImg:hover, .hidePanelImgHorizontal:hover, .hidePanelImgHorizontalHidden:hover, .hidePanelImgVertical:hover, .hidePanelImgVerticalHidden:hover {
+        opacity: 1;
+    }
     .hidePanelImgHorizontal {
-        opacity: 0.7;
-        position: absolute;
-        transition: transform 0.5s ease-in-out;
         height: 100%;
         width: auto;
         left: 46%;
@@ -196,9 +185,6 @@ body {
         transform: rotate(0deg);
     }
     .hidePanelImgHorizontalHidden {
-        opacity: 0.7;
-        position: absolute;
-        transition: transform 0.5s ease-in-out;
         height: 100%;
         width: auto;
         left: 46%;
@@ -206,9 +192,6 @@ body {
         transform: rotate(180deg);
     }
     .hidePanelImgVertical {
-        opacity: 0.7;
-        position: absolute;
-        transition: transform 0.5s ease-in-out;
         height: auto;
         width: 100%;
         left: 0;
@@ -216,15 +199,13 @@ body {
         transform: rotate(90deg);
     }
     .hidePanelImgVerticalHidden {
-        opacity: 0.7;
-        position: absolute;
-        transition: transform 0.5s ease-in-out;
         height: auto;
         width: 100%;
         left: 0;
         top: 46%;
         transform: rotate(-90deg);
     }
+
     .foodButton {
         position: absolute;
         width: 50%;
@@ -243,6 +224,9 @@ body {
         margin: 0;
         height: auto;
         width: 100%;
+    }
+    .sceneButtonHorizontal:hover, .sceneButtonVertical:hover {
+        opacity: 0.5;
     }
 
     canvas {
@@ -271,10 +255,101 @@ body {
     .playVideoButton {
         height: 100%;
         width: 100%;
-        background-image: url("./../images/youtubePlayButton.png");
-        background-repeat: no-repeat;
-        background-position: 50%;
+        background: url("./../images/youtubePlayButton.png") no-repeat 50%;
         opacity: 0.9;
         cursor: pointer;
+    }
+
+    .imagesBatchContainerHorizontal {
+        width: 85vw;
+    }
+    .imagesBatchContainerVertical {
+        width: 100vw;
+    }
+
+    .imagePreview {
+        max-width: 20%;
+        margin-left: 4%;
+        margin-top: 3vw;
+        height: auto;
+        cursor: pointer;
+    }
+
+    .loadMoreFooter {
+        width: 100vw;
+        height: 20%;
+        background-color: #883333;
+        cursor: pointer;
+    }
+
+    .dimmer {
+        display: none;
+        background: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100%;
+        z-index: 1;
+    }
+
+    .detailedImageContainerHorizontal, .detailedImageContainerVertical {
+        position: relative;
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+    .detailedImageContainerHorizontal {
+        width: 80%;
+        height: 90%;
+        left: 5%;
+        top: 5%;
+    }
+    .detailedImageContainerVertical {
+        width: 100%;
+        height: 80%;
+        top: 20%;
+    }
+
+    .prevImageButton, .nextImageButton, .closePictureButton {
+        position: absolute;
+        bottom: 0;
+        width: 10%;
+        height: 15%;
+        cursor: pointer;
+        background: #2f6fad no-repeat 50%;
+    }
+    .nextImageButton:hover, .prevImageButton:hover {
+        background-color: #aa3333;
+    }
+    .closePictureButton:hover {
+        background-color: #bb3333;
+    }
+    .nextImageButton {
+        right: 10%;
+        background-image: url("./../images/nextImageButton.png");
+    }
+    .prevImageButton {
+        right: 20%;
+        background-image: url("./../images/previousImageButton.png");
+    }
+    .closePictureButton {
+        right: 0;
+        background: #883333 url("./../images/closeImageButton.png") no-repeat 50%;
+    }
+
+    .imageDescription {
+        position: absolute;
+        right: 30%;
+        bottom: 0;
+        width: 70%;
+        height: 15%;
+        background-color: #44aaaa;
+    }
+
+    .bigImageItself {
+        margin: auto;
+        vertical-align: middle;
+        display: table-cell;
+        height: 85%;
+        background-color: #f4aaaa;
     }
 }

@@ -4,14 +4,14 @@
 
 (function(){
     var Config = require( './../../config' );
-    var _ = require('lodash');
-    var videoDescriptions = require('./../../../content/text/videoDescriptions.js');
+    var videosDescriptions = require('./../../../content/text/videosDescriptions.js');
+    var headerText = 'Videos';
 
     var videos = [];
     var activeVideos = [];
     var descriptions = [];
 
-    var computeVideoSize = _.throttle( function() {
+    var computeVideoSize =  function() {
 
         var w = window.innerWidth, h;
         w = w * 0.8 * 0.75;
@@ -44,7 +44,7 @@
             a.style.height = Config.videoSize.y + 'px';
         });
 
-    }, 100 );
+    };
 
     module.exports = function(element, isInitialized) {
 
@@ -68,13 +68,20 @@
 
         var header = document.createElement( 'div' );
         header.className = 'header';
-        header.innerHTML = Config.controlPanel.isVertical ? 'Video' : '<br>' + 'Video';
+        header.innerHTML = Config.controlPanel.isVertical ? headerText : '<br>' + headerText;
         header.style.height = Config.controlPanel.isVertical ? '20vw' : '40vw';
         pageContainer.appendChild( header );
 
-        window.addEventListener( 'resize', computeVideoSize );
-        Config.eventEmitter.on( 'horizontal', function () { header.style.height = '40vw'; header.innerHTML = '<br>' + 'Video'; });
-        Config.eventEmitter.on( 'vertical', function () { header.style.height = '20vw'; header.innerHTML = 'Video'; });
+        Config.controlPanel.onBecomingHorizontal['videoPage'] = function () {
+            header.style.height = '40vw';
+            header.innerHTML = '<br>' + headerText;
+        };
+        Config.controlPanel.onBecomingVertical['videoPage'] = function () {
+            header.style.height = '20vw';
+            header.innerHTML = headerText;
+        };
+        Config.onResize['videoPage'] = computeVideoSize;
+
         if (!Config.videoSize.x) {
             computeVideoSize();
         }
@@ -105,8 +112,7 @@
             description.style.width = Config.videoSize.x + 'px';
             description.style.backgroundColor = '#aa2222';
             description.style.marginLeft = 50 - 50 * Config.videoSize.x / window.innerWidth + 'vw';
-            // description.innerHTML = '<br>' + 'Add text there.' + '<br>' + '(from JSON)' + '<br>' + '<br>';
-            description.innerHTML = videoDescriptions[videosInfo[i].name] || videoDescriptions['default'];
+            description.innerHTML = videosDescriptions[videosInfo[i].name] || videosDescriptions['default'];
             pageContainer.appendChild(description);
 
             descriptions.push(description);

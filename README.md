@@ -1,4 +1,4 @@
-# js sandbox app ( WebGL / THREE.js )
+# js sandbox Single Page App
 
 My sandbox app based on [this](https://github.com/StephanHoyer/mithril-isomorphic-example) template.
 

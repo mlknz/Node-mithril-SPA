@@ -1,3 +1,4 @@
+var picturesArr = require('./../content/text/picturesList.js');
 var Config = {
 
     currentScene: '',
@@ -5,13 +6,16 @@ var Config = {
 
     scenes: {
         wildGrowth: './scenes/wildGrowthScene.min.js',
-        fun1: './scenes/fun1Scene.min.js',
-        kangarooMadness: './scenes/fun1Scene.min.js'
+        fun1: './scenes/fun1Scene.min.js'
     },
+
+    onResize: {},
 
     controlPanel: {
         isVertical: false,
-        isHidden: false
+        isHidden: false,
+        onBecomingVertical: {},
+        onBecomingHorizontal: {}
     },
 
     iframeAPILoaded: false,
@@ -25,8 +29,10 @@ var Config = {
     minVideoWidth: 300,
     maxVideoWidth: 700,
 
-    renderer: null,
-    eventEmitter: null
+    pictures: picturesArr,
+    picturesPerLoad: 16,
+
+    renderer: null
 
 };
 

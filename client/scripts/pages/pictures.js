@@ -3,6 +3,7 @@
 
     var m = require('mithril');
     var controlPanelService = require('./services/controlPanelService');
+    var picturesPageService = require('./services/picturesPageService');
 
     function controller() {
         m.redraw.strategy("diff");
@@ -10,18 +11,19 @@
 
     function view() {
         return [
-            m('h1', 'Pictures'),
+
             m('div.controlPanel', [
 
                 m('div.corner', { config: controlPanelService.corner }),
                 m('div.sceneSelector', { config: controlPanelService.sceneSelector }),
                 m('div.hidePanelButton', { config: controlPanelService.hidePanelButton }),
                 m('div.textButton', { config: controlPanelService.textButton }),
-                m('div.eyeFoodButton', { config: controlPanelService.eyeFoodButton }),
+                m('div.picturesButton', { config: controlPanelService.picturesButton }),
                 m('div.videoButton', { config: controlPanelService.videoButton }),
-                m('div.earFoodButton', { config: controlPanelService.earFoodButton })
+                m('div.musicButton', { config: controlPanelService.musicButton })
 
-            ])
+            ]),
+            m('picturesPage', { config: picturesPageService })
         ];
     }
 

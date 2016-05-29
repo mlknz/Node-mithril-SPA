@@ -6,19 +6,14 @@
     var Config = require( './../../config' );
     var _ = require('lodash');
     var m = require('mithril');
-    var EventEmitter  = require('events').EventEmitter;
-
-    if (!Config.eventEmitter) {
-        Config.eventEmitter = new EventEmitter();
-    }
 
     'use strict';
 
     var controlPanel,
         corner,
         textButton,
-        earFoodButton,
-        eyeFoodButton,
+        musicButton,
+        picturesButton,
         videoButton,
         hidePanelButton,
         hidePanelImg,
@@ -39,14 +34,20 @@
 
         corner.className = 'cornerHorizontal';
         textButton.className = 'textButtonHorizontal';
-        eyeFoodButton.className = 'eyeFoodButtonHorizontal';
+        picturesButton.className = 'picturesButtonHorizontal';
         videoButton.className = 'videoButtonHorizontal';
-        earFoodButton.className = 'earFoodButtonHorizontal';
+        musicButton.className = 'musicButtonHorizontal';
 
 
         scenesButtons.forEach( function( b ) {
             b.className = 'sceneButtonHorizontal';
         });
+
+        for (var key in Config.controlPanel.onBecomingHorizontal) {
+            if (Config.controlPanel.onBecomingHorizontal.hasOwnProperty(key)) {
+                Config.controlPanel.onBecomingHorizontal[key]();
+            }
+        }
 
     };
 
@@ -63,27 +64,37 @@
 
         corner.className = 'cornerVertical';
         textButton.className = 'textButtonVertical';
-        eyeFoodButton.className = 'eyeFoodButtonVertical';
+        picturesButton.className = 'picturesButtonVertical';
         videoButton.className = 'videoButtonVertical';
-        earFoodButton.className = 'earFoodButtonVertical';
+        musicButton.className = 'musicButtonVertical';
 
         scenesButtons.forEach( function( b ) {
             b.className = 'sceneButtonVertical';
         });
 
+        for (var key in Config.controlPanel.onBecomingVertical) {
+            if (Config.controlPanel.onBecomingVertical.hasOwnProperty(key)) {
+                Config.controlPanel.onBecomingVertical[key]();
+            }
+        }
+
     };
 
     var resize = _.throttle(function ( ) {
 
+        for (var key in Config.onResize) {
+            if (Config.onResize.hasOwnProperty(key)) {
+                Config.onResize[key]();
+            }
+        }
+
         if ( window.innerWidth/window.innerHeight < 1 && Config.controlPanel.isVertical ) {
 
             makeControlPanelHorizontal();
-            Config.eventEmitter.emit('horizontal');
 
         } else if ( window.innerWidth/window.innerHeight > 1 && ! Config.controlPanel.isVertical ) {
 
             makeControlPanelVertical();
-            Config.eventEmitter.emit('vertical');
 
         }
 
@@ -97,12 +108,6 @@
             controlPanel = element.parentElement;
             corner = element;
 
-            corner.addEventListener( 'mouseover', function( ){
-                corner.style.backgroundColor = '#884455';
-            });
-            corner.addEventListener( 'mouseout', function( ){
-                corner.style.backgroundColor = '#773344';
-            });
             corner.addEventListener('click', function( e ){
                 e.preventDefault();
                 if (m.route() !== '/') {
@@ -118,26 +123,19 @@
             if ( isInitialized ) return;
             sceneSelector = element;
 
-            scenesContainer = document.createElement( "div" );
+            scenesContainer = document.createElement( 'div' );
             sceneSelector.appendChild( scenesContainer );
 
             var scenesKeys = Object.keys( Config.scenes );
 
             for ( var i = 0; i < scenesKeys.length; i ++ ) {
 
-                var elem = document.createElement("img");
+                var elem = document.createElement( 'img' );
                 elem.src = 'content/images/' + scenesKeys[ i ] + '.png';
                 elem.hashLink = scenesKeys[ i ];
-
                 scenesContainer.appendChild( elem );
                 scenesButtons.push( elem );
 
-                elem.addEventListener('mouseover', function( e ){
-                    e.srcElement.style.opacity = "0.5";
-                });
-                elem.addEventListener('mouseout', function( e ){
-                    e.srcElement.style.opacity = "1.0";
-                });
                 elem.addEventListener('click', function( e ){
 
                     e.preventDefault();
@@ -170,47 +168,25 @@
             elem.className = 'foodButton';
             textButton.appendChild( elem );
 
-            textButton.addEventListener('mouseover', function( ){
-                textButton.style.backgroundColor = '#337799';
-                elem.style.opacity = "0.5";
-            });
-            textButton.addEventListener('mouseout', function( ){
-                textButton.style.backgroundColor = '#226688';
-                elem.style.opacity = "1.0";
-            });
             textButton.addEventListener('click', function( e ){
                 e.preventDefault();
-                textButton.style.backgroundColor = '#114466';
-                elem.style.opacity = "0.2";
-
                 m.route('/blog');
             });
 
         },
 
-        eyeFoodButton: function( element, isInitialized ) {
+        picturesButton: function( element, isInitialized ) {
 
             if ( isInitialized ) return;
-            eyeFoodButton = element;
+            picturesButton = element;
 
             var elem = document.createElement("img");
-            elem.src = 'content/images/eyeFoodButton.png';
+            elem.src = 'content/images/picturesButton.png';
             elem.className = 'foodButton';
-            eyeFoodButton.appendChild( elem );
+            picturesButton.appendChild( elem );
 
-            eyeFoodButton.addEventListener( 'mouseover', function( ){
-                eyeFoodButton.style.backgroundColor = '#118077';
-                elem.style.opacity = "0.5";
-            });
-            eyeFoodButton.addEventListener( 'mouseout', function( ){
-                eyeFoodButton.style.backgroundColor = '#228088';
-                elem.style.opacity = "1.0";
-            });
-            eyeFoodButton.addEventListener('click', function( e ){
+            picturesButton.addEventListener('click', function( e ){
                 e.preventDefault();
-                eyeFoodButton.style.backgroundColor = '#114466';
-                elem.style.opacity = "0.2";
-
                 window.location.hash = '-';
                 Config.currentScene = '-1';
                 m.route('/pictures');
@@ -227,19 +203,8 @@
             elem.className = 'foodButton';
             videoButton.appendChild( elem );
 
-            videoButton.addEventListener( 'mouseover', function( ){
-                videoButton.style.backgroundColor = '#119977';
-                elem.style.opacity = "0.5";
-            });
-            videoButton.addEventListener( 'mouseout', function( ){
-                videoButton.style.backgroundColor = '#229988';
-                elem.style.opacity = "1.0";
-            });
             videoButton.addEventListener('click', function( e ){
                 e.preventDefault();
-                videoButton.style.backgroundColor = '#114466';
-                elem.style.opacity = "0.2";
-
                 window.location.hash = '-';
                 Config.currentScene = '-1';
                 m.route('/video');
@@ -247,35 +212,23 @@
 
         },
 
-        earFoodButton: function( element, isInitialized ) {
+        musicButton: function( element, isInitialized ) {
 
             if ( isInitialized ) return;
-            earFoodButton = element;
+            musicButton = element;
 
             var elem = document.createElement("img");
-            elem.src = 'content/images/earFoodButton.png';
+            elem.src = 'content/images/musicButton.png';
             elem.className = 'foodButton';
-            earFoodButton.appendChild( elem );
+            musicButton.appendChild( elem );
 
-            earFoodButton.addEventListener( 'mouseover', function( ){
-                earFoodButton.style.backgroundColor = '#11cc77';
-                elem.style.opacity = "0.5";
-            });
-            earFoodButton.addEventListener( 'mouseout', function( ){
-                earFoodButton.style.backgroundColor = '#22cc88';
-                elem.style.opacity = "1.0";
-            });
-            earFoodButton.addEventListener('click', function( e ){
+            musicButton.addEventListener('click', function( e ){
                 e.preventDefault();
-                earFoodButton.style.backgroundColor = '#114466';
-                elem.style.opacity = "0.2";
-
                 window.location.hash = '-';
                 Config.currentScene = '-1';
                 m.route('/music');
             });
 
-            Config.eventEmitter.emit('horizontal');
             Config.controlPanel.isVertical = false;
             makeControlPanelHorizontal( );
             resize( );
@@ -307,14 +260,6 @@
                     }
                     Config.controlPanel.isHidden = true;
                 }
-            });
-            hidePanelButton.addEventListener( 'mouseover', function( ){
-                hidePanelButton.style.backgroundColor = '#992233';
-                hidePanelImg.style.opacity = "1.0";
-            });
-            hidePanelButton.addEventListener( 'mouseout', function( ){
-                hidePanelButton.style.backgroundColor = '#AA3344';
-                hidePanelImg.style.opacity = "0.7";
             });
 
             hidePanelImg = document.createElement( "img" );
