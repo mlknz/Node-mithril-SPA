@@ -38,6 +38,12 @@ gulp.task('images', function () {
         .pipe(gulp.dest('./target/content/images'));
 });
 
+// pictures (for pictures page)
+gulp.task('pictures', function () {
+    gulp.src('./client/content/pictures/**/*')
+        .pipe(gulp.dest('./target/content/pictures'));
+});
+
 // Concatenate & Minify JS
 gulp.task('js-main', function() {
 

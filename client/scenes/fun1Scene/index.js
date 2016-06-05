@@ -4,7 +4,7 @@
 
 window.scenes.fun1 = function(canvas, renderer) {
 
-    renderer.setClearColor(0x993322, 1.0);
+    renderer.setClearColor(0x995522, 1.0);
     renderer.clear();
 
     var camera = new THREE.PerspectiveCamera(60, 120/100, 1, 1000);

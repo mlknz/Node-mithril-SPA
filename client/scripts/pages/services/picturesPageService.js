@@ -35,7 +35,6 @@
             var image = document.createElement('img');
             image.className = 'imagePreview';
             image.setAttribute( 'src', Config.pictures[i].previewSrc );
-            image.setAttribute( 'height', 400 );
             image.setAttribute( 'data-myId', i );
             image.onclick = function() {
                 currentShownPicture = this.getAttribute('data-myId');
@@ -69,6 +68,7 @@
 
         loadMoreFooter = document.createElement( 'div' );
         loadMoreFooter.className = 'loadMoreFooter';
+        loadMoreFooter.innerHTML = '...';
         loadMoreFooter.onclick = function () {
             if ( currentLoadedBatch + 1 < totalBatches ) {
                 loadBatch( ++currentLoadedBatch );

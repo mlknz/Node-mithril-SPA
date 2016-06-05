@@ -139,7 +139,6 @@
                 elem.addEventListener('click', function( e ){
 
                     e.preventDefault();
-                    e.srcElement.style.opacity = "0.2";
 
                     if ( e.srcElement.hashLink === Config.defaultScene ) {
                         if (m.route() !== '/') {

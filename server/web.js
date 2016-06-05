@@ -15,6 +15,7 @@ function base(content) {
     '<title>mlknBay</title>',
     '<meta charset="utf-8">',
     '<link href="/content/css/main.min.css" media="all" rel="stylesheet" type="text/css">',
+    '<link rel="shortcut icon" href="content/images/favicon.ico" type="image/x-icon" />',
     '<script src="/libs/three.min.js"></script>',
     '<script src="/libs/OrbitControls.js"></script>',
     '<script src="/scripts/main.min.js"></script>',
