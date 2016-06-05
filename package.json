@@ -7,7 +7,8 @@
     "./store/index.js": "./store/client.js"
   },
   "scripts": {
-    "start": "node ./server"
+    "start": "node ./server",
+    "postinstall": "gulp default"
   },
   "author": "mlkn <rkdshe@gmail.com>",
   "license": "ISC",

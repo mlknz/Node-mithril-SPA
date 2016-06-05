@@ -118,4 +118,4 @@ gulp.task('watch', function() {
 });
 
 // Default Task
-gulp.task('default', ['libs', 'less', 'images', 'lint', 'js-main', 'scenes']);
+gulp.task('default', ['libs', 'less', 'images', 'pictures', 'lint', 'js-main', 'scenes']);
