@@ -32,9 +32,7 @@
     "mithril": "^0.1.28",
     "three": "^0.72.0",
     "mithril-node-render": "^0.1.7",
-    "promise": "^6.1.0"
-  },
-  "devDependencies": {
+    "promise": "^6.1.0",
     "brfs": "^1.2.0",
     "browserify": "^8.1.1",
     "browserify-shim": "^3.8.10",

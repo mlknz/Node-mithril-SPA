@@ -2,30 +2,19 @@ var Config = require('./config');
 var Heights = require('./prefabs/heightsGenerator');
 var Landscape = require('./prefabs/landscapePrefab');
 var Ocean = require('./prefabs/oceanPrefab');
-var _ = require('lodash');
 
-window.scenes.wildGrowth = function( canvas, renderer ) {
+window.scenes.wildGrowth = function( canvas, renderer, globalConfig ) {
 
     var scene, heights, landscape, ocean, pointLight;
-
+    var gl = renderer.getContext();
     renderer.setClearColor(0x111111, 1.0);
     renderer.clear();
     Config.renderer = renderer;
 
-    var camera = new THREE.PerspectiveCamera(60, Config.aspectRatio, 1, 1000);
+    var camera = new THREE.PerspectiveCamera(60, globalConfig.aspectRatio, 1, 1000);
     Config.camera = camera;
-
-    var resizeFunction = _.throttle(function (event) {
-
-        Config.canvasWidth = window.innerWidth;
-        Config.canvasHeight = window.innerHeight;
-
-        Config.aspectRatio = Config.canvasWidth / Config.canvasHeight;
-        Config.renderer.setSize(Config.canvasWidth, Config.canvasHeight);
-        Config.camera.aspect = Config.aspectRatio;
-        Config.camera.updateProjectionMatrix();
-    }, 50);
-    resizeFunction();
+    Config.camera.aspect = globalConfig.aspectRatio;
+    Config.camera.updateProjectionMatrix();
 
     camera.position.z = 76;
     camera.position.y = 50;
@@ -70,12 +59,14 @@ window.scenes.wildGrowth = function( canvas, renderer ) {
     changeLandscapeButton.style.height = '10vh';
     canvas.appendChild( changeLandscapeButton );
 
-    window.addEventListener('resize', resizeFunction);
-
     return {
         scene: scene,
         update: function() {
             Config.time = (new Date()).getTime();
+            if ( Config.camera.aspect !== globalConfig.aspectRatio ) {
+                Config.camera.aspect = globalConfig.aspectRatio;
+                Config.camera.updateProjectionMatrix();
+            }
 
             if ( Config.changeLandscapeStartFlag ) {
                 heights.update();

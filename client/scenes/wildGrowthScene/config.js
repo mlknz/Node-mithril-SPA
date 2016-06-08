@@ -1,8 +1,5 @@
 var Config = {
 
-    'canvasWidth': 0,
-    'canvasHeight': 0,
-    'aspectRatio': 1,
     'renderer': null,
     'camera': null,
     'rtTextureOld': null,
