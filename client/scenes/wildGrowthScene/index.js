@@ -3,27 +3,24 @@ var Heights = require('./prefabs/heightsGenerator');
 var Landscape = require('./prefabs/landscapePrefab');
 var Ocean = require('./prefabs/oceanPrefab');
 
-window.scenes.wildGrowth = function( canvas, renderer, globalConfig ) {
+window.scenes.wildGrowth = function( canvas, renderer ) {
 
     var scene, heights, landscape, ocean, pointLight;
-    var gl = renderer.getContext();
-    renderer.setClearColor(0x111111, 1.0);
+    renderer.setClearColor( 0x111111, 1.0 );
     renderer.clear();
+    var gl = renderer.getContext();
     Config.renderer = renderer;
+    Config.aspectRatio = gl.canvas.clientWidth / gl.canvas.clientHeight;
 
-    var camera = new THREE.PerspectiveCamera(60, globalConfig.aspectRatio, 1, 1000);
-    Config.camera = camera;
-    Config.camera.aspect = globalConfig.aspectRatio;
-    Config.camera.updateProjectionMatrix();
-
+    var camera = new THREE.PerspectiveCamera( 60, Config.aspectRatio, 1, 1000 );
     camera.position.z = 76;
     camera.position.y = 50;
-    camera.lookAt( new THREE.Vector3(0,0,0) );
+    camera.lookAt( new THREE.Vector3( 0,0,0 ) );
     camera.updateProjectionMatrix();
 
     scene = new THREE.Scene();
 
-    heights = new Heights(renderer);
+    heights = new Heights( renderer );
     Config.rtTexture = heights.texture;
     Config.rtTextureOld = heights.textureOld;
 
@@ -40,7 +37,7 @@ window.scenes.wildGrowth = function( canvas, renderer, globalConfig ) {
     scene.add( pointLight );
     landscape.mesh.material.needsUpdate = true;
 
-    var orbitControls = new THREE.OrbitControls(camera, renderer.domElement);
+    var orbitControls = new THREE.OrbitControls( camera, renderer.domElement );
 
     var changeLandscapeButton = document.createElement( 'BUTTON' );
     var t = document.createTextNode( 'Change landscape' );
@@ -57,15 +54,16 @@ window.scenes.wildGrowth = function( canvas, renderer, globalConfig ) {
     changeLandscapeButton.style.bottom = 0;
     changeLandscapeButton.style.width = '20vh';
     changeLandscapeButton.style.height = '10vh';
-    canvas.appendChild( changeLandscapeButton );
+    document.body.appendChild( changeLandscapeButton );
 
     return {
         scene: scene,
         update: function() {
-            Config.time = (new Date()).getTime();
-            if ( Config.camera.aspect !== globalConfig.aspectRatio ) {
-                Config.camera.aspect = globalConfig.aspectRatio;
-                Config.camera.updateProjectionMatrix();
+            Config.time = ( new Date() ).getTime();
+            Config.aspectRatio = gl.canvas.clientWidth / gl.canvas.clientHeight;
+            if ( camera.aspect !== Config.aspectRatio ) {
+                camera.aspect = Config.aspectRatio;
+                camera.updateProjectionMatrix();
             }
 
             if ( Config.changeLandscapeStartFlag ) {
@@ -75,11 +73,11 @@ window.scenes.wildGrowth = function( canvas, renderer, globalConfig ) {
             }
             orbitControls.update();
             landscape.update();
-            renderer.render(scene, camera);
+            renderer.render( scene, camera );
         },
         dispose: function() {
             changeLandscapeButton.parentNode.removeChild(changeLandscapeButton);
-            console.log('todo: scene disposing and changing renderers probably');
+            // console.log('disposing');
         }
     };
 };

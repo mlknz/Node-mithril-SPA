@@ -1,6 +1,5 @@
 (function () {
     var Config = require( './../../config' );
-    var currentScene = {};
     'use strict';
 
     var getCurrentHash = function() {
@@ -15,11 +14,11 @@
 
         if ( !hash || !Config.scenes[ hash ] ) hash = Config.defaultScene;
 
-        if ( forceRedraw || Config.currentScene !== hash) {
+        if ( forceRedraw || Config.currentSceneHash !== hash) {
 
             if ( ! window.scenes[ hash ] ) {
 
-                Config.currentScene = hash;
+                Config.currentSceneHash = hash;
 
                 var script = document.createElement( 'script' );
                 script.setAttribute( 'type', 'text/javascript' );
@@ -27,11 +26,11 @@
 
                 script.onload = function() {
 
-                    if ( currentScene && currentScene.dispose ) {
-                        currentScene.dispose();
+                    if ( Config.currentScene && Config.currentScene.dispose ) {
+                        Config.currentScene.dispose();
                     }
                     if ( window.scenes[ hash ] ) {
-                        currentScene = window.scenes[ hash ]( element, Config.renderer, Config );
+                        Config.currentScene = window.scenes[ hash ]( element, Config.renderer, Config );
                     } else {
                         console.log( 'couldn\'t load scene' );
                     }
@@ -42,12 +41,12 @@
 
             } else {
 
-                Config.currentScene = hash;
+                Config.currentSceneHash = hash;
 
-                if ( currentScene && currentScene.dispose ) {
-                    currentScene.dispose();
+                if ( Config.currentScene && Config.currentScene.dispose ) {
+                    Config.currentScene.dispose();
                 }
-                currentScene = window.scenes[ hash ]( element, Config.renderer, Config );
+                Config.currentScene = window.scenes[ hash ]( element, Config.renderer );
                 
             }
         }
@@ -56,35 +55,30 @@
     var canvasService = function ( element, isInitialized ) {
 
         if ( isInitialized ) return;
-
         if (!window.scenes) window.scenes = {};
 
+        var canvas;
 
         if ( !Config.renderer ) {
 
-            var canvas = document.createElement( 'canvas' );
+            canvas = document.createElement( 'canvas' );
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            var renderer = new THREE.WebGLRenderer( { antialias: true, canvas: canvas } );
-            Config.renderer = renderer;
-            // Config.devicePixelRatio = window.devicePixelRatio || 1;
-            renderer.setClearColor( 0x111111, 1.0 );
-            renderer.clear();
-            element.appendChild( canvas );
+            Config.renderer = new THREE.WebGLRenderer( { antialias: true, canvas: canvas } );
+            window.addEventListener("hashchange", function() { changeScene( element ); }, false);
 
         } else {
 
             canvas = Config.renderer.domElement;
-            Config.renderer.setClearColor( 0x111111, 1.0 );
-            Config.renderer.clear();
-            element.appendChild( canvas );
 
         }
 
+        Config.renderer.setClearColor( 0x111111, 1.0 );
+        Config.renderer.clear();
+        element.appendChild( canvas );
+
         changeScene( element, true );
 
-        // todo: stop multiplying listeners.
-        window.addEventListener("hashchange", function() { changeScene( element ); }, false);
         var gl = Config.renderer.getContext();
 
         function resize() {
@@ -111,9 +105,9 @@
 
             requestAnimationFrame( animate );
 
-            if ( currentScene.scene ) {
+            if ( Config.currentScene && Config.currentScene.scene ) {
                 resize();
-                currentScene.update();
+                Config.currentScene.update();
             }
 
         }

@@ -1,7 +1,8 @@
 var picturesArr = require('./../content/text/picturesList.js');
 var Config = {
 
-    currentScene: '',
+    currentSceneHash: '',
+    currentScene: {},
     defaultScene: 'wildGrowth',
 
     scenes: {

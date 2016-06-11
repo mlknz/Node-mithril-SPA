@@ -169,6 +169,10 @@
 
             textButton.addEventListener('click', function( e ){
                 e.preventDefault();
+                if ( Config.currentScene && Config.currentScene.dispose ) {
+                    Config.currentScene.dispose();
+                }
+                Config.currentScene = null;
                 m.route('/blog');
             });
 
@@ -186,6 +190,10 @@
 
             picturesButton.addEventListener('click', function( e ){
                 e.preventDefault();
+                if ( Config.currentScene && Config.currentScene.dispose ) {
+                    Config.currentScene.dispose();
+                }
+                Config.currentScene = null;
                 window.location.hash = '-';
                 Config.currentScene = '-1';
                 m.route('/pictures');
@@ -204,6 +212,10 @@
 
             videoButton.addEventListener('click', function( e ){
                 e.preventDefault();
+                if ( Config.currentScene && Config.currentScene.dispose ) {
+                    Config.currentScene.dispose();
+                }
+                Config.currentScene = null;
                 window.location.hash = '-';
                 Config.currentScene = '-1';
                 m.route('/video');
@@ -223,6 +235,10 @@
 
             musicButton.addEventListener('click', function( e ){
                 e.preventDefault();
+                if ( Config.currentScene && Config.currentScene.dispose ) {
+                    Config.currentScene.dispose();
+                }
+                Config.currentScene = null;
                 window.location.hash = '-';
                 Config.currentScene = '-1';
                 m.route('/music');

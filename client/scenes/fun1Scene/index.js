@@ -17,7 +17,7 @@ window.scenes.fun1 = function(canvas, renderer) {
             renderer.render(scene, camera);
         },
         dispose: function() {
-            console.log('todo: scene disposing and changing renderers probably');
+            // console.log('disposing');
         }
     };
 };
