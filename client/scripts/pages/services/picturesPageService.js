@@ -24,12 +24,12 @@
         }
     }, 250 );
 
-    var loadBatch = function(offset){
+    var loadBatch = function( offset ){
 
         var batchContainer = document.createElement( 'div' );
         batchContainer.className = Config.controlPanel.isVertical ? 'imagesBatchContainerHorizontal' : 'imagesBatchContainerVertical';
-        batchContainers.push(batchContainer);
-        var maxExistentMember = Math.min(Config.picturesPerLoad * ( offset + 1 ), Config.pictures.length);
+        batchContainers.push( batchContainer );
+        var maxExistentMember = Math.min( Config.picturesPerLoad * ( offset + 1 ), Config.pictures.length );
 
         for ( var i = Config.picturesPerLoad * offset; i < maxExistentMember; i++ ) {
             var image = document.createElement('img');
@@ -37,10 +37,10 @@
             image.setAttribute( 'src', Config.pictures[i].previewSrc );
             image.setAttribute( 'data-myId', i );
             image.onclick = function() {
-                currentShownPicture = this.getAttribute('data-myId');
+                currentShownPicture = this.getAttribute( 'data-myId' );
                 dimmer.style.display = 'block';
-                bigImageItself.src = Config.pictures[currentShownPicture].src;
-                imageDescription.innerHTML = picturesDescriptions[Config.pictures[currentShownPicture].name] || picturesDescriptions['default'];
+                bigImageItself.src = Config.pictures[ currentShownPicture ].src;
+                imageDescription.innerHTML = picturesDescriptions[ Config.pictures[ currentShownPicture ].name ] || picturesDescriptions[ 'default' ];
             };
             batchContainer.appendChild( image );
         }
@@ -74,7 +74,7 @@
                 loadBatch( ++currentLoadedBatch );
             }
         };
-        pageContainer.appendChild(loadMoreFooter);
+        pageContainer.appendChild( loadMoreFooter );
 
         totalBatches = Math.ceil( Config.pictures.length / Config.picturesPerLoad );
         currentLoadedBatch = 0;
@@ -82,61 +82,61 @@
 
         dimmer = document.createElement( 'div' );
         dimmer.className = 'dimmer';
-        pageContainer.appendChild(dimmer);
+        pageContainer.appendChild( dimmer );
 
         var detailedImageContainer = document.createElement( 'div' );
         detailedImageContainer.className = Config.controlPanel.isVertical ? 'detailedImageContainerHorizontal' : 'detailedImageContainerVertical';
-        dimmer.appendChild(detailedImageContainer);
+        dimmer.appendChild( detailedImageContainer );
 
         imageDescription = document.createElement( 'div' );
         imageDescription.className = 'imageDescription';
-        detailedImageContainer.appendChild(imageDescription);
+        detailedImageContainer.appendChild( imageDescription );
 
         bigImageItself = document.createElement( 'img' );
         bigImageItself.className = 'bigImageItself';
-        detailedImageContainer.appendChild(bigImageItself);
+        detailedImageContainer.appendChild( bigImageItself );
 
         var nextImageButton = document.createElement( 'div' );
         nextImageButton.className = 'nextImageButton';
         nextImageButton.onclick = function() {
             currentShownPicture++;
-            if (currentShownPicture > Config.pictures.length - 1) currentShownPicture = Config.pictures.length - 1;
-            bigImageItself.src = Config.pictures[currentShownPicture].src;
-            imageDescription.innerHTML = picturesDescriptions[Config.pictures[currentShownPicture].name] || picturesDescriptions['default'];
+            if ( currentShownPicture > Config.pictures.length - 1 ) currentShownPicture = Config.pictures.length - 1;
+            bigImageItself.src = Config.pictures[ currentShownPicture ].src;
+            imageDescription.innerHTML = picturesDescriptions[ Config.pictures[ currentShownPicture ].name ] || picturesDescriptions[ 'default' ];
         };
-        detailedImageContainer.appendChild(nextImageButton);
+        detailedImageContainer.appendChild( nextImageButton );
 
         var prevImageButton = document.createElement( 'div' );
         prevImageButton.className = 'prevImageButton';
         prevImageButton.onclick = function() {
             currentShownPicture--;
-            if (currentShownPicture < 0) currentShownPicture = 0;
-            bigImageItself.src = Config.pictures[currentShownPicture].src;
-            imageDescription.innerHTML = picturesDescriptions[Config.pictures[currentShownPicture].name] || picturesDescriptions['default'];
+            if ( currentShownPicture < 0 ) currentShownPicture = 0;
+            bigImageItself.src = Config.pictures[ currentShownPicture ].src;
+            imageDescription.innerHTML = picturesDescriptions[ Config.pictures[ currentShownPicture ].name ] || picturesDescriptions[ 'default' ];
         };
-        detailedImageContainer.appendChild(prevImageButton);
+        detailedImageContainer.appendChild( prevImageButton );
 
         var closePictureButton = document.createElement( 'div' );
         closePictureButton.className = 'closePictureButton';
         closePictureButton.onclick = function() {
             dimmer.style.display = 'none';
         };
-        detailedImageContainer.appendChild(closePictureButton);
+        detailedImageContainer.appendChild( closePictureButton );
 
-        Config.controlPanel.onBecomingHorizontal['picturesPage'] = function () {
+        Config.controlPanel.onBecomingHorizontal[ 'picturesPage' ] = function () {
             header.style.height = '40vw';
             header.innerHTML = '<br>' + headerText;
             detailedImageContainer.className = 'detailedImageContainerVertical';
-            batchContainers.forEach(function(cont) {
+            batchContainers.forEach( function( cont ) {
                 cont.className = 'imagesBatchContainerVertical';
             });
         };
-        Config.controlPanel.onBecomingVertical['picturesPage'] = function () {
+        Config.controlPanel.onBecomingVertical[ 'picturesPage' ] = function () {
             header.style.height = '20vw';
             header.innerHTML = headerText;
 
             detailedImageContainer.className = 'detailedImageContainerHorizontal';
-            batchContainers.forEach(function(cont) {
+            batchContainers.forEach( function( cont ) {
                 cont.className = 'imagesBatchContainerHorizontal';
             });
         };

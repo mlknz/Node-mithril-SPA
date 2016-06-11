@@ -228,6 +228,7 @@
                 m.route('/music');
             });
 
+            // todo: this placement is not good
             Config.controlPanel.isVertical = false;
             makeControlPanelHorizontal( );
             resize( );
