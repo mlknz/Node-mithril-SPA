@@ -11,8 +11,8 @@
 
     function view() {
         return [
-
-            m('div.controlPanel', [
+            m('div.outerDiv', [
+                m('div.controlPanel', [
 
                 m('div.corner', { config: controlPanelService.corner }),
                 m('div.sceneSelector', { config: controlPanelService.sceneSelector }),
@@ -23,7 +23,10 @@
                 m('div.musicButton', { config: controlPanelService.musicButton })
 
             ]),
-            m('picturesPage', { config: picturesPageService })
+                m('picturesPage', { config: picturesPageService })
+            ])
+
+
         ];
     }
 
