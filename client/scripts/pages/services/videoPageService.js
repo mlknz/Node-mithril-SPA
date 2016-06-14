@@ -82,9 +82,7 @@
         };
         Config.onResize['videoPage'] = computeVideoSize;
 
-        if (!Config.videoSize.x) {
-            computeVideoSize();
-        }
+        computeVideoSize();
 
         var videosInfo = Config.videos;
 

@@ -33,11 +33,7 @@ var Config = {
     pictures: picturesArr,
     picturesPerLoad: 16,
 
-    renderer: null,
-    devicePixelRatio: 1,
-    canvasWidth: 200,
-    canvasHeight: 200,
-    aspectRatio: 1
+    renderer: null
 
 };
 

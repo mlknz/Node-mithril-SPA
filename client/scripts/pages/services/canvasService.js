@@ -85,18 +85,17 @@
 
             var width = gl.canvas.clientWidth;
             var height = gl.canvas.clientHeight;
-            Config.canvasWidth = width;
-            Config.canvasHeight = height;
-            Config.aspectRatio = Config.canvasWidth / Config.canvasHeight;
 
-            if ( gl.canvas.width != width ||
-                gl.canvas.height != height ) {
+            if ( gl.canvas.width != width || gl.canvas.height != height ) {
 
                 gl.canvas.width = width;
                 gl.canvas.height = height;
+                gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
 
+                if (Config.currentScene.resize) {
+                    Config.currentScene.resize();
+                }
             }
-            gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
 
         }
         resize();
