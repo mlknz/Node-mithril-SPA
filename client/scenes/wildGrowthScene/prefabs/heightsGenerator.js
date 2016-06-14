@@ -41,8 +41,8 @@
         renderer.render( sceneRTT, cameraRTT, rtTextureOld, true );
 
         return {
-            texture: rtTexture,
-            textureOld: rtTextureOld,
+            texture: rtTexture.texture,
+            textureOld: rtTextureOld.texture,
             update: function() {
                 renderer.render( sceneRTT, cameraRTT, rtTextureOld, true );
                 seed = (Config.time % 100000 - Config.time % 1000) / 1000;

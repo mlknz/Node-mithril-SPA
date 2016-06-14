@@ -90,12 +90,13 @@
 
                 gl.canvas.width = width;
                 gl.canvas.height = height;
-                gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
 
                 if (Config.currentScene.resize) {
                     Config.currentScene.resize();
                 }
+
             }
+            gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
 
         }
         resize();
