@@ -24,13 +24,13 @@ var scrollHandler = _.throttle(function () {
 var loadBatch = function (offset) {
 
     var batchContainer = document.createElement('div');
-    batchContainer.className = Config.controlPanel.isVertical ? 'imagesBatchContainerHorizontal' : 'imagesBatchContainerVertical';
+    batchContainer.className = Config.controlPanel.isVertical ? 'images-batch-cont_horizontal' : 'images-batch-cont_vertical';
     batchContainers.push(batchContainer);
     var maxExistentMember = Math.min(Config.picturesPerLoad * ( offset + 1 ), Config.pictures.length);
 
     for (var i = Config.picturesPerLoad * offset; i < maxExistentMember; i++) {
         var image = document.createElement('img');
-        image.className = 'imagePreview';
+        image.className = 'image-preview';
         image.setAttribute('src', Config.pictures[i].previewSrc);
         image.setAttribute('data-myId', i);
         image.onclick = function () {
@@ -54,7 +54,7 @@ module.exports = function (element, isInitialized) {
     if (isInitialized) return;
 
     pageContainer = document.createElement('div');
-    pageContainer.className = 'pageContainer';
+    pageContainer.className = 'page-container';
     element.appendChild(pageContainer);
 
     var header = document.createElement('div');
@@ -64,7 +64,7 @@ module.exports = function (element, isInitialized) {
     pageContainer.appendChild(header);
 
     loadMoreFooter = document.createElement('div');
-    loadMoreFooter.className = 'loadMoreFooter';
+    loadMoreFooter.className = 'load-more-footer';
     loadMoreFooter.innerHTML = '...';
     loadMoreFooter.onclick = function () {
         if (currentLoadedBatch + 1 < totalBatches) {
@@ -82,19 +82,19 @@ module.exports = function (element, isInitialized) {
     pageContainer.appendChild(dimmer);
 
     var detailedImageContainer = document.createElement('div');
-    detailedImageContainer.className = Config.controlPanel.isVertical ? 'detailedImageContainerHorizontal' : 'detailedImageContainerVertical';
+    detailedImageContainer.className = Config.controlPanel.isVertical ? 'detailed-image-cont_horizontal' : 'detailed-image-cont_vertical';
     dimmer.appendChild(detailedImageContainer);
 
     imageDescription = document.createElement('div');
-    imageDescription.className = 'imageDescription';
+    imageDescription.className = 'detailed-image-cont__description';
     detailedImageContainer.appendChild(imageDescription);
 
     bigImageItself = document.createElement('img');
-    bigImageItself.className = 'bigImageItself';
+    bigImageItself.className = 'detailed-image-cont__image';
     detailedImageContainer.appendChild(bigImageItself);
 
     var nextImageButton = document.createElement('div');
-    nextImageButton.className = 'nextImageButton';
+    nextImageButton.className = 'detailed-image-cont__next-button';
     nextImageButton.onclick = function () {
         currentShownPicture++;
         if (currentShownPicture > Config.pictures.length - 1) currentShownPicture = Config.pictures.length - 1;
@@ -104,7 +104,7 @@ module.exports = function (element, isInitialized) {
     detailedImageContainer.appendChild(nextImageButton);
 
     var prevImageButton = document.createElement('div');
-    prevImageButton.className = 'prevImageButton';
+    prevImageButton.className = 'detailed-image-cont__prev-button';
     prevImageButton.onclick = function () {
         currentShownPicture--;
         if (currentShownPicture < 0) currentShownPicture = 0;
@@ -114,7 +114,7 @@ module.exports = function (element, isInitialized) {
     detailedImageContainer.appendChild(prevImageButton);
 
     var closePictureButton = document.createElement('div');
-    closePictureButton.className = 'closePictureButton';
+    closePictureButton.className = 'detailed-image-cont__close-button';
     closePictureButton.onclick = function () {
         dimmer.style.display = 'none';
     };
@@ -123,18 +123,18 @@ module.exports = function (element, isInitialized) {
     Config.controlPanel.onBecomingHorizontal['picturesPage'] = function () {
         header.style.height = '40vw';
         header.innerHTML = '<br>' + headerText;
-        detailedImageContainer.className = 'detailedImageContainerVertical';
+        detailedImageContainer.className = 'detailed-image-cont_vertical';
         batchContainers.forEach(function (cont) {
-            cont.className = 'imagesBatchContainerVertical';
+            cont.className = 'images-batch-cont_vertical';
         });
     };
     Config.controlPanel.onBecomingVertical['picturesPage'] = function () {
         header.style.height = '20vw';
         header.innerHTML = headerText;
 
-        detailedImageContainer.className = 'detailedImageContainerHorizontal';
+        detailedImageContainer.className = 'detailed-image-cont_horizontal';
         batchContainers.forEach(function (cont) {
-            cont.className = 'imagesBatchContainerHorizontal';
+            cont.className = 'images-batch-cont_horizontal';
         });
     };
 

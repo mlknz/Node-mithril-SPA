@@ -6,7 +6,7 @@ var m = require('mithril');
 
 var controlPanel,
     corner,
-    textButton,
+    blogButton,
     musicButton,
     picturesButton,
     videoButton,
@@ -20,21 +20,21 @@ function makeControlPanelHorizontal() {
 
     Config.controlPanel.isVertical = false;
 
-    controlPanel.className = Config.controlPanel.isHidden ? 'controlPanelHorizontalHidden' : 'controlPanelHorizontal';
+    controlPanel.className = Config.controlPanel.isHidden ? 'control-panel_horizontal-hidden' : 'control-panel_horizontal-shown';
 
-    sceneSelector.className = 'sceneSelectorHorizontal';
-    scenesContainer.className = 'scenesContainerHorizontal';
-    hidePanelButton.className = 'hidePanelButtonHorizontal';
-    hidePanelImg.className = Config.controlPanel.isHidden ? 'hidePanelImgHorizontalHidden' : 'hidePanelImgHorizontal';
+    sceneSelector.className = 'control-panel__scene-selector_horizontal';
+    scenesContainer.className = 'control-panel__scene-selector__cont_horizontal';
+    hidePanelButton.className = 'control-panel__hide-button_horizontal';
+    hidePanelImg.className = Config.controlPanel.isHidden ? 'control-panel__hide-button__img_horizontal-hidden' : 'control-panel__hide-button__img_horizontal-shown';
 
-    corner.className = 'cornerHorizontal';
-    textButton.className = 'textButtonHorizontal';
-    picturesButton.className = 'picturesButtonHorizontal';
-    videoButton.className = 'videoButtonHorizontal';
-    musicButton.className = 'musicButtonHorizontal';
+    corner.className = 'control-panel__corner_horizontal';
+    blogButton.className = 'control-panel__blog-button_horizontal';
+    picturesButton.className = 'control-panel__pictures-button_horizontal';
+    videoButton.className = 'control-panel__videos-button_horizontal';
+    musicButton.className = 'control-panel__music-button_horizontal';
 
     scenesButtons.forEach(function (b) {
-        b.className = 'sceneButtonHorizontal';
+        b.className = 'control-panel__scene-selector__cont__button_horizontal';
     });
 
     for (var key in Config.controlPanel.onBecomingHorizontal) {
@@ -49,21 +49,21 @@ function makeControlPanelVertical() {
 
     Config.controlPanel.isVertical = true;
 
-    controlPanel.className = Config.controlPanel.isHidden ? 'controlPanelVerticalHidden' : 'controlPanelVertical';
+    controlPanel.className = Config.controlPanel.isHidden ? 'control-panel_vertical-hidden' : 'control-panel_vertical-shown';
 
-    sceneSelector.className = 'sceneSelectorVertical';
-    scenesContainer.className = 'scenesContainerVertical';
-    hidePanelButton.className = 'hidePanelButtonVertical';
-    hidePanelImg.className = Config.controlPanel.isHidden ? 'hidePanelImgVerticalHidden' : 'hidePanelImgVertical';
+    sceneSelector.className = 'control-panel__scene-selector_vertical';
+    scenesContainer.className = 'control-panel__scene-selector__cont_vertical';
+    hidePanelButton.className = 'control-panel__hide-button_vertical';
+    hidePanelImg.className = Config.controlPanel.isHidden ? 'control-panel__hide-button__img_vertical-hidden' : 'control-panel__hide-button__img_vertical-shown';
 
-    corner.className = 'cornerVertical';
-    textButton.className = 'textButtonVertical';
-    picturesButton.className = 'picturesButtonVertical';
-    videoButton.className = 'videoButtonVertical';
-    musicButton.className = 'musicButtonVertical';
+    corner.className = 'control-panel__corner_vertical';
+    blogButton.className = 'control-panel__blog-button_vertical';
+    picturesButton.className = 'control-panel__pictures-button_vertical';
+    videoButton.className = 'control-panel__videos-button_vertical';
+    musicButton.className = 'control-panel__music-button_vertical';
 
     scenesButtons.forEach(function (b) {
-        b.className = 'sceneButtonVertical';
+        b.className = 'control-panel__scene-selector__cont__button_vertical';
     });
 
     for (var key in Config.controlPanel.onBecomingVertical) {
@@ -99,20 +99,20 @@ function createControlPanel(element, isInitialized) {
     }
     controlPanel.appendChild(sceneSelector);
 
-    textButton = document.createElement('div');
-    textButton.appendChild(createImgDiv('content/images/textButton.png', 'foodButton'));
-    controlPanel.appendChild(textButton);
+    blogButton = document.createElement('div');
+    blogButton.appendChild(createImgDiv('content/images/textButton.png', 'control-panel__routing-button__img'));
+    controlPanel.appendChild(blogButton);
 
     picturesButton = document.createElement('div');
-    picturesButton.appendChild(createImgDiv('content/images/picturesButton.png', 'foodButton'));
+    picturesButton.appendChild(createImgDiv('content/images/picturesButton.png', 'control-panel__routing-button__img'));
     controlPanel.appendChild(picturesButton);
 
     videoButton = document.createElement('div');
-    videoButton.appendChild(createImgDiv('content/images/videoButton.png', 'foodButton'));
+    videoButton.appendChild(createImgDiv('content/images/videoButton.png', 'control-panel__routing-button__img'));
     controlPanel.appendChild(videoButton);
 
     musicButton = document.createElement('div');
-    musicButton.appendChild(createImgDiv('content/images/musicButton.png', 'foodButton'));
+    musicButton.appendChild(createImgDiv('content/images/musicButton.png', 'control-panel__routing-button__img'));
     controlPanel.appendChild(musicButton);
 
     hidePanelButton = document.createElement('div');
@@ -164,9 +164,9 @@ function addControlPanelEventListeners() {
         }
     });
 
-    addRoutingListener(textButton, '/blog');
+    addRoutingListener(blogButton, '/blog');
     addRoutingListener(picturesButton, '/pictures');
-    addRoutingListener(videoButton, '/video');
+    addRoutingListener(videoButton, '/videos');
     addRoutingListener(musicButton, '/music');
 
     scenesButtons.forEach(function (b) {
@@ -213,20 +213,20 @@ function addHidePanelButtonListener() {
     hidePanelButton.addEventListener('click', function () {
         if (Config.controlPanel.isHidden) {
             if (Config.controlPanel.isVertical) {
-                hidePanelImg.className = 'hidePanelImgVertical';
-                controlPanel.className = 'controlPanelVertical';
+                hidePanelImg.className = 'control-panel__hide-button__img_vertical-shown';
+                controlPanel.className = 'control-panel_vertical-shown';
             } else {
-                hidePanelImg.className = 'hidePanelImgHorizontal';
-                controlPanel.className = 'controlPanelHorizontal';
+                hidePanelImg.className = 'control-panel__hide-button__img_horizontal-shown';
+                controlPanel.className = 'control-panel_horizontal-shown';
             }
             Config.controlPanel.isHidden = false;
         } else {
             if (Config.controlPanel.isVertical) {
-                hidePanelImg.className = 'hidePanelImgVerticalHidden';
-                controlPanel.className = 'controlPanelVerticalHidden';
+                hidePanelImg.className = 'control-panel__hide-button__img_vertical-hidden';
+                controlPanel.className = 'control-panel_vertical-hidden';
             } else {
-                hidePanelImg.className = 'hidePanelImgHorizontalHidden';
-                controlPanel.className = 'controlPanelHorizontalHidden';
+                hidePanelImg.className = 'control-panel__hide-button__img_horizontal-hidden';
+                controlPanel.className = 'control-panel_horizontal-hidden';
             }
             Config.controlPanel.isHidden = true;
         }

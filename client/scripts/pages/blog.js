@@ -10,9 +10,9 @@ function controller() {
 
 function view() {
     return [
-        m('div.outerDiv', [
-            m('div.controlPanel', {config: controlPanelService}),
-            m('blogPage', {config: blogPageService})
+        m('div.outer', [
+            m('div', {config: controlPanelService}),
+            m('blog-page', {config: blogPageService})
         ])
     ];
 }

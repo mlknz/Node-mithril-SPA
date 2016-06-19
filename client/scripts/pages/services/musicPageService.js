@@ -16,7 +16,7 @@ module.exports = function (element, isInitialized) {
     if (isInitialized) return;
 
     var pageContainer = document.createElement('div');
-    pageContainer.className = 'pageContainer';
+    pageContainer.className = 'page-container';
     element.appendChild(pageContainer);
 
     var header = document.createElement('div');

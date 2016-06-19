@@ -10,9 +10,9 @@ function controller() {
 
 function view() {
     return [
-        m('div.outerDiv', [
-            m('div.controlPanel', {config: controlPanelService}),
-            m('musicPage', {config: musicPageService})
+        m('div.outer', [
+            m('div', {config: controlPanelService}),
+            m('music-page', {config: musicPageService})
         ])
     ];
 }

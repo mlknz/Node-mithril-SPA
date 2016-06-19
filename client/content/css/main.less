@@ -6,13 +6,13 @@ body {
     width:100%;
     height:100%;
 
-    .outerDiv {
+    .outer {
         width: 100%;
         height: 100%;
         position: absolute;
         overflow: hidden;
     }
-    .controlPanelVertical, .controlPanelVerticalHidden {
+    .control-panel_vertical-shown, .control-panel_vertical-hidden {
         height: 100%;
         width: 20vh;
         top: 0;
@@ -20,13 +20,13 @@ body {
         z-index: 2;
         transition: right 0.5s ease-in-out;
     }
-    .controlPanelVertical {
+    .control-panel_vertical-shown {
         right: 0;
     }
-    .controlPanelVerticalHidden {
+    .control-panel_vertical-hidden {
         right: -15vh;
     }
-    .controlPanelHorizontal, .controlPanelHorizontalHidden {
+    .control-panel_horizontal-shown, .control-panel_horizontal-hidden {
         height: 20vw;
         width: 100%;
         right: 0;
@@ -35,179 +35,202 @@ body {
         z-index: 2;
         transition: top 0.5s ease-in-out;
     }
-    .controlPanelHorizontal {
+    .control-panel_horizontal-shown {
         top: 0;
     }
-    .controlPanelHorizontalHidden {
+    .control-panel_horizontal-hidden {
         top: -15vw;
     }
-    .cornerVertical, .cornerHorizontal {
+    .control-panel__corner_vertical, .control-panel__corner_horizontal {
         background-color: #773344;
         position: absolute;
         right: 0;
         cursor: pointer;
     }
-    .cornerVertical:hover, .cornerHorizontal:hover {
+    .control-panel__corner_vertical:hover, .control-panel__corner_horizontal:hover {
         background-color: #884455;
     }
-    .cornerVertical {
+    .control-panel__corner_vertical {
         height: 15vh;
         width: 15vh;
     }
-    .cornerHorizontal {
+    .control-panel__corner_horizontal {
         height: 15vw;
         width: 15vw;
     }
 
-    .sceneSelectorVertical, .sceneSelectorHorizontal {
+    .control-panel__scene-selector_vertical, .control-panel__scene-selector_horizontal {
         background-color: #aa8844;
         position: absolute;
     }
-    .sceneSelectorVertical {
+    .control-panel__scene-selector_vertical {
         height: 45vh;
         width: 15vh;
         top: 15vh;
         right: 0;
     }
-    .sceneSelectorHorizontal {
+    .control-panel__scene-selector_horizontal {
         height: 15vw;
         width: 45vw;
         top: 0;
         right: 15vw;
     }
-    .scenesContainerHorizontal, .scenesContainerVertical {
+    .control-panel__scene-selector__cont_horizontal, .control-panel__scene-selector__cont_vertical {
         background-color: #338844;
         position: relative;
     }
-    .scenesContainerHorizontal{
+    .control-panel__scene-selector__cont_horizontal{
         height: 90%;
         width: 97%;
         top: 5%;
         left: 1.5%;
     }
-    .scenesContainerVertical{
+    .control-panel__scene-selector__cont_vertical{
         height: 97%;
         width: 90%;
         top: 1.5%;
         left: 5%;
     }
-    .textButtonHorizontal, .picturesButtonHorizontal, .videoButtonHorizontal, .musicButtonHorizontal {
+
+    .control-panel__scene-selector__cont__button_horizontal {
+        cursor: pointer;
+        margin-top: 2.7vw;
+        margin-left: 1vw;
+        height: 60%;
+        width: auto;
+    }
+    .control-panel__scene-selector__cont__button_vertical {
+        cursor: pointer;
+        margin: 0;
+        height: auto;
+        width: 100%;
+    }
+    .control-panel__scene-selector__cont__button_horizontal:hover,
+    .control-panel__scene-selector__cont__button_vertical:hover {
+        opacity: 0.5;
+    }
+
+    .control-panel__blog-button_horizontal, .control-panel__pictures-button_horizontal,
+    .control-panel__videos-button_horizontal, .control-panel__music-button_horizontal {
         height: 15vw;
         width: 10vw;
         top: 0;
     }
-    .textButtonVertical, .picturesButtonVertical, .videoButtonVertical, .musicButtonVertical {
+    .control-panel__blog-button_vertical, .control-panel__pictures-button_vertical,
+    .control-panel__videos-button_vertical, .control-panel__music-button_vertical {
         height: 10vh;
         width: 15vh;
         right: 0;
     }
-    .textButtonHorizontal, .textButtonVertical {
+    .control-panel__blog-button_horizontal, .control-panel__blog-button_vertical {
         background-color: #226688;
         position: absolute;
         cursor: pointer;
     }
-    .textButtonHorizontal:hover, .textButtonVertical:hover {
+    .control-panel__blog-button_horizontal:hover, .control-panel__blog-button_vertical:hover {
         background-color: #337799;
     }
-    .textButtonHorizontal {
+    .control-panel__blog-button_horizontal {
         right: 60vw;
     }
-    .textButtonVertical {
+    .control-panel__blog-button_vertical {
         top: 60vh;
     }
-    .picturesButtonHorizontal, .picturesButtonVertical {
+    .control-panel__pictures-button_horizontal, .control-panel__pictures-button_vertical {
         background-color: #228088;
         position: absolute;
         cursor: pointer;
     }
-    .picturesButtonHorizontal:hover, .picturesButtonVertical:hover {
+    .control-panel__pictures-button_horizontal:hover, .control-panel__pictures-button_vertical:hover {
         background-color: #118077;
     }
-    .picturesButtonHorizontal {
+    .control-panel__pictures-button_horizontal {
         right: 70vw;
     }
-    .picturesButtonVertical {
+    .control-panel__pictures-button_vertical {
         top: 70vh;
     }
-    .videoButtonHorizontal, .videoButtonVertical {
+    .control-panel__videos-button_horizontal, .control-panel__videos-button_vertical {
         background-color: #229988;
         position: absolute;
         cursor: pointer;
     }
-    .videoButtonHorizontal:hover, .videoButtonVertical:hover {
+    .control-panel__videos-button_horizontal:hover, .control-panel__videos-button_vertical:hover {
         background-color: #119977;
     }
-    .videoButtonHorizontal {
+    .control-panel__videos-button_horizontal {
         right: 80vw;
     }
-    .videoButtonVertical {
+    .control-panel__videos-button_vertical {
         top: 80vh;
     }
-    .musicButtonHorizontal, .musicButtonVertical {
+    .control-panel__music-button_horizontal, .control-panel__music-button_vertical {
         background-color: #22cc88;
         position: absolute;
         cursor: pointer;
     }
-    .musicButtonHorizontal:hover, .musicButtonVertical:hover {
+    .control-panel__music-button_horizontal:hover, .control-panel__music-button_vertical:hover {
         background-color: #11cc77;
     }
-    .musicButtonHorizontal {
+    .control-panel__music-button_horizontal {
         right: 90vw;
     }
-    .musicButtonVertical {
+    .control-panel__music-button_vertical {
         top: 90vh;
     }
-    .hidePanelButtonHorizontal, .hidePanelButtonVertical {
+    .control-panel__hide-button_horizontal, .control-panel__hide-button_vertical {
         background-color: #AA3344;
         position: absolute;
         cursor: pointer;
     }
-    .hidePanelButtonHorizontal:hover, .hidePanelButtonVertical:hover {
+    .control-panel__hide-button_horizontal:hover, .control-panel__hide-button_vertical:hover {
         background-color: #992233;
     }
-    .hidePanelButtonHorizontal {
+    .control-panel__hide-button_horizontal {
         left: 0;
         bottom: 0;
         width: 100vw;
         height: 5vw;
     }
-    .hidePanelButtonVertical {
+    .control-panel__hide-button_vertical {
         left: 0;
         bottom: 0;
         width: 5vh;
         height: 100vh;
     }
 
-    .hidePanelImg,.hidePanelImgHorizontal, .hidePanelImgHorizontalHidden, .hidePanelImgVertical, .hidePanelImgVerticalHidden {
+    .control-panel__hide-button__img_horizontal-shown, .control-panel__hide-button__img_horizontal-hidden,
+    .control-panel__hide-button__img_vertical-shown, .control-panel__hide-button__img_vertical-hidden {
         opacity: 0.7;
         position: absolute;
         transition: transform 0.5s ease-in-out;
     }
-    .hidePanelImg:hover, .hidePanelImgHorizontal:hover, .hidePanelImgHorizontalHidden:hover, .hidePanelImgVertical:hover, .hidePanelImgVerticalHidden:hover {
+    .control-panel__hide-button__img_horizontal-shown:hover, .control-panel__hide-button__img_horizontal-hidden:hover,
+    .control-panel__hide-button__img_vertical-shown:hover, .control-panel__hide-button__img_vertical-hidden:hover {
         opacity: 1;
     }
-    .hidePanelImgHorizontal {
+    .control-panel__hide-button__img_horizontal-shown {
         height: 100%;
         width: auto;
         left: 46%;
         top: 0;
         transform: rotate(0deg);
     }
-    .hidePanelImgHorizontalHidden {
+    .control-panel__hide-button__img_horizontal-hidden {
         height: 100%;
         width: auto;
         left: 46%;
         top: 0;
         transform: rotate(180deg);
     }
-    .hidePanelImgVertical {
+    .control-panel__hide-button__img_vertical-shown {
         height: auto;
         width: 100%;
         left: 0;
         top: 46%;
         transform: rotate(90deg);
     }
-    .hidePanelImgVerticalHidden {
+    .control-panel__hide-button__img_vertical-hidden {
         height: auto;
         width: 100%;
         left: 0;
@@ -215,29 +238,14 @@ body {
         transform: rotate(-90deg);
     }
 
-    .foodButton {
+    .control-panel__routing-button__img {
         position: absolute;
         width: 50%;
         left: 25%;
         top: 13%;
     }
-    .sceneButtonHorizontal {
-        cursor: pointer;
-        margin-top: 2.7vw;
-        margin-left: 1vw;
-        height: 60%;
-        width: auto;
-    }
-    .sceneButtonVertical {
-        cursor: pointer;
-        margin: 0;
-        height: auto;
-        width: 100%;
-    }
-    .sceneButtonHorizontal:hover, .sceneButtonVertical:hover {
-        opacity: 0.5;
-    }
-    .canvasContainer {
+
+    .canvas-container {
         width: 100%;
         height: 100%;
         margin: 0;
@@ -249,7 +257,7 @@ body {
         }
     }
 
-    .pageContainer {
+    .page-container {
         height: 100vh;
         width: 100vw;
         margin-right: -100px;
@@ -267,7 +275,7 @@ body {
         font-weight: bold;
     }
 
-    .playVideoButton {
+    .play-video-button {
         height: 100%;
         width: 100%;
         background: url("./../images/youtubePlayButton.png") no-repeat 50%;
@@ -275,14 +283,14 @@ body {
         cursor: pointer;
     }
 
-    .imagesBatchContainerHorizontal {
+    .images-batch-cont_horizontal {
         width: 85vw;
     }
-    .imagesBatchContainerVertical {
+    .images-batch-cont_vertical {
         width: 100vw;
     }
 
-    .imagePreview {
+    .image-preview {
         max-width: 20%;
         margin-left: 4%;
         margin-top: 3vw;
@@ -290,7 +298,7 @@ body {
         cursor: pointer;
     }
 
-    .loadMoreFooter {
+    .load-more-footer {
         width: 100vw;
         height: 20%;
         font-size: 14vh;
@@ -309,23 +317,23 @@ body {
         z-index: 1;
     }
 
-    .detailedImageContainerHorizontal, .detailedImageContainerVertical {
+    .detailed-image-cont_horizontal, .detailed-image-cont_vertical {
         position: relative;
         background-color: rgba(0, 0, 0, 0.85);
     }
-    .detailedImageContainerHorizontal {
+    .detailed-image-cont_horizontal {
         width: 80%;
         height: 90%;
         left: 5%;
         top: 5%;
     }
-    .detailedImageContainerVertical {
+    .detailed-image-cont_vertical {
         width: 100%;
         height: 80%;
         top: 20%;
     }
 
-    .prevImageButton, .nextImageButton, .closePictureButton {
+    .detailed-image-cont__prev-button, .detailed-image-cont__next-button, .detailed-image-cont__close-button {
         position: absolute;
         bottom: 0;
         width: 10%;
@@ -334,27 +342,27 @@ body {
         background: #2f6fad no-repeat 50%;
         background-size: contain;
     }
-    .nextImageButton:hover, .prevImageButton:hover {
+    .detailed-image-cont__next-button:hover, .detailed-image-cont__prev-button:hover {
         background-color: #aa3333;
     }
-    .closePictureButton:hover {
+    .detailed-image-cont__close-button:hover {
         background-color: #bb3333;
     }
-    .nextImageButton {
+    .detailed-image-cont__next-button {
         right: 10%;
         background-image: url("./../images/nextImageButton.png");
     }
-    .prevImageButton {
+    .detailed-image-cont__prev-button {
         right: 20%;
         background-image: url("./../images/previousImageButton.png");
     }
-    .closePictureButton {
+    .detailed-image-cont__close-button {
         right: 0;
         background: #883333 url("./../images/closeImageButton.png") no-repeat 50%;
         background-size: contain;
     }
 
-    .imageDescription {
+    .detailed-image-cont__description {
         position: absolute;
         right: 30%;
         bottom: 0;
@@ -363,7 +371,7 @@ body {
         background-color: #44aaaa;
     }
 
-    .bigImageItself {
+    .detailed-image-cont__image {
         margin: auto;
         display: table-cell;
         height: 85%;

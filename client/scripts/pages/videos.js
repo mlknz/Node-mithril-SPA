@@ -2,7 +2,7 @@
 
 var m = require('mithril');
 var controlPanelService = require('./services/controlPanelService');
-var videosPageService = require('./services/videoPageService');
+var videosPageService = require('./services/videosPageService');
 
 function controller() {
     m.redraw.strategy("diff");
@@ -10,9 +10,9 @@ function controller() {
 
 function view() {
     return [
-        m('div.outerDiv', [
-            m('div.controlPanel', {config: controlPanelService}),
-            m('videoPage', {config: videosPageService})
+        m('div.outer', [
+            m('div', {config: controlPanelService}),
+            m('videos-page', {config: videosPageService})
         ])
     ];
 }

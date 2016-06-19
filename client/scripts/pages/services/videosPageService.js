@@ -60,7 +60,7 @@ module.exports = function (element, isInitialized) {
     }
 
     var pageContainer = document.createElement('div');
-    pageContainer.className = 'pageContainer';
+    pageContainer.className = 'page-container';
     element.appendChild(pageContainer);
 
     var header = document.createElement('div');
@@ -113,7 +113,7 @@ module.exports = function (element, isInitialized) {
         descriptions.push(description);
 
         var playButton = document.createElement("div");
-        playButton.className = 'playVideoButton';
+        playButton.className = 'play-video-button';
         youtube.appendChild(playButton);
 
         youtube.onclick = function () {

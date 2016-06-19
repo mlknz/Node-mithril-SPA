@@ -10,9 +10,9 @@ function controller() {
 
 function view() {
     return [
-        m('div.outerDiv', [
-            m('div.controlPanel', {config: controlPanelService}),
-            m('div.canvasContainer', {config: canvasService})
+        m('div.outer', [
+            m('div', {config: controlPanelService}),
+            m('div.canvas-container', {config: canvasService})
         ])
     ];
 }
