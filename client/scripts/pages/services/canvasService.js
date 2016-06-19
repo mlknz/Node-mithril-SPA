@@ -1,121 +1,121 @@
-(function () {
-    var Config = require( './../../config' );
-    'use strict';
+'use strict';
 
-    var getCurrentHash = function() {
+var Config = require('./../../config');
 
-        return window.location.hash.substr( 1 );
+var getCurrentHash = function () {
+    return window.location.hash.substr(1);
+};
 
-    };
+var changeScene = function (element, forceRedraw) {
 
-    var changeScene = function( element, forceRedraw ) {
+    var hash = getCurrentHash();
 
-        var hash = getCurrentHash();
+    if (!hash || !Config.scenes[hash]) hash = Config.defaultScene;
 
-        if ( !hash || !Config.scenes[ hash ] ) hash = Config.defaultScene;
+    if (forceRedraw || Config.currentSceneHash !== hash) {
 
-        if ( forceRedraw || Config.currentSceneHash !== hash) {
+        if (!window.scenes[hash]) {
 
-            if ( ! window.scenes[ hash ] ) {
+            Config.currentSceneHash = hash;
 
-                Config.currentSceneHash = hash;
+            var script = document.createElement('script');
+            script.setAttribute('type', 'text/javascript');
+            script.setAttribute('src', Config.scenes[hash]);
 
-                var script = document.createElement( 'script' );
-                script.setAttribute( 'type', 'text/javascript' );
-                script.setAttribute( 'src', Config.scenes[ hash ] );
+            script.onload = function () {
 
-                script.onload = function() {
-
-                    if ( Config.currentScene && Config.currentScene.dispose ) {
-                        Config.currentScene.dispose();
-                    }
-                    if ( window.scenes[ hash ] ) {
-                        Config.currentScene = window.scenes[ hash ]( element, Config.renderer, Config );
-                    } else {
-                        console.log( 'couldn\'t load scene' );
-                    }
-                    
-                };
-
-                document.body.appendChild( script );
-
-            } else {
-
-                Config.currentSceneHash = hash;
-
-                if ( Config.currentScene && Config.currentScene.dispose ) {
+                if (Config.currentScene && Config.currentScene.dispose) {
                     Config.currentScene.dispose();
                 }
-                Config.currentScene = window.scenes[ hash ]( element, Config.renderer );
-                
-            }
-        }
-    };
+                if (window.scenes[hash]) {
+                    Config.currentScene = window.scenes[hash](element, Config.renderer, Config);
+                } else {
+                    console.log('couldn\'t load scene');
+                }
 
-    var canvasService = function ( element, isInitialized ) {
+            };
 
-        if ( isInitialized ) return;
-        if (!window.scenes) window.scenes = {};
-
-        var canvas;
-
-        if ( !Config.renderer ) {
-
-            canvas = document.createElement( 'canvas' );
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            Config.renderer = new THREE.WebGLRenderer( { antialias: true, canvas: canvas } );
-            window.addEventListener("hashchange", function() { changeScene( element ); }, false);
+            document.body.appendChild(script);
 
         } else {
 
-            canvas = Config.renderer.domElement;
+            Config.currentSceneHash = hash;
 
-        }
-
-        Config.renderer.setClearColor( 0x111111, 1.0 );
-        Config.renderer.clear();
-        element.appendChild( canvas );
-
-        changeScene( element, true );
-
-        var gl = Config.renderer.getContext();
-
-        function resize() {
-
-            var width = gl.canvas.clientWidth;
-            var height = gl.canvas.clientHeight;
-
-            if ( gl.canvas.width != width || gl.canvas.height != height ) {
-
-                gl.canvas.width = width;
-                gl.canvas.height = height;
-
-                if (Config.currentScene.resize) {
-                    Config.currentScene.resize();
-                }
-
+            if (Config.currentScene && Config.currentScene.dispose) {
+                Config.currentScene.dispose();
             }
-            gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
+            Config.currentScene = window.scenes[hash](element, Config.renderer);
 
         }
-        resize();
+    }
+};
 
-        function animate() {
+var canvasService = function (element, isInitialized) {
 
-            requestAnimationFrame( animate );
+    if (isInitialized) return;
+    if (!window.scenes) window.scenes = {};
 
-            if ( Config.currentScene && Config.currentScene.scene ) {
-                resize();
-                Config.currentScene.update();
+    var canvas;
+
+    if (!Config.renderer) {
+
+        canvas = document.createElement('canvas');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        Config.renderer = new THREE.WebGLRenderer({antialias: true, canvas: canvas});
+        window.addEventListener("hashchange", function () {
+            changeScene(element);
+        }, false);
+
+    } else {
+
+        canvas = Config.renderer.domElement;
+
+    }
+
+    Config.renderer.setClearColor(0x111111, 1.0);
+    Config.renderer.clear();
+    element.appendChild(canvas);
+
+    changeScene(element, true);
+
+    var gl = Config.renderer.getContext();
+
+    function resize() {
+
+        var width = gl.canvas.clientWidth;
+        var height = gl.canvas.clientHeight;
+
+        if (gl.canvas.width != width || gl.canvas.height != height) {
+
+            gl.canvas.width = width;
+            gl.canvas.height = height;
+
+            if (Config.currentScene.resize) {
+                Config.currentScene.resize();
             }
 
         }
+        gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
 
-        animate();
+    }
 
-    };
+    resize();
 
-    module.exports = canvasService;
+    function animate() {
 
-}());
+        requestAnimationFrame(animate);
+
+        if (Config.currentScene && Config.currentScene.scene) {
+            resize();
+            Config.currentScene.update();
+        }
+
+    }
+
+    animate();
+
+};
+
+module.exports = canvasService;
+

@@ -21,10 +21,10 @@ var Config = {
 
     iframeAPILoaded: false,
     videos: [
-        { name: 'villalobos_etude1', id: '8-3Nc6nMMpw' },
-        { name: 'dwarf_fortress_theme', id: 'l62xYyRB-2Y' },
-        { name: 'breath', id: 'Hb3f1P4Z09s' },
-        { name: 'opengl_spaceship', id: 'tXAWTZmzaiU' }
+        {name: 'villalobos_etude1', id: '8-3Nc6nMMpw'},
+        {name: 'dwarf_fortress_theme', id: 'l62xYyRB-2Y'},
+        {name: 'breath', id: 'Hb3f1P4Z09s'},
+        {name: 'opengl_spaceship', id: 'tXAWTZmzaiU'}
     ],
     videoSize: {x: null, y: null, ratio: 1.5},
     minVideoWidth: 300,

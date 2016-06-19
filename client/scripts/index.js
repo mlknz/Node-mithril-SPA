@@ -1,17 +1,15 @@
-(function () {
-  'use strict';
+'use strict';
 
-  if (global.document) {
+if (global.document) {
     require('es6-promise').polyfill();
-  }
-  var domready = require('domready');
-  var m = require('mithril');
+}
+var domready = require('domready');
+var m = require('mithril');
 
-  var routes = require('./routes');
+var routes = require('./routes');
 
-  m.route.mode = 'pathname';
+m.route.mode = 'pathname';
 
-  domready(function () {
+domready(function () {
     m.route(document.body, '/', routes);
-  });
-} ());
+});
