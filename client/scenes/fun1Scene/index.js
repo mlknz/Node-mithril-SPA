@@ -2,7 +2,7 @@
  * Created by mlkn on 18.04.2016.
  */
 var Config = {};
-var OrbitControls = require('../../libs/orbitControls');
+require('../../libs/orbitControls');
 
 window.scenes.fun1 = function(canvas, renderer) {
 

@@ -2,7 +2,7 @@ var Config = require('./config');
 var Heights = require('./prefabs/heightsGenerator');
 var Landscape = require('./prefabs/landscapePrefab');
 var Ocean = require('./prefabs/oceanPrefab');
-var TrackballControls = require('../../libs/trackballControls');
+require('../../libs/trackballControls');
 
 window.scenes.wildGrowth = function( canvas, renderer ) {
 
@@ -37,7 +37,10 @@ window.scenes.wildGrowth = function( canvas, renderer ) {
     landscape.mesh.material.needsUpdate = true;
 
     var trackballControls = new THREE.TrackballControls( camera, renderer.domElement );
-    trackballControls.rotateSpeed = 3.0;
+    trackballControls.rotateSpeed = 3;
+    trackballControls.noPan = true;
+    trackballControls.minDistance = 40;
+    trackballControls.maxDistance = 300;
 
     var changeLandscapeButton = document.createElement( 'BUTTON' );
     var t = document.createTextNode( 'Change landscape' );
