@@ -65,7 +65,7 @@ window.scenes.wildGrowth = function (canvas, renderer) {
         scene: scene,
 
         update: function () {
-            Config.time = ( new Date() ).getTime();
+            Config.time = (new Date()).getTime();
 
             if (Config.changeLandscapeStartFlag) {
                 heights.update();
