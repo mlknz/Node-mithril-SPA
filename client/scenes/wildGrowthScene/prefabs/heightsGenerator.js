@@ -5,14 +5,16 @@ var Config = require('./../config');
 
 var heightsFunc = function (renderer) {
     var seed = 1;
+    var renderWidth = 1024;
+    var renderHeight = 1024;
     var rtTexture = new THREE.WebGLRenderTarget(
-        512,
-        512,
+        renderWidth,
+        renderHeight,
         {minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBFormat}
     );
     var rtTextureOld = new THREE.WebGLRenderTarget(
-        512,
-        512,
+        renderWidth,
+        renderHeight,
         {minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBFormat}
     );
 
@@ -25,17 +27,18 @@ var heightsFunc = function (renderer) {
         fragmentShader: fragmentShader
     });
 
-    var cameraRTT = new THREE.OrthographicCamera(window.innerWidth / -2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / -2, -10000, 10000);
+    var cameraRTT = new THREE.OrthographicCamera(renderWidth / -2, renderWidth / 2, renderHeight / 2, renderHeight / -2, -10000, 10000);
     cameraRTT.position.z = 100;
     var sceneRTT = new THREE.Scene();
 
-    var plane = new THREE.PlaneBufferGeometry(window.innerWidth, window.innerHeight);
+    var plane = new THREE.PlaneBufferGeometry(renderWidth, renderHeight);
     var quad = new THREE.Mesh(plane, material);
     quad.position.z = -100;
     sceneRTT.add(quad);
 
     renderer.render(sceneRTT, cameraRTT, rtTexture, true);
     renderer.render(sceneRTT, cameraRTT, rtTextureOld, true);
+
 
     return {
         texture: rtTexture.texture,

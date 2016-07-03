@@ -63,26 +63,29 @@ window.scenes.wildGrowth = function (canvas, renderer) {
 
     return {
         scene: scene,
+
         update: function () {
             Config.time = ( new Date() ).getTime();
-            Config.aspectRatio = gl.canvas.clientWidth / gl.canvas.clientHeight;
-            if (camera.aspect !== Config.aspectRatio) {
-                camera.aspect = Config.aspectRatio;
-                camera.updateProjectionMatrix();
-            }
 
             if (Config.changeLandscapeStartFlag) {
                 heights.update();
                 landscape.changeLandscape();
                 Config.changeLandscapeStartFlag = false;
+                renderer.setViewport(0, 0, gl.canvas.width, gl.canvas.height);
             }
 
             trackballControls.update();
             landscape.update();
             renderer.render(scene, camera);
         },
-        resize: function () {
+        resize: function (width, height) {
+
             trackballControls.handleResize();
+            Config.aspectRatio = width / height;
+            if (camera.aspect !== Config.aspectRatio) {
+                camera.aspect = Config.aspectRatio;
+                camera.updateProjectionMatrix();
+            }
         },
         dispose: function () {
             trackballControls.dispose();

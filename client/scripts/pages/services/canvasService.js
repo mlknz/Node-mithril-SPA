@@ -92,11 +92,10 @@ var canvasService = function (element, isInitialized) {
             gl.canvas.height = height;
 
             if (Config.currentScene.resize) {
-                Config.currentScene.resize();
+                Config.currentScene.resize(width, height);
             }
-
+            gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
         }
-        gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
 
     }
 
