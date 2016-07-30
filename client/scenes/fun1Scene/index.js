@@ -13,9 +13,9 @@ window.scenes.fun1 = function (canvas, renderer) {
     Config.aspectRatio = gl.canvas.clientWidth / gl.canvas.clientHeight;
 
     var camera = new THREE.PerspectiveCamera(60, Config.aspectRatio, 1, 10000);
-    camera.position.z = 76;
-    camera.position.y = 60;
-    camera.position.x = -70;
+    camera.position.z = 160;
+    camera.position.y = 140;
+    camera.position.x = -150;
     camera.lookAt(new THREE.Vector3(0, 0, 0));
     camera.updateProjectionMatrix();
 

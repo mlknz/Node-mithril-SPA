@@ -3,10 +3,11 @@ var Config = {
 
     currentSceneHash: '',
     currentScene: {},
-    defaultScene: 'wildGrowth',
+    defaultScene: 'littlePlanet',
 
     scenes: {
-        wildGrowth: './scenes/wildGrowthScene.min.js',
+        littlePlanet: './scenes/littlePlanetScene.min.js',
+        dungeonGeneration: './scenes/dungeonGenerationScene.min.js',
         fun1: './scenes/fun1Scene.min.js'
     },
 

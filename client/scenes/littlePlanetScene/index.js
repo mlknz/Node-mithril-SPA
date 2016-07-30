@@ -6,7 +6,7 @@ var Landscape = require('./prefabs/landscapePrefab');
 var Ocean = require('./prefabs/oceanPrefab');
 require('../../libs/trackballControls');
 
-window.scenes.wildGrowth = function (canvas, renderer) {
+window.scenes.littlePlanet = function (canvas, renderer) {
 
     var scene,
         heights,
