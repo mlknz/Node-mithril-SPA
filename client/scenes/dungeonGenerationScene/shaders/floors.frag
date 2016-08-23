@@ -1,5 +1,6 @@
 precision mediump float;
 varying vec3 vNormal;
+varying float vIsMain;
 
 #include <common>
 #include <lights_pars>
@@ -7,7 +8,7 @@ varying vec3 vNormal;
 void main() {
 	vec3 light;
 
-	vec3 c = ambientLightColor;
+	vec3 c = (vIsMain > 0.5) ? vec3(0.6, 0., 0) : ambientLightColor;
 	#if NUM_DIR_LIGHTS > 0
 	for (int i = 0; i < NUM_DIR_LIGHTS; i++) {
 		light = max( dot(normalize(vNormal), directionalLights[i].direction), 0.0) * directionalLights[i].color * 0.5;
