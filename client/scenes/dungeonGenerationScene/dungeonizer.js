@@ -2,8 +2,8 @@
 var Delaunay = require('./delaunay.js');
 
 function isCollided(a, b) {
-    if (a.x1 < b.x2 && a.x2 > b.x1 &&
-        a.y2 > b.y1 && a.y1 < b.y2 ) return true;
+    if (a.x - a.w / 2 < b.x + b.w / 2 && a.x + a.w / 2 > b.x - b.w / 2 &&
+        a.y + a.h / 2 > b.y - b.h / 2 && a.y - a.h / 2 < b.y + b.h / 2 ) return true;
 
     return false;
 }
@@ -47,7 +47,7 @@ function hasTwoConnections(a, b, gVerts) {
 
 function generateDungeon() {
     var seed = 1;
-    var dungeonSize = 19;
+    var dungeonSize = 13;
     var midRoomAspect = 1;
     var roomsAmount = dungeonSize * 5 + Math.floor(Math.random() * 10);
 
@@ -55,8 +55,8 @@ function generateDungeon() {
     var maxSize = 14;
 
     var rooms = [];
+    var i, j, k, ii;
 
-    var i, j;
     // generate sizes
     var w, h, size;
     var sortedBySizeRoomIndices = [];
@@ -65,47 +65,24 @@ function generateDungeon() {
         h = minSize + Math.floor(Math.random() * (maxSize - minSize)); // Math.floor(w * midRoomAspect * (Math.random() + 0.5));
         size = w * h;
         rooms.push({x: 0, y: 0, w: w, h: h, size: size, x1: -w / 2, x2: w / 2, y1: -h / 2, y2: h / 2, isMain: false});
-
-        var flag = false;
-        for (j = 0; j < sortedBySizeRoomIndices.length; j++) {
-            if (size < sortedBySizeRoomIndices[j].size) {
-                sortedBySizeRoomIndices.splice(j, 0, {size: size, ind: i});
-                flag = true;
-                break;
-            }
-        }
-        if (!flag) sortedBySizeRoomIndices.push({size: size, ind: i});
     }
     var rooms1 = rooms.slice();
 
     // place rooms
     var maxR = roomsAmount * maxSize * 2;
     for (i = 1; i < roomsAmount; i++) {
-        var foundPlace = false;
         var roomAngle = Math.random() * 2 * Math.PI;
 
         var posX = 0;
         var posY = 0;
         var dirX = Math.cos(roomAngle);
         var dirY = Math.sin(roomAngle);
-        var prevX = 0;
-        var prevY = 0;
 
-        for (var k = 0; k < maxR; k++) {
-            var lastPosX = posX;
-            var lastPosY = posY;
+        for (k = 0; k < maxR; k++) {
 
-            var d = Math.sqrt(posX*posX + posY*posY);
             posX += dirX;
             posY += dirY;
 
-            var w = rooms[i].w;
-            var h = rooms[i].h;
-
-            rooms[i].x1 = -w/2 + posX;
-            rooms[i].x2 = w/2 + posX;
-            rooms[i].y1 = -h/2 + posY;
-            rooms[i].y2 = h/2 + posY;
             rooms[i].x = posX;
             rooms[i].y = posY;
 
@@ -117,26 +94,62 @@ function generateDungeon() {
                 }
             }
 
-            if (!collidedByAny) break;
+
+            if (!collidedByAny) {
+                // make a round trying to place closer to center
+                var d = Math.sqrt(posX*posX + posY*posY);
+                var curAngle = roomAngle;
+                var curPosX, curPosY;
+
+                while(curAngle - roomAngle < Math.PI * 2) {
+                    curAngle += 1 / d;
+
+                    for (ii = d; ii > 0; ii--) {
+                        curPosX = ii * Math.cos(curAngle);
+                        curPosY = ii * Math.sin(curAngle);
+                        collidedByAny = false;
+                        for (j = 0; j < i; j++) {
+                            rooms[i].x = curPosX;
+                            rooms[i].y = curPosY;
+                            if (isCollided(rooms[j], rooms[i])) {
+                                collidedByAny = true;
+                                break;
+                            }
+                        }
+                        if (!collidedByAny) {
+                            d = ii;
+                            posX = curPosX;
+                            posY = curPosY;
+                        }
+                    }
+
+                }
+
+                rooms[i].x = posX;
+                rooms[i].y = posY;
+                break;
+            }
 
         }
+
+        rooms[i].x1 = -rooms[i].w/2 + rooms[i].x;
+        rooms[i].x2 = rooms[i].w/2 + rooms[i].x;
+        rooms[i].y1 = -rooms[i].h/2 + rooms[i].y;
+        rooms[i].y2 = rooms[i].h/2 + rooms[i].y;
     }
 
     // choose main rooms
-    var mainRoomsAmount = dungeonSize;
     var mainVerts = [];
-    for (i = 0; i < mainRoomsAmount; i++) {
-        var roomInd = sortedBySizeRoomIndices[roomsAmount - i - 1].ind;
-        rooms[roomInd].isMain = true;
-        mainVerts.push([rooms[roomInd].x, rooms[roomInd].y]);
+    var threshold = 10.3; // todo: fix stacking main rooms
+    for (i = 0; i < rooms.length; i++) {
+        if (/*rooms[i].w > threshold && rooms[i].h > threshold*/ rooms[i].size > threshold * threshold) {
+            rooms[i].isMain = true;
+            mainVerts.push([rooms[i].x, rooms[i].y]);
+        }
     }
 
-    // delaunay triangulation
-    // console.time("triangulate");
+    // /
     var delTriangles = Delaunay.triangulate(mainVerts);
-    // console.timeEnd("triangulate");
-
-    // console.log(delTriangles);
 
     var triangulationLines = [];
     var edges = [];
@@ -234,8 +247,6 @@ function generateDungeon() {
 
     return {floors: rooms, fullDelaunayTriangles: triangulationLines, triangles: mstLines, leftAliveLines: leftAliveLines};
 }
-
-
 
 module.exports = {
     generateDungeon: generateDungeon
