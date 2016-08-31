@@ -9,12 +9,15 @@ var floorsVert = glslify('./shaders/floors.vert');
 var floorsFrag = glslify('./shaders/floors.frag');
 
 var floorHeight = 1;
+var tunnelHeight = 1.7;
+var tunnelWidth = 1.2;
 var cubeGeom = new THREE.BoxBufferGeometry(1, 1, 1);
 
 function generateFloorsMesh(floors) {
     var offsets = [];
     var scales = [];
     var metaInfo = [];
+
     for (var i = 0; i < floors.length; i++) {
         offsets.push((floors[i].x1 + floors[i].x2) / 2, 0/*i*1.5*/, (floors[i].y1 + floors[i].y2) / 2);
         scales.push(floors[i].x2 - floors[i].x1, floorHeight, floors[i].y2 - floors[i].y1);
@@ -29,8 +32,53 @@ function generateFloorsMesh(floors) {
     geom.addAttribute('scale', new THREE.InstancedBufferAttribute(new Float32Array(scales), 3, 1));
     geom.addAttribute('metaInfo', new THREE.InstancedBufferAttribute(new Float32Array(metaInfo), 1, 1));
 
+    var uniforms = THREE.UniformsUtils.clone(THREE.UniformsLib.lights);
+
     var floorsMaterial = new THREE.RawShaderMaterial({
-        uniforms: THREE.UniformsUtils.clone(THREE.UniformsLib.lights),
+        uniforms: uniforms,
+        vertexShader: floorsVert,
+        fragmentShader: floorsFrag,
+        side: THREE.DoubleSide,
+        transparent: false,
+        lights: true
+    });
+
+    return new THREE.Mesh(geom, floorsMaterial);
+}
+
+function generateTunnelsMesh(tunnels) {
+    var offsets = [];
+    var scales = [];
+    var metaInfo = [];
+    var x1, x2, y1, y2, isHorizontal;
+    for (var i = 0; i < tunnels.length; i += 4) {
+        x1 = tunnels[i];
+        y1 = tunnels[i+1];
+        x2 = tunnels[i+2];
+        y2 = tunnels[i+3];
+
+        offsets.push((x1 + x2) / 2, 0, (y1 + y2) / 2);
+        isHorizontal = Math.abs(x2 - x1) > Math.abs(y2 - y1);
+        scales.push(
+            isHorizontal ? Math.abs(x2 - x1) + tunnelWidth / 2 : tunnelWidth,
+            tunnelHeight,
+            isHorizontal ? tunnelWidth : Math.abs(y2 - y1) + tunnelWidth / 2
+        );
+        metaInfo.push(-1);
+    }
+    var geom = new THREE.InstancedBufferGeometry();
+
+    geom.addAttribute('position', cubeGeom.attributes.position);
+    geom.addAttribute('normal', cubeGeom.attributes.normal);
+    geom.setIndex(cubeGeom.index);
+    geom.addAttribute('offset', new THREE.InstancedBufferAttribute(new Float32Array(offsets), 3, 1));
+    geom.addAttribute('scale', new THREE.InstancedBufferAttribute(new Float32Array(scales), 3, 1));
+    geom.addAttribute('metaInfo', new THREE.InstancedBufferAttribute(new Float32Array(metaInfo), 1, 1));
+
+    var uniforms = THREE.UniformsUtils.clone(THREE.UniformsLib.lights);
+
+    var floorsMaterial = new THREE.RawShaderMaterial({
+        uniforms: uniforms,
         vertexShader: floorsVert,
         fragmentShader: floorsFrag,
         side: THREE.DoubleSide,
@@ -87,11 +135,14 @@ window.scenes.dungeonGeneration = function (canvas, renderer) {
     var floorsMesh = generateFloorsMesh(dungeon.floors);
     scene.add(floorsMesh);
 
-    var trianglesMesh = generateTrianglesMesh(dungeon.triangles, 0x0000ff);
-    scene.add(trianglesMesh);
+    var tunnelsMesh = generateTunnelsMesh(dungeon.tunnels);
+    scene.add(tunnelsMesh);
 
-    var leftAliveMesh = generateTrianglesMesh(dungeon.leftAliveLines, 0x00ff00);
-    scene.add(leftAliveMesh);
+    // var trianglesMesh = generateTrianglesMesh(dungeon.triangles, 0x0000ff);
+    // scene.add(trianglesMesh);
+    //
+    // var leftAliveMesh = generateTrianglesMesh(dungeon.leftAliveLines, 0x00ff00);
+    // scene.add(leftAliveMesh);
 
     var light = new THREE.AmbientLight(0x202020);
     scene.add(light);
@@ -118,7 +169,6 @@ window.scenes.dungeonGeneration = function (canvas, renderer) {
         },
         dispose: function () {
             orbitControls.dispose();
-            renderer.shadowMap.enabled = false;
         }
     };
 };

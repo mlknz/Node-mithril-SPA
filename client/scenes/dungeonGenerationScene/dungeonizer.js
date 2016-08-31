@@ -45,6 +45,42 @@ function hasTwoConnections(a, b, gVerts) {
     return found;
 }
 
+function generateTunnel(roomA, roomB) {
+    // room: x, y, w, h
+    var tunnel = [];
+    var dx = roomA.x - roomB.x;
+    var dy = roomA.y - roomB.y;
+    var overlapX = (roomA.w + roomB.w) / 2 - Math.abs(dx);
+    var overlapY = (roomA.h + roomB.h) / 2 - Math.abs(dy);
+
+    if (overlapX > 0) {
+
+        var x = roomA.x < roomB.x ? roomA.x + roomA.w / 2 : roomB.x + roomB.w / 2;
+        x -= (Math.random() * 0.6 + 0.2) * overlapX;
+
+        tunnel = dy < 0 ? [x, roomA.y + roomA.h / 2, x, roomB.y - roomB.h / 2] :
+            [x, roomA.y - roomA.h / 2, x, roomB.y + roomB.h / 2];
+
+    } else if (overlapY > 0) {
+
+        var y = roomA.y < roomB.y ? roomA.y + roomA.h / 2 :  roomB.y + roomB.h / 2;
+        y -= (Math.random() * 0.6 + 0.2) * overlapY;
+        tunnel = dx < 0 ? [roomA.x + roomA.w / 2, y, roomB.x - roomB.w / 2, y] :
+            [roomA.x - roomA.w / 2, y, roomB.x + roomB.w / 2, y];
+
+    } else {
+
+        var y1 = dy < 0 ? roomA.y + roomA.h / 2 : roomA.y - roomA.h / 2;
+        var x1 = roomA.x + (Math.random() - 0.5) * roomA.w * 0.8;
+
+        var x2 = dx < 0 ? roomB.x - roomB.w / 2 : roomB.x + roomB.w / 2;
+        var y2 = roomB.y + (Math.random() - 0.5) * roomB.h * 0.8;
+
+        tunnel = [x1, y1, x1, y2, x1, y2, x2, y2];
+    }
+    return tunnel;
+}
+
 function generateDungeon() {
     var seed = 1;
     var dungeonSize = 13;
@@ -144,7 +180,7 @@ function generateDungeon() {
     for (i = 0; i < rooms.length; i++) {
         if (/*rooms[i].w > threshold && rooms[i].h > threshold*/ rooms[i].size > threshold * threshold) {
             rooms[i].isMain = true;
-            mainVerts.push([rooms[i].x, rooms[i].y]);
+            mainVerts.push([rooms[i].x, rooms[i].y, i]);
         }
     }
 
@@ -202,8 +238,6 @@ function generateDungeon() {
 
     }
 
-    // console.log(triangulationLines);
-
     // form minimum spanning tree (+extra leftAlive edges)
     edges.sort(function(a, b) {
         return a.dSq - b.dSq;
@@ -222,7 +256,6 @@ function generateDungeon() {
         hasSecondConnection = hasTwoConnections(a, b, gVerts);
         if (hasSecondConnection) {
             if (leavingAlive > 0) {
-                console.log('leaving alive');
                 leftAlive.push({a: a, b: b});
             }
             tPos = gVerts[a].indexOf(b);
@@ -236,16 +269,29 @@ function generateDungeon() {
         }
     }
 
+    // tunnels & debug edge lines
+    var tunnel;
+    var tunnels = [];
     var mstLines = [];
     for (i = 0; i < edges.length; i++) {
         mstLines.push(mainVerts[edges[i].a][0], mainVerts[edges[i].a][1], mainVerts[edges[i].b][0], mainVerts[edges[i].b][1]);
+        tunnel = generateTunnel( rooms[ mainVerts[edges[i].a][2] ], rooms[ mainVerts[edges[i].b][2] ] );
+        Array.prototype.push.apply(tunnels, tunnel);
     }
     var leftAliveLines = [];
     for (i = 0; i < leftAlive.length; i++) {
         leftAliveLines.push(mainVerts[leftAlive[i].a][0], mainVerts[leftAlive[i].a][1], mainVerts[leftAlive[i].b][0], mainVerts[leftAlive[i].b][1]);
+        tunnel = generateTunnel( rooms[ mainVerts[leftAlive[i].a][2] ], rooms[ mainVerts[leftAlive[i].b][2] ]);
+        Array.prototype.push.apply(tunnels, tunnel);
     }
 
-    return {floors: rooms, fullDelaunayTriangles: triangulationLines, triangles: mstLines, leftAliveLines: leftAliveLines};
+    return {
+        floors: rooms,
+        fullDelaunayTriangles: triangulationLines,
+        triangles: mstLines,
+        leftAliveLines: leftAliveLines,
+        tunnels: tunnels
+    };
 }
 
 module.exports = {

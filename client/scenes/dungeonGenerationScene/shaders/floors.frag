@@ -8,7 +8,7 @@ varying float vIsMain;
 void main() {
 	vec3 light;
 
-	vec3 c = (vIsMain > 0.5) ? vec3(0.6, 0., 0) : ambientLightColor;
+	vec3 c = (vIsMain < -0.5) ? vec3(0.8, 0.8, 0.8) : (vIsMain > 0.5) ? vec3(0.6, 0., 0) : ambientLightColor;
 	#if NUM_DIR_LIGHTS > 0
 	for (int i = 0; i < NUM_DIR_LIGHTS; i++) {
 		light = max( dot(normalize(vNormal), directionalLights[i].direction), 0.0) * directionalLights[i].color * 0.5;
