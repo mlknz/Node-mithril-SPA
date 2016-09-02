@@ -8,6 +8,20 @@ function isCollided(a, b) {
     return false;
 }
 
+function segmentRectangleCol(sx1, sy1, sx2, sy2, rx1, ry1, rx2, ry2) {
+    if (sx1 > Math.min(rx1, rx2) && sx1 < Math.max(rx1, rx2)) {
+        if (
+            (ry1 > Math.min(sy1, sy2) && ry1 < Math.max(sy1, sy2)) || ((ry2 > Math.min(sy1, sy2) && ry2 < Math.max(sy1, sy2)))) {
+            return true;
+        }
+    } else if (sy1 > Math.min(ry1, ry2) && sy1 < Math.max(ry1, ry2)) {
+        if ((rx1 > Math.min(sx1, sx2) && rx1 < Math.max(sx1, sx2)) || ((rx2 > Math.min(sx1, sx2) && rx2 < Math.max(sx1, sx2)))) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function dSq(a, b) {
     return (a[0] - b[0]) * (a[0] - b[0]) + (a[1] - b[1]) * (a[1] - b[1]);
 }
@@ -100,7 +114,7 @@ function generateDungeon() {
         w = minSize + Math.floor(Math.random() * (maxSize - minSize)); // todo: use nice distribution
         h = minSize + Math.floor(Math.random() * (maxSize - minSize)); // Math.floor(w * midRoomAspect * (Math.random() + 0.5));
         size = w * h;
-        rooms.push({x: 0, y: 0, w: w, h: h, size: size, x1: -w / 2, x2: w / 2, y1: -h / 2, y2: h / 2, isMain: false});
+        rooms.push({x: 0, y: 0, w: w, h: h, size: size, x1: -w / 2, x2: w / 2, y1: -h / 2, y2: h / 2, isMain: 0});
     }
     var rooms1 = rooms.slice();
 
@@ -179,7 +193,7 @@ function generateDungeon() {
     var threshold = 10.3; // todo: fix stacking main rooms
     for (i = 0; i < rooms.length; i++) {
         if (/*rooms[i].w > threshold && rooms[i].h > threshold*/ rooms[i].size > threshold * threshold) {
-            rooms[i].isMain = true;
+            rooms[i].isMain = 1;
             mainVerts.push([rooms[i].x, rooms[i].y, i]);
         }
     }
@@ -283,6 +297,20 @@ function generateDungeon() {
         leftAliveLines.push(mainVerts[leftAlive[i].a][0], mainVerts[leftAlive[i].a][1], mainVerts[leftAlive[i].b][0], mainVerts[leftAlive[i].b][1]);
         tunnel = generateTunnel( rooms[ mainVerts[leftAlive[i].a][2] ], rooms[ mainVerts[leftAlive[i].b][2] ]);
         Array.prototype.push.apply(tunnels, tunnel);
+    }
+
+    var room;
+    for (i = 0; i < rooms.length; i++) {
+        room = rooms[i];
+        if (room.isMain < 1) {
+            for (j = 0; j < tunnels.length; j = j + 4) {
+                if (segmentRectangleCol(tunnels[j], tunnels[j + 1], tunnels[j + 2], tunnels[j + 3],
+                room.x1, room.y1, room.x2, room.y2) !== false) {
+                    room.isMain = 2;
+                    break;
+                }
+            }
+        }
     }
 
     return {

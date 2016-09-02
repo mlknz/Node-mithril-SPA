@@ -21,7 +21,7 @@ function generateFloorsMesh(floors) {
     for (var i = 0; i < floors.length; i++) {
         offsets.push((floors[i].x1 + floors[i].x2) / 2, 0/*i*1.5*/, (floors[i].y1 + floors[i].y2) / 2);
         scales.push(floors[i].x2 - floors[i].x1, floorHeight, floors[i].y2 - floors[i].y1);
-        metaInfo.push(floors[i].isMain ? 1 : 0);
+        metaInfo.push(floors[i].isMain);
     }
     var geom = new THREE.InstancedBufferGeometry();
 
