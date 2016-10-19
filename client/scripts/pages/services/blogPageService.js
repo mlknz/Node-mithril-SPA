@@ -1,7 +1,7 @@
 'use strict';
 
 var Config = require('./../../config');
-var headerText = 'Blog';
+var headerText = 'Empty Page';
 
 module.exports = function (element, isInitialized) {
 

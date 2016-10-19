@@ -7,7 +7,6 @@ var Config = {
 
     scenes: {
         littlePlanet: './scenes/littlePlanetScene.min.js',
-        dungeonGeneration: './scenes/dungeonGenerationScene.min.js',
         fun1: './scenes/fun1Scene.min.js'
     },
 
@@ -22,10 +21,10 @@ var Config = {
 
     iframeAPILoaded: false,
     videos: [
-        {name: 'villalobos_etude1', id: '8-3Nc6nMMpw'},
-        {name: 'dwarf_fortress_theme', id: 'l62xYyRB-2Y'},
-        {name: 'breath', id: 'Hb3f1P4Z09s'},
-        {name: 'opengl_spaceship', id: 'tXAWTZmzaiU'}
+        {name: 'Video1', id: 'l62xYyRB-2Y'},
+        {name: 'Video2', id: 'l62xYyRB-2Y'},
+        {name: 'Video3', id: 'l62xYyRB-2Y'},
+        {name: 'Video4', id: 'l62xYyRB-2Y'}
     ],
     videoSize: {x: null, y: null, ratio: 1.5},
     minVideoWidth: 300,

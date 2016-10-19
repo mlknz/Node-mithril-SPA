@@ -14,7 +14,7 @@
     "start": "node ./server",
     "postinstall": "gulp default"
   },
-  "author": "mlkn <rkdshe@gmail.com>",
+  "author": "mlkn",
   "license": "ISC",
   "browserify": {
     "transform": [

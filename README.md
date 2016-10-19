@@ -1,8 +1,10 @@
-# Node.js SPA sandbox homepage.
+# Node.js SPA sandbox (abandoned).
 
 Based on [this](https://github.com/StephanHoyer/mithril-isomorphic-example) template.
 
-Live version could be found on [mlkn.tech](http://www.mlkn.tech).
+Little planet generation:
+
+![alt tag](https://cloud.githubusercontent.com/assets/12106426/12511165/32772b08-c120-11e5-8212-7058da7c57e6.gif)
 
 To launch the project locally do the following:
 
@@ -13,7 +15,3 @@ To launch the project locally do the following:
 4. Run "gulp".
 5. Run "node server.js".
 6. Open your browser and navigate to "http://localhost:8000/".
-
-Little planet generation:
-
-![alt tag](https://cloud.githubusercontent.com/assets/12106426/12511165/32772b08-c120-11e5-8212-7058da7c57e6.gif)
